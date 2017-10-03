@@ -3,9 +3,12 @@
         <nav>
             <div class="nav-wrapper">
               <a href="/#/home" class="brand-logo">Vue</a>
-              <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <ul id="nav-mobile" class="right hide-on-med-and-down">                
                 <li v-if="!isLoggedIn">
                     <router-link to="/login">Login</router-link>
+                </li>
+                <li v-if="isLoggedIn">
+                    <router-link to="/comments">Comments</router-link>
                 </li>
                 <li v-if="isLoggedIn">
                     <a href="#" @click="logout">Logout</a> 

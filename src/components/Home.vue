@@ -4,20 +4,23 @@
             <navbar></navbar>
         </div>
         <div class="content">
-            <p>Home page/</p>
-            <p v-if="isLoggedIn">Logged in</p>
-            <p v-if="!isLoggedIn">Unlogged</p>
+            <div v-if="!isLoggedIn" class="unlogged">
+                Home page, please log in
+            </div>
+            <product-list v-if="isLoggedIn"></product-list>
         </div>
     </div>
 </template>
 
 <script>
     import Navbar from './Navbar.vue'
+    import ProductList from './ProductList.vue'
     import { mapGetters } from 'vuex'
-
-    export default {
+    
+    export default {        
         components: {
-            Navbar
+            Navbar,
+            ProductList
         },
         computed: {
             ...mapGetters(['isLoggedIn'])

@@ -29,8 +29,12 @@
     }
     .content {
         height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+        .centered {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
     }
 </style>

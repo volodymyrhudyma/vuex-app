@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { GET_POSTS } from '../../config/api.js'
 
 const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 const START_FETCHING = "START_FETCHING";
@@ -24,7 +25,7 @@ const mutations = {
 const actions = {
     fetchProducts({ commit }, products) {
         commit("START_FETCHING")
-        Vue.axios.get("https://jsonplaceholder.typicode.com/posts").then((response) => {
+        Vue.axios.get(GET_POSTS).then((response) => {
             commit("FETCH_PRODUCTS", response.data);
             commit("STOP_FETCHING");
         })

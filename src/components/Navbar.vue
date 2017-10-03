@@ -8,7 +8,7 @@
                     <router-link to="/login">Login</router-link>
                 </li>
                 <li v-if="isLoggedIn">
-                    <router-link to="/comments">Comments</router-link>
+                    <router-link to="/comments">{{ $t('Comments') }}</router-link>
                 </li>
                 <li v-if="isLoggedIn">
                     <a href="#" @click="logout">Logout</a> 

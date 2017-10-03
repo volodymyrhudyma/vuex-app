@@ -9,9 +9,18 @@ import store from './store'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import vuexI18n from 'vuex-i18n';
+import { en } from './locales/en';
+import { de } from './locales/de';
 
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
+Vue.use(vuexI18n.plugin, store);
+
+Vue.i18n.add('en', en);
+Vue.i18n.add('de', de);
+
+Vue.i18n.set('de');
 
 const routes = [
 	{ path: '/home', component: Home },

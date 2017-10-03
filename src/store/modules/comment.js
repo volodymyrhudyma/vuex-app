@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { GET_COMMENTS } from '../../config/api.js'
 
 const FETCH_COMMENTS = "FETCH_COMMENTS";
 const START_FETCHING = "START_FETCHING";
@@ -24,7 +25,7 @@ const mutations = {
 const actions = {
     fetchComments({ commit }, comments) {
         commit("START_FETCHING")
-        Vue.axios.get("https://jsonplaceholder.typicode.com/comments").then((response) => {
+        Vue.axios.get(GET_COMMENTS).then((response) => {
             commit("FETCH_COMMENTS", response.data);
             commit("STOP_FETCHING");
         })

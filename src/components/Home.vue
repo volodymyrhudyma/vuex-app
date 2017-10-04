@@ -7,20 +7,20 @@
             <div v-if="!isLoggedIn" class="unlogged">
                 Home page, please log in
             </div>
-            <product-list v-if="isLoggedIn"></product-list>
+            <musician-list v-if="isLoggedIn"></musician-list>
         </div>
     </div>
 </template>
 
 <script>
     import Navbar from './Navbar.vue'
-    import ProductList from './ProductList.vue'
+    import MusicianList from './MusicianList.vue'
     import { mapGetters } from 'vuex'
     
     export default {        
         components: {
             Navbar,
-            ProductList
+            MusicianList
         },
         computed: {
             ...mapGetters(['isLoggedIn'])

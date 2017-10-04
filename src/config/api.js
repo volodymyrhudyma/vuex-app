@@ -1,3 +1,3 @@
-export const API_ROOT = 'https://jsonplaceholder.typicode.com';
+export const API_ROOT = 'http://localhost:3001';
 export const GET_COMMENTS = API_ROOT + "/comments";
-export const GET_POSTS = API_ROOT + "/posts";
+export const GET_MUSICIANS = API_ROOT + "/musicians";

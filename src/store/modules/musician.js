@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import { GET_MUSICIANS } from '../../config/api.js'
+import axios from 'axios'
 
 const FETCH_MUSICIANS = "FETCH_MUSICIANS";
 const START_FETCHING = "START_FETCHING";
@@ -22,13 +23,23 @@ const mutations = {
     }
 };
 
+const config = {
+    auth: {
+        username: 'User',
+        password: 'Password'
+    },
+}
+
 const actions = {
     fetchMusicians({ commit }, musicians) {
         commit("START_FETCHING")
-        Vue.axios.get(GET_MUSICIANS).then((response) => {
-            commit("FETCH_MUSICIANS", response.data);
-            commit("STOP_FETCHING");
-        })
+        axios.get(GET_MUSICIANS, config)
+            .then(response => {
+                commit("FETCH_MUSICIANS", response.data);
+                commit("STOP_FETCHING");
+            }).catch(e => {
+                console.log(e);
+            });
     },
 };
 

@@ -3,39 +3,33 @@ import Vue from 'vue'
 import App from './components/App.vue'
 import Login from './components/Login.vue'
 import Home from './components/Home.vue'
-import Users from './components/Users.vue'
-import Comments from './components/Comments.vue'
+import ProjectList from './components/ProjectList.vue'
+import IssueList from './components/IssueList.vue'
+import TaskList from './components/TaskList.vue'
+import TechList from './components/TechList.vue'
 import store from './store'
 import VueRouter from 'vue-router'
 import vuexI18n from 'vuex-i18n';
 import { en } from './locales/en';
-import { de } from './locales/de';
+import { ua } from './locales/ua';
 
 Vue.use(VueRouter)
 Vue.use(vuexI18n.plugin, store);
 
 Vue.i18n.add('en', en);
-Vue.i18n.add('de', de);
+Vue.i18n.add('ua', ua);
 
-Vue.i18n.set('de');
+const DEFAULT_LANGUAGE = 'en';
+
+Vue.i18n.set(DEFAULT_LANGUAGE);
 
 const routes = [
-	{ path: '/home', component: Home },
+	{ path: '/', component: Home },
 	{ path: '/login', component: Login },
-	{ 
-	 	path: '/users', 
-	  	component: Users,
-	  	beforeEnter: (to, from, next) => {
-	  		store.state.auth.isLoggedIn ? next() : next(false);
-	  	}
-	},
-	{ 
-	 	path: '/comments', 
-	  	component: Comments,
-	  	beforeEnter: (to, from, next) => {
-	  		store.state.auth.isLoggedIn ? next() : next(false);
-	  	}
-	},
+	{ path: '/projects', component: ProjectList },
+	{ path: '/issues', component: IssueList },
+	{ path: '/tasks', component: TaskList },
+	{ path: '/technologies', component: TechList },
 ]
 
 const router = new VueRouter({

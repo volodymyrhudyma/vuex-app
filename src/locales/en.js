@@ -1,3 +1,1 @@
-export const en = {
-	"Comments": "Comments en"
-};
+export const en = {};

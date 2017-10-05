@@ -53,7 +53,7 @@ export default {
         email: this.email,
         password: this.password
       }).then(() => {
-        this.$router.push("/home")
+        this.$router.push("/")
       });
     }
   },

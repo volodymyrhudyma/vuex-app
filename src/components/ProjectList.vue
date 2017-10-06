@@ -9,16 +9,16 @@
   
         <div class="phone-viewport filter-panel">
           <md-bottom-bar md-theme="teal">
-            <md-bottom-bar-item md-icon="list" @click="setFilter('all')" md-active>All</md-bottom-bar-item>
-            <md-bottom-bar-item md-icon="history" @click="setFilter('recents')">Recents</md-bottom-bar-item>
-            <md-bottom-bar-item md-icon="star" @click="setFilter('favorites')">Favorites</md-bottom-bar-item>
-            <md-bottom-bar-item md-icon="done" @click="setFilter('completed')">Completed</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="list" @click="setFilter('all')" md-active>{{ $t('All') }}</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="history" @click="setFilter('recents')">{{ $t('Recents') }}</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="star" @click="setFilter('favorites')">{{ $t('Favorites') }}</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="done" @click="setFilter('completed')">{{ $t('Completed') }}</md-bottom-bar-item>
           </md-bottom-bar>
 
           <div class="search">
             <form novalidate @submit.stop.prevent="submit">
               <md-input-container>
-                <label>Search by name</label>
+                <label>{{ $t('Search by name') }}</label>
                 <md-input v-model="query"></md-input>
               </md-input-container>
             </form>
@@ -33,16 +33,16 @@
           </div>
 
           <md-dialog md-open-from="#fab" md-close-to="#fab" ref="addProject">
-            <md-dialog-title>Create new project</md-dialog-title>
+            <md-dialog-title>{{ $t('Create new project') }}</md-dialog-title>
 
             <md-dialog-content>
               <form>
                 <md-input-container>
-                  <label>Name</label>
+                  <label>{{ $t('Name') }}</label>
                   <md-textarea v-model="newProject.name"></md-textarea>
                 </md-input-container>
                 <md-input-container>
-                  <label>Description</label>
+                  <label>{{ $t('Description') }}</label>
                   <md-textarea v-model="newProject.description"></md-textarea>
                 </md-input-container>
                 
@@ -51,10 +51,10 @@
                     <md-icon>label</md-icon>
                   </md-button>
                   
-                  <md-subheader>Hobbies</md-subheader>
+                  <md-subheader>{{ $t('Hobbies') }}</md-subheader>
                   <md-option value="freestyle">Freestyle</md-option>
 
-                  <md-subheader>Work</md-subheader>
+                  <md-subheader>{{ $t('Work') }}</md-subheader>
                   <md-option value="javascript_dev">Javascript dev</md-option>
                 </md-select>
 
@@ -62,8 +62,8 @@
             </md-dialog-content>
 
             <md-dialog-actions>
-              <md-button class="md-primary" @click="closeDialog('addProject')">Cancel</md-button>
-              <md-button class="md-primary" @click="storeProject(newProject)">Create</md-button>
+              <md-button class="md-primary" @click="closeDialog('addProject')">{{ $t('Cancel') }}</md-button>
+              <md-button class="md-primary" @click="storeProject(newProject)">{{ $t('Create') }}</md-button>
             </md-dialog-actions>
           </md-dialog>
 
@@ -76,6 +76,12 @@
               <div class="md-list-text-container">
                 <span>{{project.name}}</span>
                 <span>{{project.description}}</span>
+                <span>
+                  <div class="progress-bar">
+                    <div class="fill-wrapper" :style="{ width: project.progress + '%' }"></div>
+                    <span class="percentage">{{project.progress}}%</span>
+                  </div>
+                </span>                    
                 <p>
                   <md-chip class="md-default" v-for="tag in project.tags" :key="tag">
                     {{tag}}
@@ -116,7 +122,8 @@
               description: '',
               tags: [],
               completed: false,
-              favorited: false
+              favorited: false,
+              progress: 0
             },
           }
         },

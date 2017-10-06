@@ -38,7 +38,7 @@
               <md-list v-if="isLoggedIn">
 
                   <md-list-item>
-                    <md-icon>send</md-icon> 
+                    <md-icon>home</md-icon> 
                     <span>
                         <li v-if="isLoggedIn">
                               <router-link to="/">{{ $t('Home') }}</router-link>
@@ -47,7 +47,7 @@
                   </md-list-item>
 
                   <md-list-item>
-                    <md-icon>send</md-icon> 
+                    <md-icon>description</md-icon> 
                     <span>
                         <li v-if="isLoggedIn">
                               <router-link to="/projects">{{ $t('Projects') }}</router-link>
@@ -56,7 +56,7 @@
                   </md-list-item>
 
                   <md-list-item>
-                    <md-icon>delete</md-icon> 
+                    <md-icon>gesture</md-icon> 
                     <span>
                         <li v-if="isLoggedIn">
                               <router-link to="/issues">{{ $t('Issues') }}</router-link>
@@ -65,14 +65,14 @@
                   </md-list-item>
 
                   <md-list-item>
-                    <md-icon>error</md-icon> 
+                    <md-icon>list</md-icon> 
                       <span>
                           <router-link to="/tasks">{{ $t('Tasks') }}</router-link>
                     </span>
                   </md-list-item>
 
                   <md-list-item>
-                    <md-icon>error</md-icon> 
+                    <md-icon>http</md-icon> 
                       <span>
                           <router-link to="/technologies">{{ $t('Technologies') }}</router-link>
                     </span>

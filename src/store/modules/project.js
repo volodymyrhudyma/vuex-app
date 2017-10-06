@@ -25,7 +25,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: false,
-                completed: false
+                completed: false,
+                progress: 15
             },
             {
                 name: 'Project 2',
@@ -35,7 +36,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: true,
-                completed: false
+                completed: false,
+                progress: 55
             },
             {
                 name: 'Project 3',
@@ -45,7 +47,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: false,
-                completed: false
+                completed: false,
+                progress: 0
             },
             {
                 name: 'Project 4',
@@ -55,7 +58,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: false,
-                completed: false
+                completed: false,
+                progress: 100
             },
             {
                 name: 'Project 5',
@@ -65,7 +69,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: true,
-                completed: true
+                completed: true,
+                progress: 2
             },
             {
                 name: 'Project 6',
@@ -75,7 +80,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: true,
-                completed: true
+                completed: true,
+                progress: 0
             },
             {
                 name: 'Project 7',
@@ -85,7 +91,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: true,
-                completed: false
+                completed: false,
+                progress: 0
             },
             {
                 name: 'Project 8',
@@ -95,7 +102,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: true,
-                completed: true
+                completed: true,
+                progress: 20
             },
             {
                 name: 'Project 9',
@@ -105,7 +113,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: true,
-                completed: true
+                completed: true,
+                progress: 0
             },
             {
                 name: 'Project 10',
@@ -115,7 +124,8 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: true,
-                completed: true
+                completed: true,
+                progress: 0
             },
         ];
         state.isProjectsPending = false;

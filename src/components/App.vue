@@ -107,6 +107,34 @@
 
                         .md-list {
                             padding: 0;
+
+                            .md-list-text-container {
+                                position: relative;
+                            }
+                        }
+
+                        .progress-bar {
+                            width: 200px;
+                            height: 25px;
+                            background: transparent;
+                            border: 1px solid rgba(0, 0, 0, 0.12);
+                            border-radius: 5px;
+                            position: absolute;
+                            right: 0;
+                            top: calc(50% - 12.5px);
+
+                            .percentage {
+                                padding: 0 5px;
+                                position: absolute;
+                                top: 1px;
+                            }
+
+                            .fill-wrapper {
+                                width: 15%;
+                                height: 100%;
+                                position: absolute;
+                                background: #3f51b5;
+                            }
                         }
                     }
                 }

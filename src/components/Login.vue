@@ -14,7 +14,7 @@
 
           <md-button type="submit" class="md-raised md-primary">Submit</md-button>
 
-          <md-spinner :md-size="60" md-indeterminate class="md-warn" v-if="isPending"></md-spinner>
+          <md-spinner :md-size="60" md-indeterminate class="md-primary" v-if="isPending"></md-spinner>
         </form>
       </div>
 

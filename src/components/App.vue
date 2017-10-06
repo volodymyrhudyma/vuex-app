@@ -59,6 +59,11 @@
             display: flex;
             height: 100%;
         }
+
+        .wrapper-loader {
+            display: flex;
+            height: 100%;
+        }
     }
 
     #projects {
@@ -80,6 +85,10 @@
 
                     .md-bottom-bar {
                         box-shadow: none;
+                    }
+
+                    .list {
+                        height: 100%;
                     }
                 }
             }

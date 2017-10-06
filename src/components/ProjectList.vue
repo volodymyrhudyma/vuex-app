@@ -9,13 +9,18 @@
   
         <div class="phone-viewport">
           <md-bottom-bar md-theme="teal">
-            <md-bottom-bar-item md-icon="history">Recents</md-bottom-bar-item>
-            <md-bottom-bar-item md-icon="star" md-active>Favorites</md-bottom-bar-item>
-            <md-bottom-bar-item md-icon="done">Completed</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="history" @click="setFilter('history')">Recents</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="star" @click="setFilter('favorites')">Favorites</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="done" @click="setFilter('completed')">Completed</md-bottom-bar-item>
           </md-bottom-bar>
         </div>
 
-        <div class="phone-viewport">
+        <div class="phone-viewport list">
+
+          <div class="wrapper-loader" v-if="isProjectsPending">
+            <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
+          </div>
+
           <md-dialog md-open-from="#fab" md-close-to="#fab" ref="addProject">
             <md-dialog-title>Create new project</md-dialog-title>
 
@@ -39,133 +44,34 @@
           </md-dialog>
 
           <md-list class="custom-list md-triple-line">
-            <md-list-item>
+            <md-list-item v-for="project in filteredProjects" :key="project.name">
               <md-avatar>
-                <img src="https://placeimg.com/40/40/people/1" alt="People">
+                <img v-bind:src="project.avatar" alt="People">
               </md-avatar>
 
               <div class="md-list-text-container">
-                <span>Project 1</span>
-                <span>Description</span>
+                <span>{{project.name}}</span>
+                <span>{{project.description}}</span>
                 <p>
-                  <md-chip class="md-default">Tag1</md-chip>
-                  <md-chip class="md-default">Tag2</md-chip>
+                  <md-chip class="md-default" v-for="tag in project.tags" :key="tag">
+                    {{tag}}
+                  </md-chip>
                 </p>
               </div>
 
               <md-button class="md-icon-button md-list-action">
-                <md-icon class="md-primary">done</md-icon>
+                <md-icon class="md-primary" v-if="project.completed">done</md-icon>
+                <md-icon class="md-default" v-if="!project.completed">done</md-icon>
               </md-button>
 
               <md-button class="md-icon-button md-list-action">
-                <md-icon class="md-primary">star</md-icon>
+                <md-icon class="md-primary" v-if="project.favorited">star</md-icon>
+                <md-icon class="md-default" v-if="!project.favorited">star</md-icon>
               </md-button>
 
               <md-divider class="md-inset"></md-divider>
             </md-list-item>
 
-            <md-list-item>
-              <md-avatar>
-                <img src="https://placeimg.com/40/40/people/6" alt="People">
-              </md-avatar>
-
-              <div class="md-list-text-container">
-                <span>Project 2</span>
-                <span>Description</span>
-                <p>
-                  <md-chip class="md-default">Tag1</md-chip>
-                  <md-chip class="md-default">Tag2</md-chip>
-                  <md-chip class="md-default">Tag3</md-chip>
-                </p>
-              </div>
-
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>star_border</md-icon>
-              </md-button>
-
-              <md-divider class="md-inset"></md-divider>
-            </md-list-item>
-
-            <md-list-item>
-              <md-avatar>
-                <img src="https://placeimg.com/40/40/people/6" alt="People">
-              </md-avatar>
-
-              <div class="md-list-text-container">
-                <span>Project 3</span>
-                <span>Description</span>
-                <p>
-                  <md-chip class="md-default">Tag1</md-chip>
-                  <md-chip class="md-default">Tag2</md-chip>
-                  <md-chip class="md-default">Tag3</md-chip>
-                </p>
-              </div>
-
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>star_border</md-icon>
-              </md-button>
-
-              <md-divider class="md-inset"></md-divider>
-            </md-list-item>
-
-            <md-list-item>
-              <md-avatar>
-                <img src="https://placeimg.com/40/40/people/6" alt="People">
-              </md-avatar>
-
-              <div class="md-list-text-container">
-                <span>Project 4</span>
-                <span>Description</span>
-                <p>
-                  <md-chip class="md-default">Tag1</md-chip>
-                </p>
-              </div>
-
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>star_border</md-icon>
-              </md-button>
-
-              <md-divider class="md-inset"></md-divider>
-            </md-list-item>
-
-            <md-list-item>
-              <md-avatar>
-                <img src="https://placeimg.com/40/40/people/6" alt="People">
-              </md-avatar>
-
-              <div class="md-list-text-container">
-                <span>Project 5</span>
-                <span>Description</span>
-              </div>
-
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>star_border</md-icon>
-              </md-button>
-
-              <md-divider class="md-inset"></md-divider>
-            </md-list-item>
-
-            <md-list-item>
-              <md-avatar>
-                <img src="https://placeimg.com/40/40/people/6" alt="People">
-              </md-avatar>
-
-              <div class="md-list-text-container">
-                <span>Project 6</span>
-                <span>Description</span>
-                <p>
-                  <md-chip class="md-default">Tag1</md-chip>
-                  <md-chip class="md-default">Tag2</md-chip>
-                  <md-chip class="md-default">Tag3</md-chip>
-                </p>
-              </div>
-
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>star_border</md-icon>
-              </md-button>
-
-              <md-divider class="md-inset"></md-divider>
-            </md-list-item>
 
           </md-list>
         </div>
@@ -174,23 +80,51 @@
 </template>
 
 <script>
+    import { mapGetters, mapActions } from 'vuex'
+
     export default {
-      methods: {
-        openDialog(ref) {
-          this.$refs[ref].open();
+        data () {
+          return {
+            filter: 'all'
+          }
         },
-        closeDialog(ref) {
-          this.$refs[ref].close();
+        methods: {
+            ...mapActions(['fetchProjects']),
+            openDialog(ref) {
+              this.$refs[ref].open();
+            },
+            closeDialog(ref) {
+              this.$refs[ref].close();
+            },
+            onOpen() {
+              console.log('Opened');
+            },
+            onClose(type) {
+              console.log('Closed', type);
+            },
+            createProject() {
+              console.log('createProject')
+            },
+            setFilter(filter) {
+              this.filter = filter;
+            }
         },
-        onOpen() {
-          console.log('Opened');
+        computed: {
+            ...mapGetters(['allProjects', 'isProjectsPending']),
+            filteredProjects() {
+              if (this.filter === 'all'){
+                return this.allProjects;
+              } else if (this.filter === 'favorites') {
+                return this.allProjects.filter(project => project.favorited);
+              } else if (this.filter === 'completed') {
+                return this.allProjects.filter(project => project.completed);
+              } else if (this.filter === 'history') {
+                return this.allProjects;
+              }
+            }
         },
-        onClose(type) {
-          console.log('Closed', type);
-        },
-        createProject() {
-          console.log('createProject')
+        beforeMount() {
+            this.fetchProjects();
         }
-      }
-    };
+    }
 </script>

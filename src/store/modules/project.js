@@ -4,6 +4,7 @@ const FETCH_PROJECTS = "FETCH_PROJECTS";
 const FETCH_START = "FETCH_START";
 const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
 const TOGGLE_COMPLETED = "TOGGLE_COMPLETED";
+const STORE_PROJECT = "STORE_PROJECT";
 
 const state = {
     projects: null,
@@ -81,6 +82,9 @@ const mutations = {
         })[0];
         project.completed = !project.completed;        
     },
+    [STORE_PROJECT] (state, project) {
+        state.projects.push(project);   
+    },
 };
 
 const actions = {
@@ -89,6 +93,14 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(FETCH_PROJECTS);
+                resolve();
+            }, 1000);
+        });
+    },
+    storeProject: ({ commit }, project) => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(STORE_PROJECT, project);
                 resolve();
             }, 1000);
         });

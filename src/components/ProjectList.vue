@@ -39,18 +39,31 @@
               <form>
                 <md-input-container>
                   <label>Name</label>
-                  <md-textarea></md-textarea>
+                  <md-textarea v-model="newProject.name"></md-textarea>
                 </md-input-container>
                 <md-input-container>
                   <label>Description</label>
-                  <md-textarea></md-textarea>
+                  <md-textarea v-model="newProject.description"></md-textarea>
                 </md-input-container>
+                
+                <md-select name="tags" id="tags" multiple v-model="newProject.tags">
+                  <md-button class="md-icon-button" md-menu-trigger slot="icon">
+                    <md-icon>label</md-icon>
+                  </md-button>
+                  
+                  <md-subheader>Hobbies</md-subheader>
+                  <md-option value="freestyle">Freestyle</md-option>
+
+                  <md-subheader>Work</md-subheader>
+                  <md-option value="javascript_dev">Javascript dev</md-option>
+                </md-select>
+
               </form>
             </md-dialog-content>
 
             <md-dialog-actions>
               <md-button class="md-primary" @click="closeDialog('addProject')">Cancel</md-button>
-              <md-button class="md-primary" @click="createProject()">Create</md-button>
+              <md-button class="md-primary" @click="storeProject(newProject)">Create</md-button>
             </md-dialog-actions>
           </md-dialog>
 
@@ -103,14 +116,33 @@
         data () {
           return {
             filter: 'all',
-            query: ''
+            query: '',
+            newProject: {
+              name: '',
+              description: '',
+              tags: [],
+              completed: false,
+              favorited: false
+            },
           }
         },
         methods: {
             ...mapActions(['fetchProjects', 'toggleFavorite', 'toggleCompleted']),
+            storeProject(newProject) {
+              this.$store.dispatch('storeProject', newProject);
+              this.closeDialog('addProject');
+              this.resetNewProjectData();
+            },
+            resetNewProjectData() {
+              this.newProject = {
+                name: '',
+                description: '',
+                tags: []                
+              };
+            },
             openDialog(ref) {
               this.$refs[ref].open();
-            },
+            },            
             closeDialog(ref) {
               this.$refs[ref].close();
             },
@@ -119,9 +151,6 @@
             },
             onClose(type) {
               console.log('Closed', type);
-            },
-            createProject() {
-              console.log('createProject')
             },
             setFilter(filter) {
               this.filter = filter;

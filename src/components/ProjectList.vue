@@ -9,10 +9,21 @@
   
         <div class="phone-viewport">
           <md-bottom-bar md-theme="teal">
-            <md-bottom-bar-item md-icon="history" @click="setFilter('history')">Recents</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="list" @click="setFilter('all')" md-active>All</md-bottom-bar-item>
+            <md-bottom-bar-item md-icon="history" @click="setFilter('recents')">Recents</md-bottom-bar-item>
             <md-bottom-bar-item md-icon="star" @click="setFilter('favorites')">Favorites</md-bottom-bar-item>
             <md-bottom-bar-item md-icon="done" @click="setFilter('completed')">Completed</md-bottom-bar-item>
           </md-bottom-bar>
+
+          <div class="search">
+            <form novalidate @submit.stop.prevent="submit">
+              <md-input-container>
+                <label>Search by name</label>
+                <md-input v-model="query"></md-input>
+              </md-input-container>
+            </form>
+          </div>
+
         </div>
 
         <div class="phone-viewport list">
@@ -85,7 +96,8 @@
     export default {
         data () {
           return {
-            filter: 'all'
+            filter: 'all',
+            query: ''
           }
         },
         methods: {
@@ -112,15 +124,26 @@
         computed: {
             ...mapGetters(['allProjects', 'isProjectsPending']),
             filteredProjects() {
-              if (this.filter === 'all'){
-                return this.allProjects;
-              } else if (this.filter === 'favorites') {
-                return this.allProjects.filter(project => project.favorited);
-              } else if (this.filter === 'completed') {
-                return this.allProjects.filter(project => project.completed);
-              } else if (this.filter === 'history') {
-                return this.allProjects;
+              let projects = null;
+
+              switch(this.filter) {
+                case 'all':
+                  projects = this.allProjects;
+                  break;
+                case 'recents': 
+                  projects = this.allProjects;
+                  break;
+                case 'favorites':
+                  projects = this.allProjects.filter(project => project.favorited);
+                  break;
+                case 'completed':
+                  projects = this.allProjects.filter(project => project.completed);
+                  break;
               }
+
+              return projects.filter(project => {
+                return project.name.toLowerCase().includes(this.query.toLowerCase())
+              });
             }
         },
         beforeMount() {

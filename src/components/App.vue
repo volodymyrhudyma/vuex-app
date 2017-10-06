@@ -83,8 +83,18 @@
                     padding-left: 10px;
                     padding-top: 10px;
 
+                    .search {
+                        padding-left: 16px;
+                    }
+
                     .md-bottom-bar {
                         box-shadow: none;
+
+                        .md-bottom-bar-item {
+                            &.md-active {
+                                color: #3f51b5;
+                            }
+                        }
                     }
 
                     .list {

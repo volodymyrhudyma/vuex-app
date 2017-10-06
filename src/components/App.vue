@@ -76,6 +76,11 @@
                 .list-section {
                     width: calc(100% - 100px);
                     padding-left: 10px;
+                    padding-top: 10px;
+
+                    .md-bottom-bar {
+                        box-shadow: none;
+                    }
                 }
             }
         }

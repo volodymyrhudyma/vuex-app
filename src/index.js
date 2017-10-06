@@ -12,9 +12,12 @@ import VueRouter from 'vue-router'
 import vuexI18n from 'vuex-i18n';
 import { en } from './locales/en';
 import { ua } from './locales/ua';
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.css'
 
 Vue.use(VueRouter)
 Vue.use(vuexI18n.plugin, store);
+Vue.use(VueMaterial)
 
 Vue.i18n.add('en', en);
 Vue.i18n.add('ua', ua);

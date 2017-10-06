@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 	export default {
 		data() {
 			return {
@@ -29,6 +30,7 @@
     }
     .content {
         height: 100vh;
+        display: flex;
 
         .centered {
             display: flex;

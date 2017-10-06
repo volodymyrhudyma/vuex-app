@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import Navbar from './Navbar.vue'
+    import Navbar from './navigation/Navbar.vue'
     import { mapGetters } from 'vuex'
     
     export default {        

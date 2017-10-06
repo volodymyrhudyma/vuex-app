@@ -1,24 +1,10 @@
 <template>
-    <div class="value">
-        <div class="heading">
-            <navbar></navbar>
-        </div>
-        <div class="content">
-            Task list...
-        </div>
+    <div>
+        Task list...
     </div>
 </template>
 
 <script>
-    import Navbar from './navigation/Navbar.vue'
-    
     export default {        
-        components: {
-            Navbar,
-        },
     }
 </script>
-
-<style lang="scss">
-   
-</style>

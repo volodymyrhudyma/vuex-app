@@ -7,7 +7,7 @@
       </div>
       <div class="list-section">
   
-        <div class="phone-viewport">
+        <div class="phone-viewport filter-panel">
           <md-bottom-bar md-theme="teal">
             <md-bottom-bar-item md-icon="list" @click="setFilter('all')" md-active>All</md-bottom-bar-item>
             <md-bottom-bar-item md-icon="history" @click="setFilter('recents')">Recents</md-bottom-bar-item>
@@ -83,20 +83,14 @@
                 </p>
               </div>
 
-              <md-button class="md-icon-button md-list-action" v-if="!project.completed" @click="toggleCompleted(project.name)">
-                <md-icon class="md-default">done</md-icon>
+              <md-button class="md-icon-button md-list-action" @click="toggleCompleted(project.name)">
+                <md-icon class="md-default" v-if="!project.completed">done</md-icon>
+                <md-icon class="md-primary" v-if="project.completed">done</md-icon>
               </md-button>
 
-              <md-button class="md-icon-button md-list-action" v-if="project.completed">
-                <md-icon class="md-primary">done</md-icon>
-              </md-button>
-
-              <md-button class="md-icon-button md-list-action" v-if="!project.favorited" @click="toggleFavorite(project.name)">
-                <md-icon class="md-default">star</md-icon>
-              </md-button>
-
-              <md-button class="md-icon-button md-list-action" v-if="project.favorited">
-                <md-icon class="md-primary">star</md-icon>
+              <md-button class="md-icon-button md-list-action" @click="toggleFavorite(project.name)">
+                <md-icon class="md-default" v-if="!project.favorited">star</md-icon>
+                <md-icon class="md-primary" v-if="project.favorited">star</md-icon>
               </md-button>
 
               <md-divider class="md-inset"></md-divider>

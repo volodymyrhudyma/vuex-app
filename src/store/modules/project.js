@@ -67,6 +67,56 @@ const mutations = {
                 favorited: true,
                 completed: true
             },
+            {
+                name: 'Project 6',
+                description: 'Description',
+                avatar: 'https://placeimg.com/40/40/people/6',
+                tags: [
+                    'One', 'Two', 'Three'
+                ],
+                favorited: true,
+                completed: true
+            },
+            {
+                name: 'Project 7',
+                description: 'Description',
+                avatar: 'https://placeimg.com/40/40/people/6',
+                tags: [
+                    'One', 'Two', 'Three'
+                ],
+                favorited: true,
+                completed: false
+            },
+            {
+                name: 'Project 8',
+                description: 'Description',
+                avatar: 'https://placeimg.com/40/40/people/6',
+                tags: [
+                    'One', 'Two', 'Three'
+                ],
+                favorited: true,
+                completed: true
+            },
+            {
+                name: 'Project 9',
+                description: 'Description',
+                avatar: 'https://placeimg.com/40/40/people/6',
+                tags: [
+                    'One', 'Two', 'Three'
+                ],
+                favorited: true,
+                completed: true
+            },
+            {
+                name: 'Project 10',
+                description: 'Description',
+                avatar: 'https://placeimg.com/40/40/people/6',
+                tags: [
+                    'One', 'Two', 'Three'
+                ],
+                favorited: true,
+                completed: true
+            },
         ];
         state.isProjectsPending = false;
     },

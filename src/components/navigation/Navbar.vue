@@ -10,7 +10,7 @@
           <h2 class="md-title" style="flex: 1">Menu</h2>
 
           <md-button class="md-icon-button" @click="toggleRightSidenav">
-            <md-icon>favorite</md-icon>
+            <md-icon>exit_to_app</md-icon>
           </md-button>
         </md-toolbar>
 
@@ -112,7 +112,7 @@
         <md-sidenav class="md-right" ref="rightSidenav">
           <md-toolbar>
               <div class="md-toolbar-container">
-                  <h3 class="md-title">Actions</h3>
+                  <h3 class="md-title">Exit</h3>
               </div>
           </md-toolbar>
           <div class="phone-viewport">

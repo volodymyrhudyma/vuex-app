@@ -57,7 +57,7 @@
 
         .flex-wrapper {
             display: flex;
-            height: 100%;
+            height: calc(100% - 64px);
         }
 
         .wrapper-loader {
@@ -80,11 +80,15 @@
 
                 .list-section {
                     width: calc(100% - 100px);
-                    padding-left: 10px;
-                    padding-top: 10px;
+                    height: 100%;
 
                     .search {
-                        padding-left: 16px;
+                        padding-left: 16px;                        
+                    }
+
+                    .filter-panel {
+                        padding: 15px 0;
+                        height: 140px;
                     }
 
                     .md-bottom-bar {
@@ -98,7 +102,12 @@
                     }
 
                     .list {
-                        height: 100%;
+                        height: calc(100% - 140px);
+                        overflow-y: auto;
+
+                        .md-list {
+                            padding: 0;
+                        }
                     }
                 }
             }

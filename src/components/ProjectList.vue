@@ -54,7 +54,7 @@
             </md-dialog-actions>
           </md-dialog>
 
-          <md-list class="custom-list md-triple-line">
+          <md-list class="custom-list md-triple-line" v-if="!isProjectsPending">
             <md-list-item v-for="project in filteredProjects" :key="project.name">
               <md-avatar>
                 <img v-bind:src="project.avatar" alt="People">
@@ -70,14 +70,20 @@
                 </p>
               </div>
 
-              <md-button class="md-icon-button md-list-action">
-                <md-icon class="md-primary" v-if="project.completed">done</md-icon>
-                <md-icon class="md-default" v-if="!project.completed">done</md-icon>
+              <md-button class="md-icon-button md-list-action" v-if="!project.completed" @click="toggleCompleted(project.name)">
+                <md-icon class="md-default">done</md-icon>
               </md-button>
 
-              <md-button class="md-icon-button md-list-action">
-                <md-icon class="md-primary" v-if="project.favorited">star</md-icon>
-                <md-icon class="md-default" v-if="!project.favorited">star</md-icon>
+              <md-button class="md-icon-button md-list-action" v-if="project.completed">
+                <md-icon class="md-primary">done</md-icon>
+              </md-button>
+
+              <md-button class="md-icon-button md-list-action" v-if="!project.favorited" @click="toggleFavorite(project.name)">
+                <md-icon class="md-default">star</md-icon>
+              </md-button>
+
+              <md-button class="md-icon-button md-list-action" v-if="project.favorited">
+                <md-icon class="md-primary">star</md-icon>
               </md-button>
 
               <md-divider class="md-inset"></md-divider>
@@ -101,7 +107,7 @@
           }
         },
         methods: {
-            ...mapActions(['fetchProjects']),
+            ...mapActions(['fetchProjects', 'toggleFavorite', 'toggleCompleted']),
             openDialog(ref) {
               this.$refs[ref].open();
             },
@@ -119,12 +125,12 @@
             },
             setFilter(filter) {
               this.filter = filter;
-            }
+            }            
         },
         computed: {
             ...mapGetters(['allProjects', 'isProjectsPending']),
             filteredProjects() {
-              let projects = null;
+              let projects = [];
 
               switch(this.filter) {
                 case 'all':

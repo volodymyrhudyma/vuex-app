@@ -2,6 +2,8 @@ import toastr from 'toastr'
 
 const FETCH_PROJECTS = "FETCH_PROJECTS";
 const FETCH_START = "FETCH_START";
+const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
+const TOGGLE_COMPLETED = "TOGGLE_COMPLETED";
 
 const state = {
     projects: null,
@@ -67,6 +69,18 @@ const mutations = {
         ];
         state.isProjectsPending = false;
     },
+    [TOGGLE_FAVORITE] (state, projectName) {
+        let project = state.projects.filter(project => {
+            return project.name.toLowerCase().includes(projectName.toLowerCase());
+        })[0];
+        project.favorited = !project.favorited;        
+    },
+    [TOGGLE_COMPLETED] (state, projectName) {
+        let project = state.projects.filter(project => {
+            return project.name.toLowerCase().includes(projectName.toLowerCase());
+        })[0];
+        project.completed = !project.completed;        
+    },
 };
 
 const actions = {
@@ -75,6 +89,22 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(FETCH_PROJECTS);
+                resolve();
+            }, 1000);
+        });
+    },
+    toggleFavorite: ({ commit }, projectName) => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(TOGGLE_FAVORITE, projectName);
+                resolve();
+            }, 1000);
+        });
+    },
+    toggleCompleted: ({ commit }, projectName) => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(TOGGLE_COMPLETED, projectName);
                 resolve();
             }, 1000);
         });

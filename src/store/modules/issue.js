@@ -2,6 +2,7 @@ import toastr from 'toastr'
 
 const FETCH_ISSUES = "FETCH_ISSUES";
 const FETCH_START = "FETCH_START";
+const STORE_ISSUE = "STORE_ISSUE";
 
 const state = {
     issues: null,
@@ -35,6 +36,9 @@ const mutations = {
         ];
         state.isIssuesPending = false;
     },
+    [STORE_ISSUE] (state, issue) {
+        state.issues.push(issue);
+    },
 };
 
 const actions = {
@@ -43,6 +47,14 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(FETCH_ISSUES);
+                resolve();
+            }, 1000);
+        });
+    },
+    storeIssue: ({ commit }, issue) => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(STORE_ISSUE, issue);
                 resolve();
             }, 1000);
         });

@@ -10,9 +10,9 @@
            <div class="phone-viewport filter-panel">
                <md-bottom-bar md-theme="teal">
                    <md-bottom-bar-item md-icon="list" md-active @click="setFilter('all')">{{ $t('All') }}</md-bottom-bar-item>
-                   <md-bottom-bar-item md-icon="history" @click="setFilter('sub-tasks')">{{ $t('Sub-tasks') }}</md-bottom-bar-item>
-                   <md-bottom-bar-item md-icon="star" @click="setFilter('tasks')">{{ $t('Tasks') }}</md-bottom-bar-item>
-                   <md-bottom-bar-item md-icon="done" @click="setFilter('bugs')">{{ $t('Bugs') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="donut_small" @click="setFilter('sub-tasks')">{{ $t('Sub-tasks') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="build" @click="setFilter('tasks')">{{ $t('Tasks') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="bug_report" @click="setFilter('bugs')">{{ $t('Bugs') }}</md-bottom-bar-item>
                </md-bottom-bar>
 
                <div class="search">
@@ -45,12 +45,16 @@
                                <label>{{ $t('Description') }}</label>
                                <md-textarea v-model="newIssue.description"></md-textarea>
                            </md-input-container>
+                           <md-input-container>
+                               <label>{{ $t('Type') }}</label>
+                               <md-textarea v-model="newIssue.type"></md-textarea>
+                           </md-input-container>
                        </form>
                    </md-dialog-content>
 
                    <md-dialog-actions>
                        <md-button class="md-primary" @click="closeDialog('addIssue')">{{ $t('Cancel') }}</md-button>
-                       <md-button class="md-primary" @click="storeIssue(newProject)">{{ $t('Create') }}</md-button>
+                       <md-button class="md-primary" @click="storeIssue(newIssue)">{{ $t('Create') }}</md-button>
                    </md-dialog-actions>
                </md-dialog>
 
@@ -87,6 +91,8 @@
                 newIssue: {
                     name: '',
                     description: '',
+                    slug: '',
+                    type: ''
                 },
             }
         },
@@ -119,6 +125,19 @@
         },
         methods: {
             ...mapActions(['fetchBySlug', 'fetchIssues']),
+            storeIssue(newIssue) {
+                this.$store.dispatch('storeIssue', newIssue);
+                this.closeDialog('addIssue');
+                this.resetNewIssueData();
+            },
+            resetNewIssueData() {
+                this.newIssue = {
+                    name: '',
+                    description: '',
+                    slug: '',
+                    type: ''
+                }
+            },
             onIssueClick(issueSlug) {
                 console.log(issueSlug);
             },

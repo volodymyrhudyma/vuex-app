@@ -2,6 +2,7 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './components/App.vue'
 import Login from './components/Login.vue'
+import Callback from './components/Callback.vue'
 import Home from './components/Home.vue'
 import ProjectList from './components/ProjectList.vue'
 import Project from './components/Project.vue'
@@ -30,6 +31,7 @@ Vue.i18n.set(DEFAULT_LANGUAGE);
 const routes = [
 	{ path: '/', component: Home },
 	{ path: '/login', component: Login },
+	{ path: '/callback', component: Callback },
 	{ path: '/projects', component: ProjectList },
 	{ path: '/projects/:slug', component: Project },
 	{ path: '/issues', component: IssueList },

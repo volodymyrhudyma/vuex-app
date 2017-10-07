@@ -4,6 +4,7 @@ import App from './components/App.vue'
 import Login from './components/Login.vue'
 import Home from './components/Home.vue'
 import ProjectList from './components/ProjectList.vue'
+import Project from './components/Project.vue'
 import IssueList from './components/IssueList.vue'
 import TaskList from './components/TaskList.vue'
 import TechList from './components/TechList.vue'
@@ -30,6 +31,7 @@ const routes = [
 	{ path: '/', component: Home },
 	{ path: '/login', component: Login },
 	{ path: '/projects', component: ProjectList },
+	{ path: '/projects/:slug', component: Project },
 	{ path: '/issues', component: IssueList },
 	{ path: '/tasks', component: TaskList },
 	{ path: '/technologies', component: TechList },

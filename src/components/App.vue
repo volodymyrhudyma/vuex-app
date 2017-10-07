@@ -111,6 +111,13 @@
                             .md-list-text-container {
                                 position: relative;
                             }
+                            
+                            .md-list-item {
+                                &:hover {
+                                    background: rgba(0, 0, 0, 0.12);
+                                    cursor: pointer;
+                                }
+                            }
                         }
 
                         .progress-bar {

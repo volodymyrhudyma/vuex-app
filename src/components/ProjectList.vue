@@ -68,40 +68,42 @@
           </md-dialog>
 
           <md-list class="custom-list md-triple-line" v-if="!isProjectsPending">
-            <md-list-item v-for="project in filteredProjects" :key="project.name">
-              <md-avatar>
-                <img v-bind:src="project.avatar" alt="People">
-              </md-avatar>
 
-              <div class="md-list-text-container">
-                <span>{{project.name}}</span>
-                <span>{{project.description}}</span>
-                <span>
-                  <div class="progress-bar">
-                    <div class="fill-wrapper" :style="{ width: project.progress + '%' }"></div>
-                    <span class="percentage">{{project.progress}}%</span>
-                  </div>
-                </span>                    
-                <p>
-                  <md-chip class="md-default" v-for="tag in project.tags" :key="tag">
-                    {{tag}}
-                  </md-chip>
-                </p>
-              </div>
+              <md-list-item v-for="project in filteredProjects" :key="project.name" @click="onProjectClick(project.slug)">
 
-              <md-button class="md-icon-button md-list-action" @click="toggleCompleted(project.name)">
-                <md-icon class="md-default" v-if="!project.completed">done</md-icon>
-                <md-icon class="md-primary" v-if="project.completed">done</md-icon>
-              </md-button>
+                <md-avatar>
+                  <img v-bind:src="project.avatar" alt="People">
+                </md-avatar>
 
-              <md-button class="md-icon-button md-list-action" @click="toggleFavorite(project.name)">
-                <md-icon class="md-default" v-if="!project.favorited">star</md-icon>
-                <md-icon class="md-primary" v-if="project.favorited">star</md-icon>
-              </md-button>
+                <div class="md-list-text-container">
+                  <span>{{project.name}}</span>
+                  <span>{{project.description}}</span>
+                  <span>
+                    <div class="progress-bar">
+                      <div class="fill-wrapper" :style="{ width: project.progress + '%' }"></div>
+                      <span class="percentage">{{project.progress}}%</span>
+                    </div>
+                  </span>
+                  <p>
+                    <md-chip class="md-default" v-for="tag in project.tags" :key="tag">
+                      {{tag}}
+                    </md-chip>
+                  </p>
+                </div>
 
-              <md-divider class="md-inset"></md-divider>
-            </md-list-item>
+                <md-button class="md-icon-button md-list-action" @click="toggleCompleted(project.name)">
+                  <md-icon class="md-default" v-if="!project.completed">done</md-icon>
+                  <md-icon class="md-primary" v-if="project.completed">done</md-icon>
+                </md-button>
 
+                <md-button class="md-icon-button md-list-action" @click="toggleFavorite(project.name)">
+                  <md-icon class="md-default" v-if="!project.favorited">star</md-icon>
+                  <md-icon class="md-primary" v-if="project.favorited">star</md-icon>
+                </md-button>
+
+                <md-divider class="md-inset"></md-divider>
+              </md-list-item>
+            </a>
 
           </md-list>
         </div>
@@ -155,7 +157,10 @@
             },
             setFilter(filter) {
               this.filter = filter;
-            }            
+            },
+            onProjectClick(projectSlug) {
+                this.$router.push("/projects/" + projectSlug)
+            }
         },
         computed: {
             ...mapGetters(['allProjects', 'isProjectsPending']),

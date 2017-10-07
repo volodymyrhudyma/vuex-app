@@ -19,6 +19,7 @@ const mutations = {
         state.projects = [
             {
                 name: 'Project 1',
+                slug: 'project-1',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -30,6 +31,7 @@ const mutations = {
             },
             {
                 name: 'Project 2',
+                slug: 'project-2',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -41,6 +43,7 @@ const mutations = {
             },
             {
                 name: 'Project 3',
+                slug: 'project-3',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -52,6 +55,7 @@ const mutations = {
             },
             {
                 name: 'Project 4',
+                slug: 'project-4',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -63,6 +67,7 @@ const mutations = {
             },
             {
                 name: 'Project 5',
+                slug: 'project-5',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -74,6 +79,7 @@ const mutations = {
             },
             {
                 name: 'Project 6',
+                slug: 'project-6',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -85,6 +91,7 @@ const mutations = {
             },
             {
                 name: 'Project 7',
+                slug: 'project-7',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -96,6 +103,7 @@ const mutations = {
             },
             {
                 name: 'Project 8',
+                slug: 'project-8',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -107,6 +115,7 @@ const mutations = {
             },
             {
                 name: 'Project 9',
+                slug: 'project-9',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
@@ -118,6 +127,7 @@ const mutations = {
             },
             {
                 name: 'Project 10',
+                slug: 'project-10',
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [

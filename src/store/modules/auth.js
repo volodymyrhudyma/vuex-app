@@ -7,10 +7,10 @@ const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 
 const CLIENT_ID = 'sYQrG53uT3yKGv3s4Ltgc8XZ67Li3I7l';
-const CLIENT_DOMAIN = '{AUTH0_DOMAIN}';
-const REDIRECT = 'http://localhost:8000/callback';
-const SCOPE = 'full_access';
-const AUDIENCE = 'AUDIENCE_ATTRIBUTE';
+const CLIENT_DOMAIN = 'progrest.eu.auth0.com';
+const REDIRECT = 'http://localhost:8000/#/callback';
+const SCOPE = 'openid';
+const AUDIENCE = 'progrest.com';
 
 const LOGIN = "LOGIN";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -21,8 +21,29 @@ let auth = new auth0.WebAuth({
     domain: CLIENT_DOMAIN
 });
 
+let lock = new Auth0Lock(
+    CLIENT_ID,
+    CLIENT_DOMAIN
+);
+
+lock.on("authenticated", function(authResult) {
+    // Use the token in authResult to getUserInfo() and save it to localStorage
+    lock.getUserInfo(authResult.accessToken, function(error, profile) {
+        if (error) {
+            // Handle error
+            console.log(error)
+            return;
+        }
+
+        console.log('profile');
+        console.log(profile);
+        setAccessToken();
+        setIdToken();
+    });
+});
+
 const state = {
-    isLoggedIn: !!localStorage.getItem("token"),
+    isLoggedIn: isLoggedIn(),
     isPending: false
 };
 
@@ -32,7 +53,6 @@ const mutations = {
         state.isPending = true;
     },
     [LOGIN_SUCCESS] (state) {
-        state.isLoggedIn = true;
         state.isPending = false;
         toastr.success('You have been logged in');
     },

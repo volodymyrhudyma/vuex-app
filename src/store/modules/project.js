@@ -5,15 +5,22 @@ const FETCH_START = "FETCH_START";
 const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
 const TOGGLE_COMPLETED = "TOGGLE_COMPLETED";
 const STORE_PROJECT = "STORE_PROJECT";
+const FETCH_BY_SLUG_START = "FETCH_BY_SLUG_START";
+const FETCH_BY_SLUG = "FETCH_BY_SLUG";
 
 const state = {
     projects: null,
-    isProjectsPending: false
+    isProjectsPending: false,
+    project: null,
+    isProjectPending: false
 };
 
 const mutations = {
-    [FETCH_START] (state, projects) {
+    [FETCH_START] (state) {
         state.isProjectsPending = true;
+    },
+    [FETCH_BY_SLUG_START] (state) {
+        state.isProjectPending = true;
     },
     [FETCH_PROJECTS] (state, projects) {
         state.projects = [
@@ -155,6 +162,21 @@ const mutations = {
     [STORE_PROJECT] (state, project) {
         state.projects.push(project);   
     },
+    [FETCH_BY_SLUG] (state, slug) {
+        state.project = {
+            name: 'Project 10',
+            slug: 'project-10',
+            description: 'Description',
+            avatar: 'https://placeimg.com/40/40/people/6',
+            tags: [
+                'One', 'Two', 'Three'
+            ],
+            favorited: true,
+            completed: true,
+            progress: 0
+        },
+        state.isProjectPending = false;
+    },
 };
 
 const actions = {
@@ -191,6 +213,15 @@ const actions = {
             }, 1000);
         });
     },
+    fetchBySlug: ({ commit }, slug) => {
+        commit(FETCH_BY_SLUG_START);
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(FETCH_BY_SLUG, slug);
+                resolve();
+            }, 1000);
+        });
+    },
 };
 
 const getters = {
@@ -199,6 +230,12 @@ const getters = {
     },
     isProjectsPending: state => {
         return state.isProjectsPending
+    },
+    project: state => {
+        return state.project
+    },
+    isProjectPending: state => {
+        return state.isProjectPending
     },
 };
 

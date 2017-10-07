@@ -7,6 +7,7 @@ import project from './modules/project'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+    strict: true,
   modules: {
     auth: auth,
     lang: lang,

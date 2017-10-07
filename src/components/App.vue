@@ -47,7 +47,7 @@
     .heading {
         .md-sidenav-content {
             .md-avatar {
-                margin: 15px auto;
+                margin: 15px auto!important;
             }
 
             .md-list-text-container {

@@ -37,44 +37,44 @@
           <div class="phone-viewport">
               <md-list v-if="isLoggedIn">
 
-                  <md-list-item>
+                  <md-list-item @click="onLeftMenuItemClick('home')">
                     <md-icon>home</md-icon> 
                     <span>
                         <li v-if="isLoggedIn">
-                              <router-link to="/">{{ $t('Home') }}</router-link>
+                              {{ $t('Home') }}
                           </li>
                     </span>
                   </md-list-item>
 
-                  <md-list-item>
+                  <md-list-item @click="onLeftMenuItemClick('projects')">
                     <md-icon>description</md-icon> 
                     <span>
                         <li v-if="isLoggedIn">
-                              <router-link to="/projects">{{ $t('Projects') }}</router-link>
+                              {{ $t('Projects') }}
                           </li>
                     </span>
                   </md-list-item>
 
-                  <md-list-item>
+                  <md-list-item @click="onLeftMenuItemClick('issues')">
                     <md-icon>gesture</md-icon> 
                     <span>
                         <li v-if="isLoggedIn">
-                              <router-link to="/issues">{{ $t('Issues') }}</router-link>
+                              {{ $t('Issues') }}
                           </li>
                     </span>
                   </md-list-item>
 
-                  <md-list-item>
+                  <md-list-item @click="onLeftMenuItemClick('tasks')">
                     <md-icon>list</md-icon> 
                       <span>
-                          <router-link to="/tasks">{{ $t('Tasks') }}</router-link>
+                          {{ $t('Tasks') }}
                     </span>
                   </md-list-item>
 
-                  <md-list-item>
+                  <md-list-item @click="onLeftMenuItemClick('technologies')">
                     <md-icon>http</md-icon> 
                       <span>
-                          <router-link to="/technologies">{{ $t('Technologies') }}</router-link>
+                          {{ $t('Technologies') }}
                     </span>
                     <md-divider class="md-inset"></md-divider>
                   </md-list-item>                   
@@ -117,17 +117,17 @@
           </md-toolbar>
           <div class="phone-viewport">
               <md-list>
-                  <md-list-item v-if="!isLoggedIn">
+                  <md-list-item v-if="!isLoggedIn" @click="onRightMenuItemClick('login')">
                     <md-icon>move_to_inbox</md-icon>
                     <span>
-                          <router-link to="/login">{{ $t('Login') }}</router-link>
+                          {{ $t('Login') }}
                       </span>
                   </md-list-item>
 
-                   <md-list-item v-if="isLoggedIn">
+                   <md-list-item v-if="isLoggedIn" @click="onLogoutClick()">
                     <md-icon>error</md-icon> 
                       <span>
-                          <a href="#" @click="logout">{{ $t('Logout') }}</a> 
+                          {{ $t('Logout') }}
                     </span>
                   </md-list-item>
 
@@ -144,6 +144,18 @@
     export default {
         methods: {
             ...mapActions(['logout', 'setLanguage']),
+            onLeftMenuItemClick(route) {
+                this.toggleLeftSidenav();
+                this.$router.push("/" + route);
+            },
+            onRightMenuItemClick(route) {
+                this.toggleRightSidenav();
+                this.$router.push("/" + route);
+            },
+            onLogoutClick() {
+                this.toggleRightSidenav();
+                this.logout();
+            },
             toggleLeftSidenav() {
               this.$refs.leftSidenav.toggle();
             },
@@ -155,7 +167,7 @@
             },
             close(ref) {
               console.log('Closed: ' + ref);
-            }
+            },
         },
         computed: {
             ...mapGetters(['isLoggedIn'])

@@ -126,6 +126,7 @@
             newProject: {
               name: '',
               description: '',
+              slug: '',
               tags: [],
               completed: false,
               favorited: false,
@@ -136,9 +137,24 @@
         methods: {
             ...mapActions(['fetchProjects', 'toggleFavorite', 'toggleCompleted']),
             storeProject(newProject) {
+              this.slugifyNewProject(newProject);
               this.$store.dispatch('storeProject', newProject);
               this.closeDialog('addProject');
               this.resetNewProjectData();
+            },
+            slugifyNewProject(newProject) {
+                newProject.slug = this.slugify(newProject.name);
+            },
+            slugify(string) {
+                return string
+                    .toString()
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace(/[^\w\-]+/g, "")
+                    .replace(/\-\-+/g, "-")
+                    .replace(/^-+/, "")
+                    .replace(/-+$/, "");
             },
             resetNewProjectData() {
               this.newProject = {

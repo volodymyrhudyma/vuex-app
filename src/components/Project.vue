@@ -1,6 +1,7 @@
 <template>
    <div class="flex-wrapper">
        <div class="add-section">
+
            <md-button class="md-icon-button md-raised md-primary" @click="openDialog('addIssue')">
                <md-icon>add</md-icon>
            </md-button>

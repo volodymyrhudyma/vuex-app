@@ -88,7 +88,6 @@ const mutations = {
             },
 
         ];
-        state.issues = [];
         state.isIssuesPending = false;
     },
     [STORE_ISSUE] (state, issue) {

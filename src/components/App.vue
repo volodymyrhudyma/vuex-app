@@ -152,6 +152,14 @@
                                     background: rgba(0, 0, 0, 0.12);
                                     cursor: pointer;
                                 }
+
+                                .issue-avatar {
+                                    background: #3f51b5;
+                                    color: white;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
                             }
                         }
 

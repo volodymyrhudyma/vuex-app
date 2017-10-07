@@ -60,7 +60,12 @@
                </md-dialog>
 
                <md-list class="custom-list md-triple-line" v-if="!isIssuesPending && filteredIssues.length">
-                   <md-list-item v-for="issue in filteredIssues" :key="issue.name" @click="onIssueClick(issue.slug)">
+                   <md-list-item v-for="(issue, key) in filteredIssues" :key="issue.name" @click="onIssueClick(issue.slug)">
+
+                       <md-avatar class="issue-avatar">
+                           {{++key}}
+                       </md-avatar>
+
                        <div class="md-list-text-container">
                            <span>{{issue.name}}</span>
                            <span>{{issue.description}}</span>

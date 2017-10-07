@@ -27,6 +27,8 @@ let lock = new Auth0Lock(
 );
 
 lock.on("authenticated", function(authResult) {
+    console.log('authResult')
+    console.log(authResult)
     // Use the token in authResult to getUserInfo() and save it to localStorage
     lock.getUserInfo(authResult.accessToken, function(error, profile) {
         if (error) {
@@ -35,10 +37,7 @@ lock.on("authenticated", function(authResult) {
             return;
         }
 
-        console.log('profile');
-        console.log(profile);
-        setAccessToken();
-        setIdToken();
+        setIdToken(authResult.idToken);
     });
 });
 
@@ -99,7 +98,6 @@ export function login() {
 
 export function logout() {
     clearIdToken();
-    clearAccessToken();
 }
 
 export function requireAuth(to, from, next) {
@@ -117,16 +115,8 @@ export function getIdToken() {
     return localStorage.getItem(ID_TOKEN_KEY);
 }
 
-export function getAccessToken() {
-    return localStorage.getItem(ACCESS_TOKEN_KEY);
-}
-
 function clearIdToken() {
     localStorage.removeItem(ID_TOKEN_KEY);
-}
-
-function clearAccessToken() {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
 }
 
 // Helper function that will allow us to extract the access_token and id_token
@@ -135,15 +125,8 @@ function getParameterByName(name) {
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
-// Get and store access_token in local storage
-export function setAccessToken() {
-    let accessToken = getParameterByName('access_token');
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-}
-
 // Get and store id_token in local storage
-export function setIdToken() {
-    let idToken = getParameterByName('id_token');
+export function setIdToken(idToken) {
     localStorage.setItem(ID_TOKEN_KEY, idToken);
 }
 

@@ -44,6 +44,27 @@
         margin: auto;
     }
 
+    .heading {
+        .md-sidenav-content {
+            .md-avatar {
+                margin: 15px auto;
+            }
+
+            .md-list-text-container {
+                text-align: center;
+
+                span {
+                    margin-bottom: 5px;
+                    color: #fff;
+
+                    &:last-child {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+
     .content {
         height: 100vh;
 
@@ -105,6 +126,19 @@
                     .list {
                         height: calc(100% - 140px);
                         overflow-y: auto;
+
+                        .empty-list {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 100%;
+
+                            .filter-name {
+                                font-weight: bold;
+                                margin: 0 10px;
+                                color: #3f51b5;
+                            }
+                        }
 
                         .md-list {
                             padding: 0;

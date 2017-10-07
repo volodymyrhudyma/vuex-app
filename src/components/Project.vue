@@ -58,23 +58,20 @@
                    </md-dialog-actions>
                </md-dialog>
 
-               <md-list class="custom-list md-triple-line" v-if="!isIssuesPending">
-
+               <md-list class="custom-list md-triple-line" v-if="!isIssuesPending && filteredIssues.length">
                    <md-list-item v-for="issue in filteredIssues" :key="issue.name" @click="onIssueClick(issue.slug)">
-
-                       <md-avatar>
-                           <img v-bind:src="issue.avatar" alt="People">
-                       </md-avatar>
-
                        <div class="md-list-text-container">
                            <span>{{issue.name}}</span>
                            <span>{{issue.description}}</span>
                        </div>
-
                        <md-divider class="md-inset"></md-divider>
                    </md-list-item>
-
                </md-list>
+
+               <div class="empty-list" v-if="!filteredIssues.length">
+                   No issues of the type <span class="filter-name">{{filter}}</span> found
+               </div>
+
            </div>
        </div>
     </div>
@@ -126,9 +123,24 @@
         methods: {
             ...mapActions(['fetchBySlug', 'fetchIssues']),
             storeIssue(newIssue) {
+                this.slugifyNewIssue(newIssue);
                 this.$store.dispatch('storeIssue', newIssue);
                 this.closeDialog('addIssue');
                 this.resetNewIssueData();
+            },
+            slugifyNewIssue(newIssue) {
+                newIssue.slug = this.slugify(newIssue.name);
+            },
+            slugify(string) {
+                return string
+                    .toString()
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace(/[^\w\-]+/g, "")
+                    .replace(/\-\-+/g, "-")
+                    .replace(/^-+/, "")
+                    .replace(/-+$/, "");
             },
             resetNewIssueData() {
                 this.newIssue = {

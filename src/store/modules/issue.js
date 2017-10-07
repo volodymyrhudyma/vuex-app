@@ -19,13 +19,13 @@ const mutations = {
                 name: 'Issue 1',
                 slug: 'issue-1',
                 description: 'Description',
-                type: 'bug'
+                type: 'task'
             },
             {
                 name: 'Issue 2',
                 slug: 'issue-2',
                 description: 'Description',
-                type: 'sub-task'
+                type: 'task'
             },
             {
                 name: 'Issue 3',
@@ -33,6 +33,60 @@ const mutations = {
                 description: 'Description',
                 type: 'task'
             },
+            {
+                name: 'Issue 4',
+                slug: 'issue-4',
+                description: 'Description',
+                type: 'task'
+            },
+            {
+                name: 'Issue 5',
+                slug: 'issue-5',
+                description: 'Description',
+                type: 'task'
+            },
+            {
+                name: 'Issue 6',
+                slug: 'issue-6',
+                description: 'Description',
+                type: 'task'
+            },
+            {
+                name: 'Issue 7',
+                slug: 'issue-7',
+                description: 'Description',
+                type: 'task'
+            },{
+                name: 'Issue 8',
+                slug: 'issue-8',
+                description: 'Description',
+                type: 'task'
+            },
+            {
+                name: 'Issue 9',
+                slug: 'issue-9',
+                description: 'Description',
+                type: 'task'
+            },
+            {
+                name: 'Issue 10',
+                slug: 'issue-10',
+                description: 'Description',
+                type: 'task'
+            },
+            {
+                name: 'Issue 11',
+                slug: 'issue-11',
+                description: 'Description',
+                type: 'task'
+            },
+            {
+                name: 'Issue 12',
+                slug: 'issue-12',
+                description: 'Description',
+                type: 'task'
+            },
+
         ];
         state.isIssuesPending = false;
     },

@@ -1,9 +1,78 @@
 <template>
    <div class="flex-wrapper">
-       <div class="wrapper-loader" v-if="isProjectPending">
-           <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
+       <div class="add-section">
+           <md-button class="md-icon-button md-raised md-primary" @click="openDialog('addIssue')">
+               <md-icon>add</md-icon>
+           </md-button>
        </div>
-       <span v-if="!isProjectPending">{{project.name}}</span>
+       <div class="list-section">
+
+           <div class="phone-viewport filter-panel">
+               <md-bottom-bar md-theme="teal">
+                   <md-bottom-bar-item md-icon="list" md-active>{{ $t('All') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="history">{{ $t('Sub-tasks') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="star">{{ $t('Tasks') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="done">{{ $t('Bugs') }}</md-bottom-bar-item>
+               </md-bottom-bar>
+
+               <div class="search">
+                   <form novalidate @submit.stop.prevent="submit">
+                       <md-input-container>
+                           <label>{{ $t('Search by name') }}</label>
+                           <md-input v-model="query"></md-input>
+                       </md-input-container>
+                   </form>
+               </div>
+
+           </div>
+
+           <div class="phone-viewport list">
+
+               <div class="wrapper-loader" v-if="isIssuesPending">
+                   <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
+               </div>
+
+               <md-dialog md-open-from="#fab" md-close-to="#fab" ref="addIssue">
+                   <md-dialog-title>{{ $t('Create new issue') }}</md-dialog-title>
+
+                   <md-dialog-content>
+                       <form>
+                           <md-input-container>
+                               <label>{{ $t('Name') }}</label>
+                               <md-textarea v-model="newIssue.name"></md-textarea>
+                           </md-input-container>
+                           <md-input-container>
+                               <label>{{ $t('Description') }}</label>
+                               <md-textarea v-model="newIssue.description"></md-textarea>
+                           </md-input-container>
+                       </form>
+                   </md-dialog-content>
+
+                   <md-dialog-actions>
+                       <md-button class="md-primary" @click="closeDialog('addIssue')">{{ $t('Cancel') }}</md-button>
+                       <md-button class="md-primary" @click="storeIssue(newProject)">{{ $t('Create') }}</md-button>
+                   </md-dialog-actions>
+               </md-dialog>
+
+               <md-list class="custom-list md-triple-line" v-if="!isIssuesPending">
+
+                   <md-list-item v-for="issue in filteredIssues" :key="issue.name" @click="onIssueClick(issue.slug)">
+
+                       <md-avatar>
+                           <img v-bind:src="issue.avatar" alt="People">
+                       </md-avatar>
+
+                       <div class="md-list-text-container">
+                           <span>{{issue.name}}</span>
+                           <span>{{issue.description}}</span>
+                       </div>
+
+                       <md-divider class="md-inset"></md-divider>
+                   </md-list-item>
+
+               </md-list>
+           </div>
+       </div>
     </div>
 </template>
 
@@ -11,15 +80,42 @@
     import { mapGetters, mapActions } from 'vuex'
 
     export default {
+        data () {
+            return {
+                filter: 'all',
+                query: '',
+                newIssue: {
+                    name: '',
+                    description: '',
+                },
+            }
+        },
         computed: {
-            ...mapGetters(['project', 'isProjectPending']),
+            ...mapGetters(['project', 'isProjectPending', 'allIssues', 'isIssuesPending']),
+            filteredIssues() {
+                let issues = [];
+
+                switch(this.filter) {
+                    case 'all':
+                        issues = this.allIssues;
+                        break;
+                }
+
+                return issues.filter(issue => {
+                    return issue.name.toLowerCase().includes(this.query.toLowerCase())
+                });
+            },
         },
         methods: {
-            ...mapActions(['fetchBySlug']),
+            ...mapActions(['fetchBySlug', 'fetchIssues']),
+            onIssueClick(issueSlug) {
+                console.log(issueSlug);
+            },
         },
         beforeMount() {
             let slug = this.$route.params.slug;
             this.fetchBySlug(slug);
+            this.fetchIssues();
         }
     }
 </script>

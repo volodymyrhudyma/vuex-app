@@ -67,7 +67,7 @@
         }
     }
 
-    #projects {
+    #projects, #issues {
         .content {
             .flex-wrapper {
 

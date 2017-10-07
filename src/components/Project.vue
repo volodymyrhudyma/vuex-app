@@ -9,10 +9,10 @@
 
            <div class="phone-viewport filter-panel">
                <md-bottom-bar md-theme="teal">
-                   <md-bottom-bar-item md-icon="list" md-active>{{ $t('All') }}</md-bottom-bar-item>
-                   <md-bottom-bar-item md-icon="history">{{ $t('Sub-tasks') }}</md-bottom-bar-item>
-                   <md-bottom-bar-item md-icon="star">{{ $t('Tasks') }}</md-bottom-bar-item>
-                   <md-bottom-bar-item md-icon="done">{{ $t('Bugs') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="list" md-active @click="setFilter('all')">{{ $t('All') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="history" @click="setFilter('sub-tasks')">{{ $t('Sub-tasks') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="star" @click="setFilter('tasks')">{{ $t('Tasks') }}</md-bottom-bar-item>
+                   <md-bottom-bar-item md-icon="done" @click="setFilter('bugs')">{{ $t('Bugs') }}</md-bottom-bar-item>
                </md-bottom-bar>
 
                <div class="search">
@@ -99,6 +99,17 @@
                     case 'all':
                         issues = this.allIssues;
                         break;
+                    case 'sub-tasks':
+                        issues = this.allIssues.filter(issue => issue.type === 'sub-task');
+                        break;
+                    case 'tasks':
+                        issues = this.allIssues.filter(issue => issue.type === 'task');
+                        break;
+                    case 'bugs':
+                        issues = this.allIssues.filter(issue => issue.type === 'bug');
+                        break;
+                    default:
+                        break;
                 }
 
                 return issues.filter(issue => {
@@ -110,6 +121,15 @@
             ...mapActions(['fetchBySlug', 'fetchIssues']),
             onIssueClick(issueSlug) {
                 console.log(issueSlug);
+            },
+            openDialog(ref) {
+                this.$refs[ref].open();
+            },
+            closeDialog(ref) {
+                this.$refs[ref].close();
+            },
+            setFilter(filter) {
+                this.filter = filter;
             },
         },
         beforeMount() {

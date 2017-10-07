@@ -18,16 +18,19 @@ const mutations = {
                 name: 'Issue 1',
                 slug: 'issue-1',
                 description: 'Description',
+                type: 'bug'
             },
             {
                 name: 'Issue 2',
                 slug: 'issue-2',
                 description: 'Description',
+                type: 'sub-task'
             },
             {
                 name: 'Issue 3',
                 slug: 'issue-3',
                 description: 'Description',
+                type: 'task'
             },
         ];
         state.isIssuesPending = false;

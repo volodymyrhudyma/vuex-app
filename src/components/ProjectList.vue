@@ -67,7 +67,7 @@
             </md-dialog-actions>
           </md-dialog>
 
-          <md-list class="custom-list md-triple-line" v-if="!isProjectsPending">
+          <md-list class="custom-list md-triple-line" v-if="!isProjectsPending && filteredProjects.length">
 
               <md-list-item v-for="project in filteredProjects" :key="project.name" @click="onProjectClick(project.slug)">
 
@@ -103,9 +103,13 @@
 
                 <md-divider class="md-inset"></md-divider>
               </md-list-item>
-            </a>
 
           </md-list>
+
+          <div class="empty-list" v-if="!isProjectsPending && !filteredProjects.length">
+            No projects of the type <span class="filter-name">{{filter}}</span> found
+          </div>
+
         </div>
       </div>
     </div>

@@ -68,7 +68,7 @@
                    </md-list-item>
                </md-list>
 
-               <div class="empty-list" v-if="!filteredIssues.length">
+               <div class="empty-list" v-if="!isIssuesPending && !filteredIssues.length">
                    No issues of the type <span class="filter-name">{{filter}}</span> found
                </div>
 

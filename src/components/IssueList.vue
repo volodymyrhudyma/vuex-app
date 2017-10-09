@@ -1,9 +1,13 @@
 <template>
-    <div>Issue list...</div>
+   <list></list>
 </template>
 
 <script>
-    
-    export default {        
+    import List from './issue/List.vue'
+
+    export default {
+        components: {
+        	List
+        }
     }
 </script>

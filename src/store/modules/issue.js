@@ -84,7 +84,7 @@ const mutations = {
                 name: 'Issue 12',
                 slug: 'issue-12',
                 description: 'Description',
-                type: 'task'
+                type: 'sub-task'
             },
 
         ];
@@ -121,6 +121,30 @@ const getters = {
     },
     isIssuesPending: state => {
         return state.isIssuesPending
+    },
+    issueStats: state => {
+        let tasks = 0,
+            subTasks = 0,
+            bugs = 0;
+        state.issues.map(issue => {
+            switch(issue.type) {
+                case 'task':
+                    tasks++;
+                    break;
+                case 'sub-task':
+                    subTasks++;
+                    break;
+                case 'bugs':
+                    bugs++;
+                    break;
+                default:
+                    break;
+            }
+        });
+        return [tasks, subTasks, bugs];
+    },
+    issueLabels: state => {
+        return ['Tasks', 'Sub-tasks', 'Bugs'];
     },
 };
 

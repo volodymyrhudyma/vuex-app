@@ -37,7 +37,7 @@
           <div class="phone-viewport">
               <md-list v-if="isLoggedIn">
 
-                  <md-list-item @click="onLeftMenuItemClick('home')">
+                  <md-list-item @click="onLeftMenuItemClick()">
                     <md-icon>home</md-icon> 
                     <span>
                         <li v-if="isLoggedIn">
@@ -144,7 +144,7 @@
     export default {
         methods: {
             ...mapActions(['logout', 'setLanguage']),
-            onLeftMenuItemClick(route) {
+            onLeftMenuItemClick(route = '') {
                 this.toggleLeftSidenav();
                 this.$router.push("/" + route);
             },

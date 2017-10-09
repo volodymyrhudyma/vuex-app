@@ -8,6 +8,14 @@ const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
 const state = {
     technologies: null,
     isTechnologiesPending: false,
+    availableColors: [
+      '#f87979', 
+      '#A1E7E8', 
+      '#F7EDD2',
+      '#4BC0C0',
+      '#FFCE56',
+      '#36A2EB'
+    ]
 };
 
 const mutations = {
@@ -19,17 +27,34 @@ const mutations = {
             {
                 name: 'JavaScript',
                 slug: 'javascript',
-                favorited: false
+                favorited: false,
+                usageCount: 10,
             },
             {
                 name: 'C#',
                 slug: 'c#',
-                favorited: true
+                favorited: true,
+                usageCount: 23,
             },
             {
                 name: 'PHP',
                 slug: 'php',
-                favorited: false
+                favorited: false,
+                usageCount: 1,
+
+            },
+            {
+                name: 'Java',
+                slug: 'java',
+                favorited: false,
+                usageCount: 76,
+
+            },
+            {
+                name: 'Other',
+                slug: 'other',
+                favorited: false,
+                usageCount: 123,
             },
         ];
         state.isTechnologiesPending = false;
@@ -80,6 +105,19 @@ const getters = {
     isTechnologiesPending: state => {
         return state.isTechnologiesPending
     },
+    technologyStats: state => {
+        return state.technologies.map(technology => {
+            return technology.usageCount;
+        });
+    },
+    technologyLabels: state => {
+        return state.technologies.map(technology => {
+            return technology.name;
+        });
+    },
+    availableColors: state => {
+        return state.availableColors
+    }
 };
 
 export default {

@@ -58,8 +58,7 @@
 
                        <div class="md-list-text-container">
                            <span>{{technology.name}}</span>
-                           <span>{{technology.description}}</span>
-                           <span></span>
+                           <span>Used in: {{technology.usageCount}} project(s)</span>
                        </div>
 
                        <md-button class="md-icon-button md-list-action" @click="toggleFavorite(technology.name)">

@@ -19,10 +19,15 @@
             }
 		},
         updated() {
-            this.pageName = this.$route.path.toLowerCase().split('/')[1];
+            this.pageName = this.splitUrl() ? this.splitUrl() : 'home';
         },
         mounted() {
-            this.pageName = this.$route.path.toLowerCase().split('/')[1];
+            this.pageName = this.splitUrl() ? this.splitUrl() : 'home';
+        },
+        methods: {
+            splitUrl() {
+                return this.$route.path.toLowerCase().split('/')[1];
+            }
         },
         components: {
             Navbar
@@ -79,6 +84,7 @@
         .flex-wrapper {
             display: flex;
             height: calc(100% - 64px);
+            justify-content: space-around;
         }
 
         .wrapper-loader {
@@ -204,8 +210,18 @@
             }
         }            
     }
-    
-    
-    
+
+    #home {
+        .content {
+            .flex-wrapper {
+                .chart {
+                    .title {
+                        text-align: center;
+                        margin: 20px 0;
+                    }
+                }
+            }   
+        }
+    }
    
 </style>

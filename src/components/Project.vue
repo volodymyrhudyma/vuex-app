@@ -55,14 +55,14 @@
 
                    <md-dialog-actions>
                        <md-button class="md-primary" @click="closeDialog('addIssue')">{{ $t('Cancel') }}</md-button>
-                       <md-button class="md-primary" @click="storeIssue(newIssue)">{{ $t('Create') }}</md-button>
+                       <md-button class="md-primary" @click="saveIssue(newIssue)">{{ $t('Create') }}</md-button>
                    </md-dialog-actions>
                </md-dialog>
 
                <md-list class="custom-list md-triple-line" v-if="!isIssuesPending && filteredIssues.length">
                    <md-list-item v-for="(issue, key) in filteredIssues" :key="issue.name" @click="onIssueClick(issue.slug)">
 
-                       <md-avatar class="issue-avatar">
+                       <md-avatar class="avatar">
                            {{++key}}
                        </md-avatar>
 
@@ -84,7 +84,8 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
+    import { createNamespacedHelpers } from 'vuex'
+    const { mapGetters, mapActions } = createNamespacedHelpers('issue')
 
     export default {
         data () {
@@ -100,7 +101,7 @@
             }
         },
         computed: {
-            ...mapGetters(['project', 'isProjectPending', 'allIssues', 'isIssuesPending']),
+            ...mapGetters(['allIssues', 'isIssuesPending']),
             filteredIssues() {
                 let issues = [];
 
@@ -127,10 +128,10 @@
             },
         },
         methods: {
-            ...mapActions(['fetchBySlug', 'fetchIssues']),
-            storeIssue(newIssue) {
+            ...mapActions(['fetchIssues', 'storeIssue']),
+            saveIssue(newIssue) {
                 this.slugifyNewIssue(newIssue);
-                this.$store.dispatch('storeIssue', newIssue);
+                this.storeIssue(newIssue);
                 this.closeDialog('addIssue');
                 this.resetNewIssueData();
             },
@@ -171,7 +172,6 @@
         },
         beforeMount() {
             let slug = this.$route.params.slug;
-            this.fetchBySlug(slug);
             this.fetchIssues();
         }
     }

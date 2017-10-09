@@ -63,7 +63,7 @@
 
             <md-dialog-actions>
               <md-button class="md-primary" @click="closeDialog('addProject')">{{ $t('Cancel') }}</md-button>
-              <md-button class="md-primary" @click="storeProject(newProject)">{{ $t('Create') }}</md-button>
+              <md-button class="md-primary" @click="saveProject(newProject)">{{ $t('Create') }}</md-button>
             </md-dialog-actions>
           </md-dialog>
 
@@ -116,7 +116,8 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
+    import { createNamespacedHelpers } from 'vuex'
+    const { mapGetters, mapActions } = createNamespacedHelpers('project')
 
     export default {
         data () {
@@ -135,10 +136,10 @@
           }
         },
         methods: {
-            ...mapActions(['fetchProjects', 'toggleFavorite', 'toggleCompleted']),
-            storeProject(newProject) {
+            ...mapActions(['fetchProjects', 'storeProject', 'toggleFavorite', 'toggleCompleted']),
+            saveProject(newProject) {
               this.slugifyNewProject(newProject);
-              this.$store.dispatch('storeProject', newProject);
+              this.storeProject(newProject);
               this.closeDialog('addProject');
               this.resetNewProjectData();
             },

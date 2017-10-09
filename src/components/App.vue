@@ -88,7 +88,7 @@
         }
     }
 
-    #projects, #issues {
+    #projects, #issues, #technologies {
         .content {
             .flex-wrapper {
 
@@ -153,7 +153,7 @@
                                     cursor: pointer;
                                 }
 
-                                .issue-avatar {
+                                .avatar {
                                     background: #3f51b5;
                                     color: white;
                                     display: flex;

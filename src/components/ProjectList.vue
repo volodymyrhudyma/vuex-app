@@ -101,6 +101,10 @@
                   <md-icon class="md-primary" v-if="project.favorited">star</md-icon>
                 </md-button>
 
+                <md-button class="md-icon-button md-list-action" @click="deleteProject(project.name)">
+                  <md-icon class="md-warn">delete</md-icon>
+                </md-button>
+
                 <md-divider class="md-inset"></md-divider>
               </md-list-item>
 
@@ -136,7 +140,7 @@
           }
         },
         methods: {
-            ...mapActions(['fetchProjects', 'storeProject', 'toggleFavorite', 'toggleCompleted']),
+            ...mapActions(['fetchProjects', 'storeProject', 'toggleFavorite', 'toggleCompleted', 'deleteProject']),
             saveProject(newProject) {
               this.slugifyNewProject(newProject);
               this.storeProject(newProject);

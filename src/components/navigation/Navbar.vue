@@ -64,13 +64,6 @@
                     </span>
                   </md-list-item>
 
-                  <md-list-item @click="onLeftMenuItemClick('tasks')">
-                    <md-icon>list</md-icon> 
-                      <span>
-                          {{ $t('Tasks') }}
-                    </span>
-                  </md-list-item>
-
                   <md-list-item @click="onLeftMenuItemClick('technologies')">
                     <md-icon>http</md-icon> 
                       <span>

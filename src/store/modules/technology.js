@@ -4,6 +4,7 @@ const FETCH_TECHNOLOGIES = "FETCH_TECHNOLOGIES";
 const FETCH_START = "FETCH_START";
 const STORE_TECHNOLOGY = "STORE_TECHNOLOGY";
 const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
+const DELETE_TECHNOLOGY = "DELETE_TECHNOLOGY";
 
 const state = {
     technologies: null,
@@ -64,9 +65,15 @@ const mutations = {
     },
     [TOGGLE_FAVORITE] (state, technologyName) {
         let technology = state.technologies.filter(technology => {
-            return technology.name.toLowerCase().includes(technologyName.toLowerCase());
+            return technology.name.toLowerCase() === technologyName.toLowerCase();
         })[0];
         technology.favorited = !technology.favorited;        
+    },
+    [DELETE_TECHNOLOGY] (state, technologyName) {
+        let technology = state.technologies.filter(technology => {
+            return technology.name.toLowerCase() === technologyName.toLowerCase();
+        })[0];
+        state.technologies.splice(state.technologies.indexOf(technology), 1);
     },
 };
 
@@ -92,6 +99,14 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(TOGGLE_FAVORITE, technologyName);
+                resolve();
+            }, 1000);
+        });
+    },
+    deleteTechnology: ({ commit }, technologyName) => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(DELETE_TECHNOLOGY, technologyName);
                 resolve();
             }, 1000);
         });

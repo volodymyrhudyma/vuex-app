@@ -3,6 +3,7 @@ import toastr from 'toastr'
 const FETCH_ISSUES = "FETCH_ISSUES";
 const FETCH_START = "FETCH_START";
 const STORE_ISSUE = "STORE_ISSUE";
+const DELETE_ISSUE = "DELETE_ISSUE";
 
 const state = {
     issues: null,
@@ -93,6 +94,12 @@ const mutations = {
     [STORE_ISSUE] (state, issue) {
         state.issues.push(issue);
     },
+    [DELETE_ISSUE] (state, issueSlug) {
+        let issue = state.issues.filter(issue => {
+            return issue.slug === issueSlug;
+        })[0];
+        state.issues.splice(state.issues.indexOf(issue), 1);
+    },
 };
 
 const actions = {
@@ -109,6 +116,14 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(STORE_ISSUE, issue);
+                resolve();
+            }, 1000);
+        });
+    },
+    deleteIssue: ({ commit }, issueSlug) => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(DELETE_ISSUE, issueSlug);
                 resolve();
             }, 1000);
         });

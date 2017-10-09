@@ -6,7 +6,6 @@ import Home from './components/Home.vue'
 import ProjectList from './components/ProjectList.vue'
 import Project from './components/Project.vue'
 import IssueList from './components/IssueList.vue'
-import TaskList from './components/TaskList.vue'
 import TechList from './components/TechList.vue'
 import store from './store'
 import VueRouter from 'vue-router'
@@ -33,7 +32,6 @@ const routes = [
 	{ path: '/projects', component: ProjectList },
 	{ path: '/projects/:slug', component: Project },
 	{ path: '/issues', component: IssueList },
-	{ path: '/tasks', component: TaskList },
 	{ path: '/technologies', component: TechList },
 ]
 

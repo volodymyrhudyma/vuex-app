@@ -70,6 +70,11 @@
                            <span>{{issue.name}}</span>
                            <span>{{issue.description}}</span>
                        </div>
+
+                       <md-button class="md-icon-button md-list-action" @click="deleteIssue(issue.slug)">
+                          <md-icon class="md-warn">delete</md-icon>
+                        </md-button>
+
                        <md-divider class="md-inset"></md-divider>
                    </md-list-item>
                </md-list>
@@ -128,7 +133,7 @@
             },
         },
         methods: {
-            ...mapActions(['fetchIssues', 'storeIssue']),
+            ...mapActions(['fetchIssues', 'storeIssue', 'deleteIssue']),
             saveIssue(newIssue) {
                 this.slugifyNewIssue(newIssue);
                 this.storeIssue(newIssue);

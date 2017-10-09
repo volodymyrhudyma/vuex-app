@@ -7,6 +7,7 @@ const TOGGLE_COMPLETED = "TOGGLE_COMPLETED";
 const STORE_PROJECT = "STORE_PROJECT";
 const FETCH_BY_SLUG_START = "FETCH_BY_SLUG_START";
 const FETCH_BY_SLUG = "FETCH_BY_SLUG";
+const DELETE_PROJECT = "DELETE_PROJECT";
 
 const state = {
     projects: null,
@@ -149,13 +150,13 @@ const mutations = {
     },
     [TOGGLE_FAVORITE] (state, projectName) {
         let project = state.projects.filter(project => {
-            return project.name.toLowerCase().includes(projectName.toLowerCase());
+            return project.name.toLowerCase() === projectName.toLowerCase();
         })[0];
         project.favorited = !project.favorited;        
     },
     [TOGGLE_COMPLETED] (state, projectName) {
         let project = state.projects.filter(project => {
-            return project.name.toLowerCase().includes(projectName.toLowerCase());
+            return project.name.toLowerCase() === projectName.toLowerCase();
         })[0];
         project.completed = !project.completed;        
     },
@@ -176,6 +177,12 @@ const mutations = {
             progress: 0
         },
         state.isProjectPending = false;
+    },
+    [DELETE_PROJECT] (state, projectName) {
+        let project = state.projects.filter(project => {
+            return project.name.toLowerCase() === projectName.toLowerCase();
+        })[0];
+        state.projects.splice(state.projects.indexOf(project), 1);
     },
 };
 
@@ -221,7 +228,15 @@ const actions = {
                 resolve();
             }, 1000);
         });
-    }    
+    },
+    deleteProject: ({ commit }, projectName) => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(DELETE_PROJECT, projectName);
+                resolve();
+            }, 1000);
+        });
+    },
 };
 
 const getters = {

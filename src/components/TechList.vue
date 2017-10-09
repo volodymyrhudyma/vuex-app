@@ -66,6 +66,10 @@
                         <md-icon class="md-primary" v-if="technology.favorited">star</md-icon>
                       </md-button>
 
+                      <md-button class="md-icon-button md-list-action" @click="deleteTechnology(technology.slug)">
+                          <md-icon class="md-warn">delete</md-icon>
+                        </md-button>
+
                        <md-divider class="md-inset"></md-divider>
                    </md-list-item>
                </md-list>
@@ -117,7 +121,7 @@
             },
         },
         methods: {
-            ...mapActions(['fetchTechnologies', 'toggleFavorite']),
+            ...mapActions(['fetchTechnologies', 'toggleFavorite', 'deleteTechnology']),
             storeTechnology(newTechnology) {
                 this.slugifyNewTechnology(newTechnology);
                 this.$store.dispatch('storeTechnology', newTechnology);

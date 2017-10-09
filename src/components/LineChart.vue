@@ -2,11 +2,11 @@
   import { Doughnut } from 'vue-chartjs'
   
   export default Doughnut.extend({
-    props: ['technologyStats', 'technologyLabels', 'availableColors'],
+    props: ['stats', 'labels', 'availableColors'],
     data () {
       return {
         datacollection: {
-          labels: this.technologyLabels, 
+          labels: this.labels, 
           datasets: [
             {
               label: 'Languages',
@@ -14,7 +14,7 @@
               pointBackgroundColor: 'white',
               borderWidth: 1,
               pointBorderColor: '#249EBF',
-              data: this.technologyStats
+              data: this.stats
             },
           ]
         },

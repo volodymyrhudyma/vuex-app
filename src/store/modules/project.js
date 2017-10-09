@@ -141,7 +141,7 @@ const mutations = {
                     'One', 'Two', 'Three'
                 ],
                 favorited: true,
-                completed: true,
+                completed: false,
                 progress: 0
             },
         ];
@@ -221,7 +221,7 @@ const actions = {
                 resolve();
             }, 1000);
         });
-    },
+    }    
 };
 
 const getters = {
@@ -236,6 +236,18 @@ const getters = {
     },
     isProjectPending: state => {
         return state.isProjectPending
+    },
+    projectStats: state => {
+        let completed = 0;
+        state.projects.map(project => {
+            project.completed ? completed++ : null;
+        });
+        let inProgress = state.projects.length - completed;
+        return [completed, inProgress];
+    },
+    projectLabels: state => {
+        let labels = ['Completed', 'In progress'];
+        return labels;
     },
 };
 

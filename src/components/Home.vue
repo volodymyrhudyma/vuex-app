@@ -1,28 +1,21 @@
 <template>
     
     <div class="flex-wrapper" v-if="isLoggedIn">
-        <div class="chart" v-if="!isTechnologiesPending">
+        <div class="chart" v-if="!isPending">
             <div class="title">
-                <span class="md-display-1">Technologies used</span>
+                <span class="md-display-1">Technologies</span>
             </div>
-           <line-chart v-bind:technologyStats="technologyStats" v-bind:technologyLabels="technologyLabels" v-bind:availableColors="availableColors"></line-chart>
+           <line-chart v-bind:stats="technologyStats" v-bind:labels="technologyLabels" v-bind:availableColors="availableColors"></line-chart>
         </div>
 
-        <div class="chart" v-if="!isTechnologiesPending">
+        <div class="chart" v-if="!isPending">
             <div class="title">
-                <span class="md-display-1">Technologies used</span>
+                <span class="md-display-1">Projects</span>
             </div>
-           <line-chart v-bind:technologyStats="technologyStats" v-bind:technologyLabels="technologyLabels" v-bind:availableColors="availableColors"></line-chart>
+           <line-chart v-bind:stats="projectStats" v-bind:labels="projectLabels" v-bind:availableColors="availableColors"></line-chart>
         </div>
 
-        <div class="chart" v-if="!isTechnologiesPending">
-            <div class="title">
-                <span class="md-display-1">Technologies used</span>
-            </div>
-           <line-chart v-bind:technologyStats="technologyStats" v-bind:technologyLabels="technologyLabels" v-bind:availableColors="availableColors"></line-chart>
-        </div>
-
-        <div class="wrapper-loader" v-if="isTechnologiesPending">
+        <div class="wrapper-loader" v-if="isPending">
            <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
         </div>
     </div>
@@ -39,11 +32,23 @@
             technologyStats() {
                 return this.$store.getters['technology/technologyStats'];
             },
+            projectStats() {
+                return this.$store.getters['project/projectStats'];
+            },
             technologyLabels() {
                 return this.$store.getters['technology/technologyLabels'];
             },
+            projectLabels() {
+                return this.$store.getters['project/projectLabels'];
+            },
             isTechnologiesPending() {
                 return this.$store.getters['technology/isTechnologiesPending'];
+            },
+            isProjectsPending() {
+                return this.$store.getters['project/isProjectsPending'];
+            },
+            isPending() {
+                return this.isProjectsPending || this.isTechnologiesPending;
             },
             availableColors() {
                 return this.$store.getters['technology/availableColors'];
@@ -54,6 +59,7 @@
         },
         beforeMount() {
             this.$store.dispatch('technology/fetchTechnologies');
+            this.$store.dispatch('project/fetchProjects');
         }
     }
 </script>

@@ -69,8 +69,15 @@
                       <span>
                           {{ $t('Technologies') }}
                     </span>
+                  </md-list-item>
+
+                  <md-list-item @click="onLeftMenuItemClick('badges')">
+                    <md-icon>http</md-icon> 
+                      <span>
+                          {{ $t('Badges') }}
+                    </span>
                     <md-divider class="md-inset"></md-divider>
-                  </md-list-item>                   
+                  </md-list-item>
 
                   <md-list-item>
                       <span>

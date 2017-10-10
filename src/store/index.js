@@ -5,6 +5,7 @@ import lang from './modules/lang'
 import project from './modules/project'
 import issue from './modules/issue'
 import technology from './modules/technology'
+import badge from './modules/badge'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
 	    project: project,
 	    issue: issue,
 	    technology: technology,
+	    badge: badge,
 	}
 });
 

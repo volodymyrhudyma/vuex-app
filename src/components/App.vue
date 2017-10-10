@@ -223,5 +223,31 @@
             }   
         }
     }
+
+    #badges {
+        .content {
+            .flex-wrapper {
+                .badge-menu {
+                    width: 250px;
+                }
+                .badge-list {
+                    width: calc(100% - 250px);
+
+                    .cards {
+                        display: flex;
+                        flex-wrap: wrap;
+
+                        .md-card {
+                            width: 20%;
+                            display: flex;
+                            justify-content: space-between;
+                            height: 250px;
+                        }
+        
+                    }
+                }
+            }
+        }
+    }
    
 </style>

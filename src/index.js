@@ -7,6 +7,7 @@ import ProjectList from './components/ProjectList.vue'
 import Project from './components/Project.vue'
 import IssueList from './components/IssueList.vue'
 import TechList from './components/TechList.vue'
+import BadgeList from './components/BadgeList.vue'
 import store from './store'
 import VueRouter from 'vue-router'
 import vuexI18n from 'vuex-i18n';
@@ -33,6 +34,7 @@ const routes = [
 	{ path: '/projects/:slug', component: Project },
 	{ path: '/issues', component: IssueList },
 	{ path: '/technologies', component: TechList },
+	{ path: '/badges', component: BadgeList },
 ]
 
 const router = new VueRouter({

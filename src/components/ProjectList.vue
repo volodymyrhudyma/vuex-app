@@ -69,27 +69,78 @@
 
           <md-list class="custom-list md-triple-line" v-if="!isProjectsPending && filteredProjects.length">
 
-              <md-list-item v-for="project in filteredProjects" :key="project.name" @click="onProjectClick(project.slug)">
-
+              <md-list-item v-for="(project, index) in filteredProjects" :key="project.name">              
                 <md-avatar>
                   <img v-bind:src="project.avatar" alt="People">
                 </md-avatar>
 
                 <div class="md-list-text-container">
-                  <span>{{project.name}}</span>
+                  <span @click="onProjectClick(project.slug)">{{project.name}}</span>
                   <span>{{project.description}}</span>
-                  <span>
-                    <div class="progress-bar">
-                      <div class="fill-wrapper" :style="{ width: project.progress + '%' }"></div>
-                      <span class="percentage">{{project.progress}}%</span>
-                    </div>
-                  </span>
+                  <span>Finish: {{project.finishAt}}</span>                  
                   <p>
                     <md-chip class="md-default" v-for="tag in project.tags" :key="tag">
                       {{tag}}
                     </md-chip>
                   </p>
                 </div>
+
+                <md-button class="md-icon-button md-list-action" @click="showInfo(project.name)">
+                  <md-icon class="md-default info-icon" >info_outline</md-icon>
+                </md-button>
+
+                <md-dialog md-open-from="#abs" md-close-to="#abs" :ref="'seeInfo-' + project.name" class="see-info-dialog">
+                  <md-dialog-title>{{ $t('Information') }}</md-dialog-title>
+
+                  <md-dialog-content>
+                    <div>
+                        The top progress bar calculates your perfect progress.
+                    </div>
+                    <div>
+                        <div class="progress-bar">                      
+                          <div class="fill-wrapper" :style="{ width: project.progress + '%', background: project.trend === 'up' ? '#7CB342' : project.trend === 'down' ? '#d32f2f' : 'rgba(0, 0, 0, 0.12)' }"></div>
+                          <span class="percentage">{{project.progress}}%</span>
+                        </div>
+                    </div>
+                    <div>
+                      The bottom progress bar calculates your actual progress.
+                    </div>
+                    <div>                      
+                      <div class="perfect-progress-bar">
+                        <div class="fill-wrapper" :style="{ width: project.perfectProgress + '%' }"></div>
+                        <span class="percentage">{{project.perfectProgress}}%</span>
+                      </div>
+                    </div>
+                    <div>For the current project, your perfect progress in the current time should be: <span class="value">{{project.perfectProgress}}</span></div>
+                    <div>It really is: <span class="value">{{project.progress}}</span></div>
+                    <div :class="'tip' + (project.progress >= project.perfectProgress ? ' ok' : ' lack')">
+                      {{project.progress === project.perfectProgress ? 
+                        'The project is completed, cool!' 
+                      : project.progress >= project.perfectProgress ?
+                        'Well, you should go on this way and the project will be completed in time!' 
+                      :
+                        'Consider speeding up your development!'
+                      }}
+                    </div>
+                  </md-dialog-content>
+
+                  <md-dialog-actions>
+                    <md-button class="md-primary" @click="hideInfo(project.name)">{{ $t('Got it') }}</md-button>
+                  </md-dialog-actions>
+                </md-dialog>
+
+                <span>
+                    <div class="perfect-progress-bar">
+                      <div class="fill-wrapper" :style="{ width: project.perfectProgress + '%' }"></div>
+                      <span class="percentage">{{project.perfectProgress}}%</span>
+                    </div>
+                </span>
+                <span>
+                    <div class="progress-bar">                      
+                      <div class="fill-wrapper" :style="{ width: project.progress + '%', background: project.trend === 'up' ? '#7CB342' : project.trend === 'down' ? '#d32f2f' : 'rgba(0, 0, 0, 0.12)' }"></div>
+                      <span class="percentage">{{project.progress}}%</span>
+                    </div>
+                </span>
 
                 <md-button class="md-icon-button md-list-action" @click="toggleCompleted(project.name)">
                   <md-icon class="md-default" v-if="!project.completed">done</md-icon>
@@ -179,6 +230,14 @@
             },
             onProjectClick(projectSlug) {
                 this.$router.push("/projects/" + projectSlug)
+            },
+            showInfo(projectName) {
+              let ref = 'seeInfo-' + projectName;
+              this.$refs[ref][0].open();
+            },
+            hideInfo(projectName) {
+              let ref = 'seeInfo-' + projectName;
+              this.$refs[ref][0].close();
             }
         },
         computed: {

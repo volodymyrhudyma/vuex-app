@@ -91,6 +91,56 @@
             display: flex;
             height: 100%;
             width: 100%;
+        }        
+    }
+
+    .progress-bar, .perfect-progress-bar {
+        width: 200px;
+        height: 25px;
+        background: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 5px;
+        position: relative;
+
+        .percentage {
+            padding: 0 5px;
+            position: absolute;
+            top: 1px;
+            right: 0;
+        }
+
+        .fill-wrapper {
+            width: 15%;
+            height: 100%;
+            position: absolute;
+            background: rgba(0, 0, 0, .12);
+        }
+    }
+
+    .see-info-dialog {
+
+        .md-dialog-content {
+            padding-top: 24px;
+        }
+        
+        div {
+            margin-bottom: 5px;
+        }
+
+        span.value {
+            font-weight: bold;
+        }
+
+        .tip {
+            font-weight: bold;
+
+            &.ok {
+                color: #7CB342;
+            }
+
+            &.lack {
+                color: #d32f2f;
+            }
         }
     }
 
@@ -154,10 +204,6 @@
                             }
                             
                             .md-list-item {
-                                &:hover {
-                                    background: rgba(0, 0, 0, 0.12);
-                                    cursor: pointer;
-                                }
 
                                 .avatar {
                                     background: #3f51b5;
@@ -169,28 +215,17 @@
                             }
                         }
 
-                        .progress-bar {
-                            width: 200px;
-                            height: 25px;
-                            background: transparent;
-                            border: 1px solid rgba(0, 0, 0, 0.12);
-                            border-radius: 5px;
+                        .progress-bar, .perfect-progress-bar {
                             position: absolute;
-                            right: 0;
-                            top: calc(50% - 12.5px);
+                            right: 140px;
+                        }
 
-                            .percentage {
-                                padding: 0 5px;
-                                position: absolute;
-                                top: 1px;
-                            }
+                        .progress-bar {
+                            bottom: 15px;
+                        }
 
-                            .fill-wrapper {
-                                width: 15%;
-                                height: 100%;
-                                position: absolute;
-                                background: #3f51b5;
-                            }
+                        .perfect-progress-bar {
+                            top: 15px;
                         }
                     }
                 }

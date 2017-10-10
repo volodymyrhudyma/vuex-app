@@ -29,35 +29,35 @@ const mutations = {
                 name: 'JavaScript',
                 slug: 'javascript',
                 favorited: false,
-                usageCount: 10,
+                usageCount: 10,                
             },
             {
                 name: 'C#',
                 slug: 'c#',
                 favorited: true,
-                usageCount: 23,
+                usageCount: 23,                
             },
             {
                 name: 'PHP',
                 slug: 'php',
                 favorited: false,
-                usageCount: 1,
-
+                usageCount: 1,                
             },
             {
                 name: 'Java',
                 slug: 'java',
                 favorited: false,
-                usageCount: 76,
-
+                usageCount: 76,                
             },
             {
                 name: 'Other',
                 slug: 'other',
                 favorited: false,
-                usageCount: 123,
+                usageCount: 123,                
             },
         ];
+        console.log('state.technologies')
+        console.log(state.technologies)
         state.isTechnologiesPending = false;
     },
     [STORE_TECHNOLOGY] (state, technology) {

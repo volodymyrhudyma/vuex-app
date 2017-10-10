@@ -1,4 +1,5 @@
 import toastr from 'toastr'
+import moment from 'moment'
 
 const FETCH_PROJECTS = "FETCH_PROJECTS";
 const FETCH_START = "FETCH_START";
@@ -35,7 +36,11 @@ const mutations = {
                 ],
                 favorited: false,
                 completed: false,
-                progress: 15
+                progress: 15,
+                perfectProgress: 23,
+                trend: 'down',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 2',
@@ -47,7 +52,11 @@ const mutations = {
                 ],
                 favorited: true,
                 completed: false,
-                progress: 55
+                progress: 55,
+                perfectProgress: 23,
+                trend: 'up',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 3',
@@ -59,7 +68,11 @@ const mutations = {
                 ],
                 favorited: false,
                 completed: false,
-                progress: 0
+                progress: 0,
+                perfectProgress: 23,
+                trend: 'down',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 4',
@@ -71,7 +84,11 @@ const mutations = {
                 ],
                 favorited: false,
                 completed: false,
-                progress: 100
+                progress: 100,
+                perfectProgress: 100,
+                trend: 'equal',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 5',
@@ -83,7 +100,11 @@ const mutations = {
                 ],
                 favorited: true,
                 completed: true,
-                progress: 2
+                progress: 2,
+                perfectProgress: 23,
+                trend: 'down',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 6',
@@ -95,7 +116,11 @@ const mutations = {
                 ],
                 favorited: true,
                 completed: true,
-                progress: 0
+                progress: 0,
+                perfectProgress: 23,
+                trend: 'down',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 7',
@@ -107,7 +132,11 @@ const mutations = {
                 ],
                 favorited: true,
                 completed: false,
-                progress: 0
+                progress: 0,
+                perfectProgress: 23,
+                trend: 'down',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 8',
@@ -119,7 +148,11 @@ const mutations = {
                 ],
                 favorited: true,
                 completed: true,
-                progress: 20
+                progress: 20,
+                perfectProgress: 23,
+                trend: 'down',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 9',
@@ -131,7 +164,11 @@ const mutations = {
                 ],
                 favorited: true,
                 completed: true,
-                progress: 0
+                progress: 0,
+                perfectProgress: 23,
+                trend: 'down',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
             {
                 name: 'Project 10',
@@ -143,7 +180,11 @@ const mutations = {
                 ],
                 favorited: true,
                 completed: false,
-                progress: 0
+                progress: 22,
+                perfectProgress: 11,
+                trend: 'up',
+                createdAt: moment().format("MMM Do YY"),
+                finishAt: moment().format("MMM Do YY")
             },
         ];
         state.isProjectsPending = false;

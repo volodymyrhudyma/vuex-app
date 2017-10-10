@@ -229,9 +229,18 @@
             .flex-wrapper {
                 .badge-menu {
                     width: 250px;
+
+                    .md-list {
+                        border: 1px solid rgba(0, 0, 0, 0.2); 
+                    }
                 }
                 .badge-list {
                     width: calc(100% - 250px);
+                    padding: 25px;
+
+                    .heading {
+                        padding-bottom: 25px;
+                    }
 
                     .cards {
                         display: flex;

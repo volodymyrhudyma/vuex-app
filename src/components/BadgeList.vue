@@ -1,10 +1,7 @@
 <template>
 	<div class="flex-wrapper">
-		<ul class="badge-menu">
-			<li class="item" v-for="badge in allBadges">
-				{{badge.name}}
-			</li>
-	    </ul>
+		
+		<badge-menu></badge-menu>
 
 	    <div class="badge-list">
 
@@ -45,6 +42,7 @@
 <script>
     import { createNamespacedHelpers } from 'vuex'
     const { mapGetters, mapActions } = createNamespacedHelpers('badge')
+    import BadgeMenu from './badge/Menu.vue'
 
     export default {
         computed: {
@@ -55,6 +53,9 @@
         },
         beforeMount() {
             this.fetchBadges();
+        },
+        components: {
+        	BadgeMenu
         }
     }
 </script>

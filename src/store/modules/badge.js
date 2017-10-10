@@ -8,69 +8,89 @@ const state = {
     types: [
         {
             name: 'One',
-            children: {
-                name: '1.1',
-                children: {
-                    name: '1.1.1',
-                    children: {
-                        name: '1.1.1.1'
-                    },
+            children: [
+                {
+                    name: '1.1',
                 },
-            },
+                {
+                    name: '1.2',
+                },
+                {
+                    name: '1.3',
+                }
+            ],
         },
         {
             name: 'Two',
-            children: {
-                name: '2.1'
-            }
+            children: [
+                {
+                    name: '2.1'
+                }
+            ],
         },
         {
             name: 'Three',
-            children: {
-                name: '3.1'
-            }
+            children: [
+                {
+                    name: '3.1'
+                }
+            ],
         },
         {
             name: 'Four',
-            children: {
-                name: '4.1'
-            }
+            children: [
+                {
+                    name: '4.1'
+                }
+            ],
         },
         {
             name: 'Five',
-            children: {
-                name: '5.1'
-            }
+            children: [
+                {
+                    name: '5.1'
+                }
+            ],
         },
         {
             name: 'Six',
-            children: {
-                name: '6.1'
-            }
+            children: [
+                {
+                    name: '6.1'
+                }
+            ],
         },
         {
             name: 'Seven',
-            children: {
-                name: '7.1'
-            }
+            children: [
+                {
+                    name: '7.1'
+                }
+            ],
         },
         {
             name: 'Eight',
-            children: {
-                name: '8.1'
-            }
+            children: [
+                {
+                    name: '9.1'
+                }
+            ],
         },
         {
             name: 'Nine',
-            children: {
-                name: '9.1'
-            }
+            children: [
+                {
+                    name: '9.1'
+                }
+            ],
         },
         {
             name: 'Ten',
-            children: {
-                name: '10.1'
-            }
+            children: [
+                {
+                    name: '10.1'
+                }
+            ],
         },
     ],
     isBadgesPending: false,

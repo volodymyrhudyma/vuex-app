@@ -24,6 +24,9 @@
         mounted() {
             this.pageName = this.splitUrl() ? this.splitUrl() : 'home';
         },
+        beforeMount() {
+		    this.$store.dispatch('profile/fetchProfile');
+        },
         methods: {
             splitUrl() {
                 return this.$route.path.toLowerCase().split('/')[1];
@@ -53,6 +56,7 @@
         .md-sidenav-content {
             .md-avatar {
                 margin: 15px auto!important;
+                cursor: pointer;
             }
 
             .md-list-text-container {
@@ -288,6 +292,56 @@
                             height: 250px;
                         }
         
+                    }
+                }
+            }
+        }
+    }
+
+    #profile {
+        .flex-wrapper {
+            .avatar {
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .overview {
+                width: 100%;
+
+                .md-tabs {
+                    height: 100%;
+
+                    .md-tabs-content {
+                        height: 100%!important;
+
+                        .md-tab {
+                            height: 100%;
+
+                            .empty {
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+
+                            .followers {
+                                display: flex;
+                                flex-wrap: wrap;
+
+                                .item {
+                                    width: 20%;
+                                    height: 50px;
+                                    text-align: center;
+
+                                    img {
+                                        border-radius: 50%;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

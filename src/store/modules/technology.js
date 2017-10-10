@@ -56,8 +56,6 @@ const mutations = {
                 usageCount: 123,                
             },
         ];
-        console.log('state.technologies')
-        console.log(state.technologies)
         state.isTechnologiesPending = false;
     },
     [STORE_TECHNOLOGY] (state, technology) {

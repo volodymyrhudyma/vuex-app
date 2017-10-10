@@ -20,7 +20,7 @@
               
                 <md-list-item class="md-avatar-list">
                   <md-avatar class="md-large">
-                    <img src="https://placeimg.com/64/64/people/8" alt="People">
+                    <img src="https://placeimg.com/64/64/people/8" alt="People" @click="onLeftMenuItemClick('profile')">
                   </md-avatar>
                 </md-list-item>
 

@@ -9,6 +9,8 @@ const state = {
     isPending: false
 };
 
+const lock = new Auth0Lock('hllJJtMboqdjw4Mee322VrVrtvL7SJAj', 'progrezt.eu.auth0.com');
+
 // 이거슨 reducer 같은 존재
 const mutations = {
     [LOGIN] (state) {

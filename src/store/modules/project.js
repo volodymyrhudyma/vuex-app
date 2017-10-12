@@ -39,8 +39,8 @@ const mutations = {
                 progress: 15,
                 perfectProgress: 23,
                 trend: 'down',
-                createdAt: moment().subtract('days', 1).format("MMM Do YY"),
-                finishAt: moment().add('days', 5).format("MMM Do YY"),
+                createdAt: moment().subtract('days', 1),
+                finishAt: moment().add('days', 5),
             },
             {
                 name: 'Project 2',
@@ -55,8 +55,8 @@ const mutations = {
                 progress: 55,
                 perfectProgress: 23,
                 trend: 'up',
-                createdAt: moment().subtract('days', 10).format("MMM Do YY"),
-                finishAt: moment().add('days', 15).format("MMM Do YY")
+                createdAt: moment().subtract('days', 10),
+                finishAt: moment().add('days', 15)
             },
             {
                 name: 'Project 3',
@@ -71,8 +71,8 @@ const mutations = {
                 progress: 0,
                 perfectProgress: 23,
                 trend: 'down',
-                createdAt: moment().subtract('days', 10).format("MMM Do YY"),
-                finishAt: moment().add('days', 12).format("MMM Do YY")
+                createdAt: moment().subtract('days', 10),
+                finishAt: moment().add('days', 12)
             },
             {
                 name: 'Project 4',
@@ -87,8 +87,8 @@ const mutations = {
                 progress: 100,
                 perfectProgress: 100,
                 trend: 'equal',
-                createdAt: moment().subtract('days', 22).format("MMM Do YY"),
-                finishAt: moment().add('days', 1).format("MMM Do YY")
+                createdAt: moment().subtract('days', 22),
+                finishAt: moment().add('days', 1)
             },
             {
                 name: 'Project 5',
@@ -103,8 +103,8 @@ const mutations = {
                 progress: 2,
                 perfectProgress: 23,
                 trend: 'down',
-                createdAt: moment().subtract('days', 56).format("MMM Do YY"),
-                finishAt: moment().add('days', 55).format("MMM Do YY")
+                createdAt: moment().subtract('days', 56),
+                finishAt: moment().add('days', 55)
             },
             {
                 name: 'Project 6',
@@ -119,8 +119,8 @@ const mutations = {
                 progress: 0,
                 perfectProgress: 23,
                 trend: 'down',
-                createdAt: moment().subtract('days', 18).format("MMM Do YY"),
-                finishAt: moment().add('days', 51).format("MMM Do YY")
+                createdAt: moment().subtract('days', 18),
+                finishAt: moment().add('days', 51)
             },
             {
                 name: 'Project 7',
@@ -135,8 +135,8 @@ const mutations = {
                 progress: 0,
                 perfectProgress: 23,
                 trend: 'down',
-                createdAt: moment().subtract('days', 50).format("MMM Do YY"),
-                finishAt: moment().add('days', 22).format("MMM Do YY")
+                createdAt: moment().subtract('days', 50),
+                finishAt: moment().add('days', 22)
             },
             {
                 name: 'Project 8',
@@ -151,8 +151,8 @@ const mutations = {
                 progress: 20,
                 perfectProgress: 23,
                 trend: 'down',
-                createdAt: moment().subtract('days', 4).format("MMM Do YY"),
-                finishAt: moment().add('days', 43).format("MMM Do YY")
+                createdAt: moment().subtract('days', 4),
+                finishAt: moment().add('days', 43)
             },
             {
                 name: 'Project 9',
@@ -167,8 +167,8 @@ const mutations = {
                 progress: 0,
                 perfectProgress: 23,
                 trend: 'down',
-                createdAt: moment().subtract('days', 2).format("MMM Do YY"),
-                finishAt: moment().add('days', 15).format("MMM Do YY")
+                createdAt: moment().subtract('days', 2),
+                finishAt: moment().add('days', 15)
             },
             {
                 name: 'Project 10',
@@ -181,10 +181,11 @@ const mutations = {
                 favorited: true,
                 completed: false,
                 progress: 22,
-                perfectProgress: 11,
+                // current day - created / finish - created * 100
+                perfectProgress: moment().diff(moment().subtract('days', 10), 'days')/moment().add('days', 15).diff(moment().subtract('days', 10), 'days') * 100,
                 trend: 'up',
-                createdAt: moment().subtract('days', 10).format("MMM Do YY"),
-                finishAt: moment().add('days', 15).format("MMM Do YY")
+                createdAt: moment().subtract('days', 10),
+                finishAt: moment().add('days', 15)
             },
         ];
         state.isProjectsPending = false;

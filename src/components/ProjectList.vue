@@ -75,9 +75,9 @@
                 </md-avatar>
 
                 <div class="md-list-text-container">
-                  <span @click="onProjectClick(project.slug)">{{project.name}}</span>
+                  <a href="#" class="project-name" @click="onProjectClick(project.slug, $event)">{{project.name}}</a>
                   <span>{{project.description}}</span>
-                  <span>Finish: {{project.finishAt}}</span>                  
+                  <span>Finish: {{project.finishAt.format("MMM Do YY")}}</span>
                   <p>
                     <md-chip class="md-default" v-for="tag in project.tags" :key="tag">
                       {{tag}}
@@ -228,7 +228,8 @@
             setFilter(filter) {
               this.filter = filter;
             },
-            onProjectClick(projectSlug) {
+            onProjectClick(projectSlug, e) {
+                if(e) e.preventDefault();
                 this.$router.push("/projects/" + projectSlug)
             },
             showInfo(projectName) {

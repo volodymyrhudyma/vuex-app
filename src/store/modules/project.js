@@ -216,7 +216,26 @@ const mutations = {
             ],
             favorited: true,
             completed: true,
-            progress: 0
+            progress: 0,
+            leads: [
+                {
+                    name: 'Volodymyr Hudyma',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
+            ],
+            members: [
+                {
+                    name: 'Member1',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                {
+                    name: 'Member2',
+                    link: 'link',
+                    avatar: 'avatar',
+                }
+            ]
         },
         state.isProjectPending = false;
     },

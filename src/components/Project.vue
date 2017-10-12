@@ -9,7 +9,7 @@
             Issues
          </div>
          <div class="members">
-            Members
+            Team
          </div>
       </div>
 
@@ -33,17 +33,16 @@
       </div>
       <div class="members" v-if="!isProjectPending">
          <div class="heading">
-            Members
+            Team
          </div>
-         <div class="lead">
-            Lead: Volodymyr Hudyma
-         </div>
-         <div class="most-active">
-            <div class="item">
-               One
+         <div class="lead" v-if="project.leads.length">
+            <div class="item" v-for="lead in project.leads">
+               {{lead.name}}
             </div>
-            <div class="item">
-               Two
+         </div>
+         <div class="most-active" v-if="project.members.length">
+            <div class="item" v-for="member in project.members">
+               {{member.name}}
             </div>
          </div>
       </div>

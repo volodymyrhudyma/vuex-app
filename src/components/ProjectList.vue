@@ -75,7 +75,7 @@
                 </md-avatar>
 
                 <div class="md-list-text-container">
-                  <a href="#" class="project-name" @click="onProjectClick(project.slug, $event)">{{project.name}}</a>
+                  <a href="#" class="project-name" @click="onProjectClick(project.id, $event)">{{project.name}}</a>
                   <span>{{project.description}}</span>
                   <span>Finish: {{project.finishAt.format("MMM Do YY")}}</span>
                   <p>
@@ -228,9 +228,9 @@
             setFilter(filter) {
               this.filter = filter;
             },
-            onProjectClick(projectSlug, e) {
+            onProjectClick(projectId, e) {
                 if(e) e.preventDefault();
-                this.$router.push("/project/" + projectSlug)
+                this.$router.push("/project/" + projectId)
             },
             showInfo(projectName) {
               let ref = 'seeInfo-' + projectName;

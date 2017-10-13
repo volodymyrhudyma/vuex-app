@@ -14,14 +14,15 @@ const mutations = {
     [FETCH_START] (state) {
         state.isIssuesPending = true;
     },
-    [FETCH_ISSUES] (state, issues) {
-        state.issues = [
+    [FETCH_ISSUES] (state, projectId = null) {    
+        let issues = [
             {
                 name: 'Issue 1',
                 slug: 'issue-1',
                 description: 'Description',
                 type: 'task',
                 status: 'done',
+                projectId: 1
             },
             {
                 name: 'Issue 2',
@@ -29,6 +30,7 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'done',
+                projectId: 1
             },
             {
                 name: 'Issue 3',
@@ -36,6 +38,7 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'in-progress',
+                projectId: 1
             },
             {
                 name: 'Issue 4',
@@ -43,6 +46,7 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'to-do',
+                projectId: 2
             },
             {
                 name: 'Issue 5',
@@ -50,6 +54,7 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'done',
+                projectId: 2
             },
             {
                 name: 'Issue 6',
@@ -57,6 +62,7 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'done',
+                projectId: 2
             },
             {
                 name: 'Issue 7',
@@ -64,12 +70,14 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'to-do',
+                projectId: 3
             },{
                 name: 'Issue 8',
                 slug: 'issue-8',
                 description: 'Description',
                 type: 'task',
                 status: 'done',
+                projectId: 3
             },
             {
                 name: 'Issue 9',
@@ -77,6 +85,7 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'in-progress',
+                projectId: 3
             },
             {
                 name: 'Issue 10',
@@ -84,13 +93,15 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'in-progress',
+                projectId: 4
             },
             {
                 name: 'Issue 11',
                 slug: 'issue-11',
                 description: 'Description',
-                type: 'task',
+                type: 'bug',
                 status: 'done',
+                projectId: 4
             },
             {
                 name: 'Issue 12',
@@ -98,9 +109,15 @@ const mutations = {
                 description: 'Description',
                 type: 'sub-task',
                 status: 'to-do',
+                projectId: 10
             },
-
         ];
+        if(projectId) {
+            issues = issues.filter(issue => {
+                return issue.projectId === projectId
+            });
+        }   
+        state.issues = issues;
         state.isIssuesPending = false;
     },
     [STORE_ISSUE] (state, issue) {
@@ -115,11 +132,11 @@ const mutations = {
 };
 
 const actions = {
-    fetchIssues: ({ commit }, issues) => {
+    fetchIssues: ({ commit }, projectId) => {
         commit(FETCH_START);
         return new Promise(resolve => {
             setTimeout(() => {
-                commit(FETCH_ISSUES);
+                commit(FETCH_ISSUES, projectId);
                 resolve();
             }, 1000);
         });

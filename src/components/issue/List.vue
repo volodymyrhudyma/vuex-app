@@ -197,8 +197,8 @@
             },
         },
         beforeMount() {
-            let slug = this.$route.params.slug;
-            this.fetchIssues();
+            let projectId = parseInt(this.$route.params.id);
+            this.fetchIssues(projectId);
         }
     }
 </script>

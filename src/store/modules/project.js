@@ -6,8 +6,8 @@ const FETCH_START = "FETCH_START";
 const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
 const TOGGLE_COMPLETED = "TOGGLE_COMPLETED";
 const STORE_PROJECT = "STORE_PROJECT";
-const FETCH_BY_SLUG_START = "FETCH_BY_SLUG_START";
-const FETCH_BY_SLUG = "FETCH_BY_SLUG";
+const FETCH_BY_ID_START = "FETCH_BY_ID_START";
+const FETCH_BY_ID = "FETCH_BY_ID";
 const DELETE_PROJECT = "DELETE_PROJECT";
 
 const state = {
@@ -21,12 +21,13 @@ const mutations = {
     [FETCH_START] (state) {
         state.isProjectsPending = true;
     },
-    [FETCH_BY_SLUG_START] (state) {
+    [FETCH_BY_ID_START] (state) {
         state.isProjectPending = true;
     },
     [FETCH_PROJECTS] (state) {
         state.projects = [
             {
+                id: 1,
                 name: 'Project 1',
                 slug: 'project-1',
                 description: 'Description',
@@ -43,6 +44,7 @@ const mutations = {
                 finishAt: moment().add('days', 5),
             },
             {
+                id: 2,
                 name: 'Project 2',
                 slug: 'project-2',
                 description: 'Description',
@@ -59,6 +61,7 @@ const mutations = {
                 finishAt: moment().add('days', 15)
             },
             {
+                id: 3,
                 name: 'Project 3',
                 slug: 'project-3',
                 description: 'Description',
@@ -75,6 +78,7 @@ const mutations = {
                 finishAt: moment().add('days', 12)
             },
             {
+                id: 4,
                 name: 'Project 4',
                 slug: 'project-4',
                 description: 'Description',
@@ -91,6 +95,7 @@ const mutations = {
                 finishAt: moment().add('days', 1)
             },
             {
+                id: 5,
                 name: 'Project 5',
                 slug: 'project-5',
                 description: 'Description',
@@ -107,6 +112,7 @@ const mutations = {
                 finishAt: moment().add('days', 55)
             },
             {
+                id: 6,
                 name: 'Project 6',
                 slug: 'project-6',
                 description: 'Description',
@@ -123,6 +129,7 @@ const mutations = {
                 finishAt: moment().add('days', 51)
             },
             {
+                id: 7,
                 name: 'Project 7',
                 slug: 'project-7',
                 description: 'Description',
@@ -139,6 +146,7 @@ const mutations = {
                 finishAt: moment().add('days', 22)
             },
             {
+                id: 8,
                 name: 'Project 8',
                 slug: 'project-8',
                 description: 'Description',
@@ -155,6 +163,7 @@ const mutations = {
                 finishAt: moment().add('days', 43)
             },
             {
+                id: 9,
                 name: 'Project 9',
                 slug: 'project-9',
                 description: 'Description',
@@ -171,6 +180,7 @@ const mutations = {
                 finishAt: moment().add('days', 15)
             },
             {
+                id: 10,
                 name: 'Project 10',
                 slug: 'project-10',
                 description: 'Description',
@@ -205,8 +215,9 @@ const mutations = {
     [STORE_PROJECT] (state, project) {
         state.projects.push(project);   
     },
-    [FETCH_BY_SLUG] (state, slug) {
+    [FETCH_BY_ID] (state, id) {
         state.project = {
+            id: 10,
             name: 'Project 10',
             slug: 'project-10',
             description: 'Description',
@@ -281,11 +292,11 @@ const actions = {
             }, 1000);
         });
     },
-    fetchBySlug: ({ commit }, slug) => {
-        commit(FETCH_BY_SLUG_START);
+    fetchById: ({ commit }, id) => {
+        commit(FETCH_BY_ID_START);
         return new Promise(resolve => {
             setTimeout(() => {
-                commit(FETCH_BY_SLUG, slug);
+                commit(FETCH_BY_ID, id);
                 resolve();
             }, 1000);
         });

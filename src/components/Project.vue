@@ -96,11 +96,11 @@
             ...mapGetters(['project', 'isProjectPending']),
         },
         methods: {
-            ...mapActions(['fetchBySlug']),
+            ...mapActions(['fetchById']),
         },
         beforeMount() {
-            let slug = this.$route.params.slug;
-            this.fetchBySlug(slug);
+            let id = this.$route.params.id;
+            this.fetchById(id);
         },
         components: {
           List

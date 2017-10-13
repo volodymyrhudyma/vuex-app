@@ -2,7 +2,7 @@
    <div class="flex-wrapper">
       <div class="avatar" v-if="!isProfileFetching">
          <div class="image">
-            <img src="#" alt="Avatar" />
+            Avatar
          </div>
          <div class="full-name">
             {{fullName}}
@@ -39,7 +39,7 @@
             <md-tab md-label="Followers" md-icon="books">
                <div class="followers" v-if="!isProfileFetching">
                   <div class="item" v-for="follower in filteredFollowers">
-                     <img src="../assets/images/avatar.png" :alt="follower.name" />
+                     Avatar
                   </div>
                </div>
                <div class="empty" v-if="!isProfileFetching && !profile.followers.length">

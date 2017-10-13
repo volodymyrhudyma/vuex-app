@@ -88,7 +88,7 @@
         .flex-wrapper {
             display: flex;
             height: calc(100% - 64px);
-            justify-content: space-around;
+            justify-content: space-between;
         }
 
         .wrapper-loader {
@@ -148,7 +148,7 @@
         }
     }
 
-    #projects, #issues, #technologies {
+    #projects, #issues, #technologies, #project {
         .content {
             .flex-wrapper {
 
@@ -170,7 +170,11 @@
 
                     .filter-panel {
                         padding: 15px 0;
-                        height: 140px;
+                        height: 210px;
+
+                        .status {
+                            padding-left: 16px;
+                        }
                     }
 
                     .md-bottom-bar {
@@ -184,7 +188,7 @@
                     }
 
                     .list {
-                        height: calc(100% - 140px);
+                        height: calc(100% - 210px);
                         overflow-y: auto;
 
                         .empty-list {
@@ -232,7 +236,7 @@
                             top: 15px;
                         }
                     }
-                }
+                }                
             }
         }
     }
@@ -344,6 +348,103 @@
                         }
                     }
                 }
+            }
+        }
+    }
+
+    #project {
+        .flex-wrapper {
+            .issues {
+                .flex-wrapper {
+                    height: 100%;
+
+                    .list-section {
+                        width: 100%;
+                    }
+                }                    
+            }
+
+            .details {
+                width: 100%;
+                padding: 20px;
+
+                .heading {
+                    padding-bottom: 20px;
+                    font-size: 2em;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+                }
+
+                .issue {
+                    padding: 20px 0;
+
+                    .head {
+                        display: flex;
+
+                        .avatar {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        .info {
+                            margin: 0 15px;
+                        }
+                    }
+
+                    .manager {
+                        display: flex;
+                        margin: 10px 0;
+
+                        .actions {
+                            display: flex;
+                            margin-right: 15px;
+
+                            .item {
+                                &:first-child {
+                                    button {
+                                        margin-left: 0;
+                                    }
+                                }
+                            }
+                        }
+
+                        .status {
+                            display: flex;
+
+                            .item {
+                                button {
+                                    margin-left: 0;
+                                    margin-right: 0;
+
+                                    &.to-do {
+                                        &.active {
+                                            background: #3f51b5;
+                                            color: #fff;
+                                        }
+                                    }
+
+                                    &.in-progress {
+                                        &.active {
+                                            background: orange;
+                                            color: #fff;
+                                        }
+                                    }
+
+                                    &.done {
+                                        &.active {
+                                            background: green;
+                                            color: #fff;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .members {
+                padding: 20px 0;
             }
         }
     }

@@ -230,7 +230,7 @@
             },
             onProjectClick(projectSlug, e) {
                 if(e) e.preventDefault();
-                this.$router.push("/projects/" + projectSlug)
+                this.$router.push("/project/" + projectSlug)
             },
             showInfo(projectName) {
               let ref = 'seeInfo-' + projectName;

@@ -1,6 +1,6 @@
 <template>
    <div class="flex-wrapper">
-       <div class="add-section">
+       <div class="add-section" v-if="!hideAddBtn">
 
            <md-button class="md-icon-button md-raised md-primary" @click="openDialog('addIssue')">
                <md-icon>add</md-icon>
@@ -15,6 +15,17 @@
                    <md-bottom-bar-item md-icon="build" @click="setFilter('tasks')">{{ $t('Tasks') }}</md-bottom-bar-item>
                    <md-bottom-bar-item md-icon="bug_report" @click="setFilter('bugs')">{{ $t('Bugs') }}</md-bottom-bar-item>
                </md-bottom-bar>
+
+                <div class="status">
+                  <md-input-container>
+                    <label for="filter">Filter</label>
+                    <md-select name="filter" id="filter" v-model="filter">
+                      <md-option value="to-do">To Do</md-option>
+                      <md-option value="in-progress">In Progress</md-option>
+                      <md-option value="done">Done</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
 
                <div class="search">
                    <form novalidate @submit.stop.prevent="submit">
@@ -93,6 +104,7 @@
     const { mapGetters, mapActions } = createNamespacedHelpers('issue')
 
     export default {
+        props: ['hideAddBtn'],
         data () {
             return {
                 filter: 'all',
@@ -122,6 +134,15 @@
                         break;
                     case 'bugs':
                         issues = this.allIssues.filter(issue => issue.type === 'bug');
+                        break;
+                    case 'to-do':
+                        issues = this.allIssues.filter(issue => issue.status === 'to-do');
+                        break;
+                    case 'in-progress':
+                        issues = this.allIssues.filter(issue => issue.status === 'in-progress');
+                        break;
+                    case 'done':
+                        issues = this.allIssues.filter(issue => issue.status === 'done');
                         break;
                     default:
                         break;

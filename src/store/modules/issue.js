@@ -20,72 +20,84 @@ const mutations = {
                 name: 'Issue 1',
                 slug: 'issue-1',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'done',
             },
             {
                 name: 'Issue 2',
                 slug: 'issue-2',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'done',
             },
             {
                 name: 'Issue 3',
                 slug: 'issue-3',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'in-progress',
             },
             {
                 name: 'Issue 4',
                 slug: 'issue-4',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'to-do',
             },
             {
                 name: 'Issue 5',
                 slug: 'issue-5',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'done',
             },
             {
                 name: 'Issue 6',
                 slug: 'issue-6',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'done',
             },
             {
                 name: 'Issue 7',
                 slug: 'issue-7',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'to-do',
             },{
                 name: 'Issue 8',
                 slug: 'issue-8',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'done',
             },
             {
                 name: 'Issue 9',
                 slug: 'issue-9',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'in-progress',
             },
             {
                 name: 'Issue 10',
                 slug: 'issue-10',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'in-progress',
             },
             {
                 name: 'Issue 11',
                 slug: 'issue-11',
                 description: 'Description',
-                type: 'task'
+                type: 'task',
+                status: 'done',
             },
             {
                 name: 'Issue 12',
                 slug: 'issue-12',
                 description: 'Description',
-                type: 'sub-task'
+                type: 'sub-task',
+                status: 'to-do',
             },
 
         ];

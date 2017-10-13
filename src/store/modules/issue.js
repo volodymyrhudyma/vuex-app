@@ -6,6 +6,8 @@ const FETCH_ISSUE_START = "FETCH_ISSUE_START";
 const FETCH_START = "FETCH_START";
 const STORE_ISSUE = "STORE_ISSUE";
 const DELETE_ISSUE = "DELETE_ISSUE";
+const CHANGE_ISSUE_STATUS_START = "CHANGE_ISSUE_STATUS_START";
+const CHANGE_ISSUE_STATUS = "CHANGE_ISSUE_STATUS";
 
 const state = {
     issues: null,
@@ -20,6 +22,7 @@ const state = {
     },
     isIssuesPending: false,
     isIssuePending: false,
+    isIssueStatusChanging: false,
 };
 
 const mutations = {
@@ -28,6 +31,9 @@ const mutations = {
     },
     [FETCH_ISSUE_START] (state) {
         state.isIssuePending = true;
+    },
+    [CHANGE_ISSUE_STATUS_START] (state) {
+        state.isIssueStatusChanging = true;
     },
     [FETCH_ISSUES] (state, projectId = null) {    
         let issues = [
@@ -168,6 +174,10 @@ const mutations = {
         })[0];
         state.issues.splice(state.issues.indexOf(issue), 1);
     },
+    [CHANGE_ISSUE_STATUS] (state, status) {    
+        state.issue.status = status;
+        state.isIssueStatusChanging = false;
+    },
 };
 
 const actions = {
@@ -185,6 +195,15 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(FETCH_ISSUE, issueId);
+                resolve();
+            }, 1000);
+        });
+    },
+    changeIssueStatus: ({ commit }, status) => {
+        commit(CHANGE_ISSUE_STATUS_START);
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(CHANGE_ISSUE_STATUS, status);
                 resolve();
             }, 1000);
         });

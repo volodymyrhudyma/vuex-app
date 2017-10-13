@@ -1,22 +1,38 @@
 import toastr from 'toastr'
 
 const FETCH_ISSUES = "FETCH_ISSUES";
+const FETCH_ISSUE = "FETCH_ISSUE";
+const FETCH_ISSUE_START = "FETCH_ISSUE_START";
 const FETCH_START = "FETCH_START";
 const STORE_ISSUE = "STORE_ISSUE";
 const DELETE_ISSUE = "DELETE_ISSUE";
 
 const state = {
     issues: null,
+    issue: {
+        id: 9,
+        name: 'Issue 9',
+        slug: 'issue-9',
+        description: 'Description',
+        type: 'task',
+        status: 'done',
+        projectId: 3
+    },
     isIssuesPending: false,
+    isIssuePending: false,
 };
 
 const mutations = {
     [FETCH_START] (state) {
         state.isIssuesPending = true;
     },
+    [FETCH_ISSUE_START] (state) {
+        state.isIssuePending = true;
+    },
     [FETCH_ISSUES] (state, projectId = null) {    
         let issues = [
             {
+                id: 1,
                 name: 'Issue 1',
                 slug: 'issue-1',
                 description: 'Description',
@@ -25,6 +41,7 @@ const mutations = {
                 projectId: 1
             },
             {
+                id: 2,
                 name: 'Issue 2',
                 slug: 'issue-2',
                 description: 'Description',
@@ -33,6 +50,7 @@ const mutations = {
                 projectId: 1
             },
             {
+                id: 3,
                 name: 'Issue 3',
                 slug: 'issue-3',
                 description: 'Description',
@@ -41,6 +59,7 @@ const mutations = {
                 projectId: 1
             },
             {
+                id: 4,
                 name: 'Issue 4',
                 slug: 'issue-4',
                 description: 'Description',
@@ -49,6 +68,7 @@ const mutations = {
                 projectId: 2
             },
             {
+                id: 5,
                 name: 'Issue 5',
                 slug: 'issue-5',
                 description: 'Description',
@@ -57,6 +77,7 @@ const mutations = {
                 projectId: 2
             },
             {
+                id: 6,
                 name: 'Issue 6',
                 slug: 'issue-6',
                 description: 'Description',
@@ -65,13 +86,16 @@ const mutations = {
                 projectId: 2
             },
             {
+                id: 7,
                 name: 'Issue 7',
                 slug: 'issue-7',
                 description: 'Description',
                 type: 'task',
                 status: 'to-do',
                 projectId: 3
-            },{
+            },
+            {
+                id: 8,
                 name: 'Issue 8',
                 slug: 'issue-8',
                 description: 'Description',
@@ -80,6 +104,7 @@ const mutations = {
                 projectId: 3
             },
             {
+                id: 9,
                 name: 'Issue 9',
                 slug: 'issue-9',
                 description: 'Description',
@@ -88,6 +113,7 @@ const mutations = {
                 projectId: 3
             },
             {
+                id: 10,
                 name: 'Issue 10',
                 slug: 'issue-10',
                 description: 'Description',
@@ -96,6 +122,7 @@ const mutations = {
                 projectId: 4
             },
             {
+                id: 11,
                 name: 'Issue 11',
                 slug: 'issue-11',
                 description: 'Description',
@@ -104,6 +131,7 @@ const mutations = {
                 projectId: 4
             },
             {
+                id: 12,
                 name: 'Issue 12',
                 slug: 'issue-12',
                 description: 'Description',
@@ -119,6 +147,17 @@ const mutations = {
         }   
         state.issues = issues;
         state.isIssuesPending = false;
+    },
+    [FETCH_ISSUE] (state, issueId) {    
+        state.issue = {
+            name: 'Issue 10',
+            slug: 'issue-10',
+            description: 'Description',
+            type: 'task',
+            status: 'in-progress',
+            projectId: 4
+        };
+        state.isIssuePending = false;
     },
     [STORE_ISSUE] (state, issue) {
         state.issues.push(issue);
@@ -137,6 +176,15 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(FETCH_ISSUES, projectId);
+                resolve();
+            }, 1000);
+        });
+    },
+    fetchIssue: ({ commit }, issueId) => {
+        commit(FETCH_ISSUE_START);
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(FETCH_ISSUE, issueId);
                 resolve();
             }, 1000);
         });
@@ -189,6 +237,12 @@ const getters = {
     },
     issueLabels: state => {
         return ['Tasks', 'Sub-tasks', 'Bugs'];
+    },
+    issue: state => {
+        return state.issue;
+    },
+    isIssuePending: state => {
+        return state.isIssuePending
     },
 };
 

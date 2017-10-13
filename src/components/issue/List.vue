@@ -71,7 +71,7 @@
                </md-dialog>
 
                <md-list class="custom-list md-triple-line" v-if="!isIssuesPending && filteredIssues.length">
-                   <md-list-item v-for="(issue, key) in filteredIssues" :key="issue.name" @click="onIssueClick(issue.slug)">
+                   <md-list-item v-for="(issue, key) in filteredIssues" :key="issue.name" @click="onIssueClick(issue.id)">
 
                        <md-avatar class="avatar">
                            {{++key}}
@@ -154,7 +154,7 @@
             },
         },
         methods: {
-            ...mapActions(['fetchIssues', 'storeIssue', 'deleteIssue']),
+            ...mapActions(['fetchIssues', 'fetchIssue', 'storeIssue', 'deleteIssue']),
             saveIssue(newIssue) {
                 this.slugifyNewIssue(newIssue);
                 this.storeIssue(newIssue);
@@ -183,8 +183,8 @@
                     type: ''
                 }
             },
-            onIssueClick(issueSlug) {
-                console.log(issueSlug);
+            onIssueClick(id) {
+                this.fetchIssue(id);
             },
             openDialog(ref) {
                 this.$refs[ref].open();

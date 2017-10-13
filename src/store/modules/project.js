@@ -50,7 +50,7 @@ const mutations = {
                 description: 'Description',
                 avatar: 'https://placeimg.com/40/40/people/6',
                 tags: [
-                    'One', 'Two', 'Three'
+                    'One', 'Two', 'Three', 'Four'
                 ],
                 favorited: true,
                 completed: false,

@@ -80,7 +80,9 @@
                   <span>Finish: {{project.finishAt.format("MMM Do YY")}}</span>
                   <p>
                     <md-chip class="md-default" v-for="tag in project.tags" :key="tag">
-                      {{tag}}
+                      <div class="tag" @click="setFilter('tag', tag)">
+                         #{{tag}}
+                      </div>
                     </md-chip>
                   </p>
                 </div>
@@ -179,6 +181,7 @@
           return {
             filter: 'all',
             query: '',
+            tag: '',
             newProject: {
               name: '',
               description: '',
@@ -225,8 +228,12 @@
             closeDialog(ref) {
               this.$refs[ref].close();
             },
-            setFilter(filter) {
+            setFilter(filter, value = null) {
+              console.log('set filter')
               this.filter = filter;
+              if(value) {
+                this.tag = value;
+              }
             },
             onProjectClick(projectId, e) {
                 if(e) e.preventDefault();
@@ -258,6 +265,10 @@
                   break;
                 case 'completed':
                   projects = this.allProjects.filter(project => project.completed);
+                case 'tag':
+                  projects = this.allProjects.filter(project => {
+                      return project.tags.includes(this.tag);
+                  });
                   break;
               }
 

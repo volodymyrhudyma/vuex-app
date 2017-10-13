@@ -220,6 +220,20 @@
                                     align-items: center;
                                     justify-content: center;
                                 }
+
+                                .md-chip {
+                                    padding: 0;
+                                    height: auto;
+
+                                    &:not(:last-child) {
+                                        margin-right: 3px;
+                                    }
+
+                                    .tag {
+                                        padding: 3px 10px;
+                                        cursor: pointer;
+                                    }
+                                }
                             }
                         }
 

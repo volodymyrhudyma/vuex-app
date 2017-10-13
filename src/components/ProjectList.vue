@@ -265,6 +265,7 @@
                   break;
                 case 'completed':
                   projects = this.allProjects.filter(project => project.completed);
+                  break;
                 case 'tag':
                   projects = this.allProjects.filter(project => {
                       return project.tags.includes(this.tag);

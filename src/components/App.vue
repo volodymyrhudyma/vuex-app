@@ -403,6 +403,27 @@
                         .info {
                             margin: 0 15px;
                         }
+
+                        .workers {
+                            margin-left: auto;
+                            text-align: right;
+
+                            .change {
+                                display: none;
+
+                                i {
+                                    width: 15px;
+                                }
+                            }
+
+                            .assignee {
+                                &:hover {
+                                    .change {
+                                        display: inline;
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     .manager {

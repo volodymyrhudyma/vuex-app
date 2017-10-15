@@ -247,7 +247,7 @@ const mutations = {
                     avatar: 'avatar',
                 }
             ]
-        },
+        };
         state.isProjectPending = false;
     },
     [DELETE_PROJECT] (state, projectName) {

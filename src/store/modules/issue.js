@@ -8,6 +8,8 @@ const STORE_ISSUE = "STORE_ISSUE";
 const DELETE_ISSUE = "DELETE_ISSUE";
 const CHANGE_ISSUE_STATUS_START = "CHANGE_ISSUE_STATUS_START";
 const CHANGE_ISSUE_STATUS = "CHANGE_ISSUE_STATUS";
+const CHANGE_ISSUE_ASSIGNEE_START = "CHANGE_ISSUE_ASSIGNEE_START";
+const CHANGE_ISSUE_ASSIGNEE = "CHANGE_ISSUE_ASSIGNEE";
 
 const state = {
     issues: null,
@@ -18,11 +20,22 @@ const state = {
         description: 'Description',
         type: 'task',
         status: 'done',
-        projectId: 3
+        projectId: 3,
+        reporter: {
+            name: 'Andrew Hopkins',
+            avatar: 'avatar',
+            link: 'link'
+        },
+        assignee: {
+            name: 'Joy Rones',
+            avatar: 'avatar',
+            link: 'link'
+        }
     },
     isIssuesPending: false,
     isIssuePending: false,
     isIssueStatusChanging: false,
+    isIssueAssigneeChanging: false,
 };
 
 const mutations = {
@@ -35,6 +48,9 @@ const mutations = {
     [CHANGE_ISSUE_STATUS_START] (state) {
         state.isIssueStatusChanging = true;
     },
+    [CHANGE_ISSUE_ASSIGNEE_START] (state) {
+        state.isIssueAssigneeChanging = true;
+    },
     [FETCH_ISSUES] (state, projectId = null) {    
         let issues = [
             {
@@ -44,7 +60,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'done',
-                projectId: 1
+                projectId: 1,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 2,
@@ -53,7 +79,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'done',
-                projectId: 1
+                projectId: 1,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 3,
@@ -62,7 +98,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'in-progress',
-                projectId: 1
+                projectId: 1,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 4,
@@ -71,7 +117,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'to-do',
-                projectId: 2
+                projectId: 2,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 5,
@@ -80,7 +136,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'done',
-                projectId: 2
+                projectId: 2,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 6,
@@ -89,7 +155,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'done',
-                projectId: 2
+                projectId: 2,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 7,
@@ -98,7 +174,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'to-do',
-                projectId: 3
+                projectId: 3,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 8,
@@ -107,7 +193,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'done',
-                projectId: 3
+                projectId: 3,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 9,
@@ -116,7 +212,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'in-progress',
-                projectId: 3
+                projectId: 3,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 10,
@@ -125,7 +231,17 @@ const mutations = {
                 description: 'Description',
                 type: 'task',
                 status: 'in-progress',
-                projectId: 4
+                projectId: 4,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 11,
@@ -134,7 +250,17 @@ const mutations = {
                 description: 'Description',
                 type: 'bug',
                 status: 'done',
-                projectId: 4
+                projectId: 4,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
             {
                 id: 12,
@@ -143,14 +269,24 @@ const mutations = {
                 description: 'Description',
                 type: 'sub-task',
                 status: 'to-do',
-                projectId: 10
+                projectId: 10,
+                reporter: {
+                    name: 'Andrew Hopkins',
+                    avatar: 'avatar',
+                    link: 'link'
+                },
+                assignee: {
+                    name: 'Joy Rones',
+                    avatar: 'avatar',
+                    link: 'link'
+                }
             },
         ];
         if(projectId) {
             issues = issues.filter(issue => {
                 return issue.projectId === projectId
             });
-        }   
+        }
         state.issues = issues;
         state.isIssuesPending = false;
     },
@@ -161,7 +297,17 @@ const mutations = {
             description: 'Description',
             type: 'task',
             status: 'in-progress',
-            projectId: 4
+            projectId: 4,
+            reporter: {
+                name: 'Andrew Hopkins',
+                avatar: 'avatar',
+                link: 'link'
+            },
+            assignee: {
+                name: 'Joy Rones',
+                avatar: 'avatar',
+                link: 'link'
+            }
         };
         state.isIssuePending = false;
     },
@@ -177,6 +323,14 @@ const mutations = {
     [CHANGE_ISSUE_STATUS] (state, status) {    
         state.issue.status = status;
         state.isIssueStatusChanging = false;
+    },
+    [CHANGE_ISSUE_ASSIGNEE] (state, assigneeId) {
+        state.issue.assignee = {
+            name: 'Changed',
+            avatar: 'changed',
+            link: 'changed'
+        };
+        state.isIssueAssigneeChanging = false;
     },
 };
 
@@ -204,6 +358,15 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(CHANGE_ISSUE_STATUS, status);
+                resolve();
+            }, 1000);
+        });
+    },
+    changeIssueAssignee: ({ commit }, assigneeId) => {
+        commit(CHANGE_ISSUE_ASSIGNEE_START);
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(CHANGE_ISSUE_ASSIGNEE, assigneeId);
                 resolve();
             }, 1000);
         });

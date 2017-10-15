@@ -24,9 +24,11 @@
                     <span class="name">
                         {{issue.assignee.name}}
                     </span>
+                    <div class="wrapper-loader" v-if="isIssueAssigneeChanging">
+                        <md-spinner :md-size="25" md-indeterminate class="md-primary"></md-spinner>
+                    </div>
                     <span class="change">
-
-                        <md-select name="assignee" id="assignee" v-on:change="assigneeChanged">
+                        <md-select name="assignee" id="assignee" v-on:change="assigneeChanged" v-if="!isIssueAssigneeChanging">
                           <md-button class="md-icon-button" md-menu-trigger slot="icon">
                             <md-icon>mode_edit</md-icon>
                           </md-button>
@@ -86,6 +88,7 @@
     export default {
         props: ['project', 'issue'],
         computed: {
+            ...mapGetters('issue', ['isIssueAssigneeChanging']),
           issueStatus() {
             return this.issue.status;
           }

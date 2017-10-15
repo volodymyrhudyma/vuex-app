@@ -426,6 +426,9 @@ const getters = {
     isIssuePending: state => {
         return state.isIssuePending
     },
+    isIssueAssigneeChanging: state => {
+        return state.isIssueAssigneeChanging
+    },
 };
 
 export default {

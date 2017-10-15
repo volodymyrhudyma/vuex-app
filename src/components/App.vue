@@ -407,9 +407,13 @@
                         .workers {
                             margin-left: auto;
                             text-align: right;
+                            position: relative;
 
                             .change {
                                 display: none;
+                                position: absolute;
+                                right: -10px;
+                                top: -15px;
 
                                 i {
                                     width: 15px;
@@ -417,10 +421,33 @@
                             }
 
                             .assignee {
+                                display: flex;
+                                padding-right: 30px;
+
                                 &:hover {
                                     .change {
                                         display: inline;
                                     }
+                                }
+
+                                .wrapper-loader {
+                                    position: absolute;
+                                    right: 0;
+                                    top: -5px;
+                                    width: auto;
+                                    height: auto;
+                                }
+
+                                .name {
+                                    margin-left: 5px;
+                                }
+                            }
+
+                            .reporter {
+                                display: flex;
+
+                                .name {
+                                    margin-left: 5px;
                                 }
                             }
                         }

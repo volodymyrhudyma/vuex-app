@@ -99,6 +99,16 @@
            {{issue.description}}
          </div>
        </div>
+       <div class="attachments">
+         <div class="section">
+           Attachments
+         </div>
+         <div class="value">
+           <div class="empty">
+             There are no attachments yet on this issue.
+           </div>
+         </div>
+       </div>
        <div class="activity">
          <div class="section">
            Comments

@@ -510,9 +510,9 @@
                     }
 
                     .details {
-                        margin-bottom: 15px;
                         display: flex;
                         flex-direction: column;
+                        margin-bottom: 15px;
 
                         div {
                             span {
@@ -524,8 +524,16 @@
                         }
                     }
 
+                    .description {
+                        margin-bottom: 15px;
+                    }
+
+                    .attachments {
+                        margin-bottom: 15px;
+                    }
+
                     .activity {
-                        margin: 15px 0;
+                        margin-bottom: 15px;
 
                         .comments-container {
                              .comments {

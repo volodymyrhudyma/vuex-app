@@ -378,7 +378,7 @@
                 }                    
             }
 
-            .details {
+            .general-info {
                 width: 100%;
                 padding: 20px;
 
@@ -500,6 +500,35 @@
                                     }
                                 }
                             }
+                        }
+                    }
+
+                    .details {
+                        margin-bottom: 15px;
+                        display: flex;
+                        flex-direction: column;
+
+                        div {
+                            span {
+                                &:first-child {
+                                    display: inline-block;
+                                    width: 105px;
+                                }
+                            }
+                        }
+                    }
+
+                    .activity {
+                        margin: 15px 0;
+
+                        .comments {
+                            .empty {
+                                margin-top: 10px;
+                            }
+                        }
+
+                        .add-comment {
+                            margin-top: 10px;
                         }
                     }
                 }

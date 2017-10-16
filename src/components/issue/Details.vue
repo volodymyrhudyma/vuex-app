@@ -1,5 +1,5 @@
 <template>
-  <div class="details">
+  <div class="general-info">
     <div class="heading">
         Open issues
     </div>
@@ -74,11 +74,60 @@
                </div>
             </div>
        </div>
+       <div class="details">
+         <div class="type">
+           <span>Type</span>
+           <span>{{issue.type}}</span>
+         </div>
+         <div class="status">
+           <span>Status</span>
+           <span>{{issueStatus}}</span>
+         </div>
+         <div class="priority">
+           <span>Priority</span>
+           <span>{{issue.priority}}</span>
+         </div>
+       </div>
        <div class="description">
            {{issue.description}}
        </div>
+       <div class="activity">
+         <div class="head">
+           Activity
+         </div>
+         <div class="comments-container">
+           <div class="comments">
+
+           <div class="list">
+             <div class="item" v-for="comment in issue.comments">
+               {{comment}}
+             </div>
+
+             <div class="empty" v-if="!issue.comments.length && !isCommentSaving">
+               There are no comments yet on this issue.
+             </div>
+           </div>
+             
+           </div>
+           <div class="add-comment" v-if="!commentInputShown">
+              <md-button class="md-icon-button md-raised" @click="showCommentInput">
+                <md-icon>add</md-icon>
+              </md-button>
+           </div>
+           <div class="comment-input" v-if="commentInputShown">
+            <form novalidate @submit.stop.prevent="submit">
+               <md-input-container>
+                <md-icon>speaker_notes</md-icon>
+                <label>Notes</label>
+                <md-textarea v-model="comment"></md-textarea>
+              </md-input-container>
+              <md-button class="md-raised md-primary" @click="addComment">Add</md-button>
+              <md-button @click="cancelComment">Cancel</md-button>
+            </form>
+           </div>
+         </div>
+       </div>
      </div>
-      .
   </div>
 </template>
 
@@ -87,19 +136,39 @@
 
     export default {
         props: ['project', 'issue'],
+        data() {
+          return {
+            commentInputShown: false,
+            comment: ''
+          }
+        },
         computed: {
-            ...mapGetters('issue', ['isIssueAssigneeChanging']),
+            ...mapGetters('issue', ['isIssueAssigneeChanging', 'isCommentSaving']),
           issueStatus() {
             return this.issue.status;
           }
         },
         methods: {
-          ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee']),
+          ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment']),
           changeStatus(status) {
             this.changeIssueStatus(status);
           },
           assigneeChanged(id) {
               this.changeIssueAssignee(id);
+          },
+          showCommentInput() {
+            this.commentInputShown = true;
+          },
+          hideCommentInput() {
+            this.commentInputShown = false;
+          },
+          cancelComment() {
+            this.comment = '';
+          },
+          addComment() {
+            this.saveComment(this.comment);
+            this.cancelComment();
+            this.hideCommentInput();
           }
         }
     }

@@ -10,6 +10,8 @@ const CHANGE_ISSUE_STATUS_START = "CHANGE_ISSUE_STATUS_START";
 const CHANGE_ISSUE_STATUS = "CHANGE_ISSUE_STATUS";
 const CHANGE_ISSUE_ASSIGNEE_START = "CHANGE_ISSUE_ASSIGNEE_START";
 const CHANGE_ISSUE_ASSIGNEE = "CHANGE_ISSUE_ASSIGNEE";
+const SAVE_COMMENT_START = "SAVE_COMMENT_START";
+const SAVE_COMMENT = "SAVE_COMMENT";
 
 const state = {
     issues: null,
@@ -21,6 +23,7 @@ const state = {
         type: 'task',
         status: 'done',
         projectId: 3,
+        priority: 'medium',
         reporter: {
             name: 'Andrew Hopkins',
             avatar: 'avatar',
@@ -30,12 +33,14 @@ const state = {
             name: 'Joy Rones',
             avatar: 'avatar',
             link: 'link'
-        }
+        },
+        comments: []
     },
     isIssuesPending: false,
     isIssuePending: false,
     isIssueStatusChanging: false,
     isIssueAssigneeChanging: false,
+    isCommentSaving: false,
 };
 
 const mutations = {
@@ -51,6 +56,9 @@ const mutations = {
     [CHANGE_ISSUE_ASSIGNEE_START] (state) {
         state.isIssueAssigneeChanging = true;
     },
+    [SAVE_COMMENT_START] (state) {
+        state.isCommentSaving = true;
+    },
     [FETCH_ISSUES] (state, projectId = null) {    
         let issues = [
             {
@@ -61,6 +69,7 @@ const mutations = {
                 type: 'task',
                 status: 'done',
                 projectId: 1,
+                priority: 'low',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -70,7 +79,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 2,
@@ -80,6 +90,7 @@ const mutations = {
                 type: 'task',
                 status: 'done',
                 projectId: 1,
+                priority: 'high',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -89,7 +100,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 3,
@@ -99,6 +111,7 @@ const mutations = {
                 type: 'task',
                 status: 'in-progress',
                 projectId: 1,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -108,7 +121,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 4,
@@ -118,6 +132,7 @@ const mutations = {
                 type: 'task',
                 status: 'to-do',
                 projectId: 2,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -127,7 +142,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 5,
@@ -137,6 +153,7 @@ const mutations = {
                 type: 'task',
                 status: 'done',
                 projectId: 2,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -146,7 +163,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 6,
@@ -156,6 +174,7 @@ const mutations = {
                 type: 'task',
                 status: 'done',
                 projectId: 2,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -165,7 +184,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 7,
@@ -175,6 +195,7 @@ const mutations = {
                 type: 'task',
                 status: 'to-do',
                 projectId: 3,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -184,7 +205,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 8,
@@ -194,6 +216,7 @@ const mutations = {
                 type: 'task',
                 status: 'done',
                 projectId: 3,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -203,7 +226,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 9,
@@ -213,6 +237,7 @@ const mutations = {
                 type: 'task',
                 status: 'in-progress',
                 projectId: 3,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -222,7 +247,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 10,
@@ -232,6 +258,7 @@ const mutations = {
                 type: 'task',
                 status: 'in-progress',
                 projectId: 4,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -241,7 +268,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 11,
@@ -251,6 +279,7 @@ const mutations = {
                 type: 'bug',
                 status: 'done',
                 projectId: 4,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -260,7 +289,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
             {
                 id: 12,
@@ -270,6 +300,7 @@ const mutations = {
                 type: 'sub-task',
                 status: 'to-do',
                 projectId: 10,
+                priority: 'medium',
                 reporter: {
                     name: 'Andrew Hopkins',
                     avatar: 'avatar',
@@ -279,7 +310,8 @@ const mutations = {
                     name: 'Joy Rones',
                     avatar: 'avatar',
                     link: 'link'
-                }
+                },
+                comments: []
             },
         ];
         if(projectId) {
@@ -298,6 +330,7 @@ const mutations = {
             type: 'task',
             status: 'in-progress',
             projectId: 4,
+            priority: 'medium',
             reporter: {
                 name: 'Andrew Hopkins',
                 avatar: 'avatar',
@@ -307,7 +340,8 @@ const mutations = {
                 name: 'Joy Rones',
                 avatar: 'avatar',
                 link: 'link'
-            }
+            },
+            comments: []
         };
         state.isIssuePending = false;
     },
@@ -331,6 +365,10 @@ const mutations = {
             link: 'changed'
         };
         state.isIssueAssigneeChanging = false;
+    },
+    [SAVE_COMMENT] (state, comment) {
+        state.issue.comments.push(comment);
+        state.isCommentSaving = false;
     },
 };
 
@@ -367,6 +405,15 @@ const actions = {
         return new Promise(resolve => {
             setTimeout(() => {
                 commit(CHANGE_ISSUE_ASSIGNEE, assigneeId);
+                resolve();
+            }, 1000);
+        });
+    },
+    saveComment: ({ commit }, comment) => {
+        commit(SAVE_COMMENT_START);
+        return new Promise(resolve => {
+            setTimeout(() => {
+                commit(SAVE_COMMENT, comment);
                 resolve();
             }, 1000);
         });
@@ -428,6 +475,9 @@ const getters = {
     },
     isIssueAssigneeChanging: state => {
         return state.isIssueAssigneeChanging
+    },
+    isCommentSaving: state => {
+        return state.isCommentSaving
     },
 };
 

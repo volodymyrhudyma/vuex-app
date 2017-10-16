@@ -75,6 +75,9 @@
             </div>
        </div>
        <div class="details">
+        <div class="section">
+          Details
+        </div>
          <div class="type">
            <span>Type</span>
            <span>{{issue.type}}</span>
@@ -89,11 +92,16 @@
          </div>
        </div>
        <div class="description">
+         <div class="section">
+           Description
+         </div>
+         <div class="value">
            {{issue.description}}
+         </div>
        </div>
        <div class="activity">
-         <div class="head">
-           Activity
+         <div class="section">
+           Comments
          </div>
          <div class="comments-container">
            <div class="comments">

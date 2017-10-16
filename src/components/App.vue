@@ -391,6 +391,12 @@
                 .issue {
                     padding: 20px 0;
 
+                    .section {
+                        font-weight: bold;
+                        margin-bottom: 5px;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+                    }
+
                     .head {
                         display: flex;
 
@@ -521,15 +527,25 @@
                     .activity {
                         margin: 15px 0;
 
-                        .comments {
-                            .empty {
+                        .comments-container {
+                             .comments {
+                                .list {
+                                    .item {
+                                        margin-bottom: 5px;
+                                    }
+
+                                    .empty {
+                                        margin-top: 10px;
+                                    }
+                                }
+                            }
+
+                            .add-comment {
                                 margin-top: 10px;
                             }
                         }
 
-                        .add-comment {
-                            margin-top: 10px;
-                        }
+                       
                     }
                 }
             }

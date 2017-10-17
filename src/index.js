@@ -9,6 +9,7 @@ import IssueList from './components/IssueList.vue'
 import TechList from './components/TechList.vue'
 import BadgeList from './components/BadgeList.vue'
 import Profile from './components/Profile.vue'
+import Callback from './components/Callback.vue'
 import store from './store'
 import VueRouter from 'vue-router'
 import vuexI18n from 'vuex-i18n';
@@ -37,15 +38,25 @@ const routes = [
 	{ path: '/technologies', component: TechList },
 	{ path: '/badges', component: BadgeList },
 	{ path: '/profile', component: Profile },
+	{ path: '/callback', component: Callback }
 ];
 
 const router = new VueRouter({
+	mode: 'history',
 	routes
 });
 
-new Vue({
+
+const app = new Vue({
     el: '#app',
 	router,
     store,    
     render: h => h(App)
+});
+
+const renderer = require('vue-server-renderer').createRenderer();
+
+renderer.renderToString(app, (err, html) => {
+  if (err) throw err
+  console.log(html);
 });

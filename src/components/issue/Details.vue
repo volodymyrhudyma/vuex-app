@@ -169,7 +169,11 @@
         methods: {
           ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment']),
           changeStatus(status) {
-            this.changeIssueStatus(status);
+            let payload = {
+              id: this.issue.id,
+              status: status
+            };
+            this.changeIssueStatus(payload);
           },
           assigneeChanged(id) {
               this.changeIssueAssignee(id);

@@ -45,6 +45,14 @@
                   <label>{{ $t('Description') }}</label>
                   <md-textarea v-model="newProject.description"></md-textarea>
                 </md-input-container>
+                <md-input-container>
+                  <label>{{ $t('Avatar') }}</label>
+                  <md-textarea v-model="newProject.avatar"></md-textarea>
+                </md-input-container>
+                <md-input-container>
+                  <label>{{ $t('Finish at') }}</label>
+                  <md-textarea v-model="newProject.finishAt"></md-textarea>
+                </md-input-container>
                 
                 <md-select name="tags" id="tags" multiple v-model="newProject.tags">
                   <md-button class="md-icon-button" md-menu-trigger slot="icon">
@@ -69,7 +77,7 @@
 
           <md-list class="custom-list md-triple-line" v-if="!isProjectsPending && filteredProjects.length">
 
-              <md-list-item v-for="(project, index) in filteredProjects" :key="project.name">              
+              <md-list-item v-for="(project, index) in filteredProjects" :key="project.name">
                 <md-avatar>
                   <img v-bind:src="project.avatar" alt="People">
                 </md-avatar>
@@ -77,7 +85,7 @@
                 <div class="md-list-text-container">
                   <a href="#" class="project-name" @click="onProjectClick(project.id, $event)">{{project.name}}</a>
                   <span>{{project.description}}</span>
-                  <span>Finish: {{project.finishAt.format("MMM Do YY")}}</span>
+                  <span>Finish: {{project.finishAt}}</span>
                   <p>
                     <md-chip class="md-default" v-for="tag in project.tags" :key="tag">
                       <div class="tag" @click="setFilter('tag', tag)">
@@ -144,17 +152,17 @@
                     </div>
                 </span>
 
-                <md-button class="md-icon-button md-list-action" @click="toggleCompleted(project.name)">
+                <md-button class="md-icon-button md-list-action" @click="complete(project.id)">
                   <md-icon class="md-default" v-if="!project.completed">done</md-icon>
                   <md-icon class="md-primary" v-if="project.completed">done</md-icon>
                 </md-button>
 
-                <md-button class="md-icon-button md-list-action" @click="toggleFavorite(project.name)">
+                <md-button class="md-icon-button md-list-action" @click="toggleFavorite(project.id)">
                   <md-icon class="md-default" v-if="!project.favorited">star</md-icon>
                   <md-icon class="md-primary" v-if="project.favorited">star</md-icon>
                 </md-button>
 
-                <md-button class="md-icon-button md-list-action" @click="deleteProject(project.name)">
+                <md-button class="md-icon-button md-list-action" @click="deleteProject(project.id)">
                   <md-icon class="md-warn">delete</md-icon>
                 </md-button>
 
@@ -184,17 +192,19 @@
             tag: '',
             newProject: {
               name: '',
-              description: '',
               slug: '',
+              description: '',
+              avatar: '',
               tags: [],
               completed: false,
               favorited: false,
-              progress: 0
+              progress: 0,
+              finishAt: null
             },
           }
         },
         methods: {
-            ...mapActions(['fetchProjects', 'storeProject', 'toggleFavorite', 'toggleCompleted', 'deleteProject']),
+            ...mapActions(['fetchProjects', 'storeProject', 'toggleFavorite', 'complete', 'deleteProject']),
             saveProject(newProject) {
               this.slugifyNewProject(newProject);
               this.storeProject(newProject);

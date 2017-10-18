@@ -1,4 +1,5 @@
 import toastr from 'toastr'
+import axios from 'axios'
 
 const FETCH_ISSUES = "FETCH_ISSUES";
 const FETCH_ISSUE = "FETCH_ISSUE";
@@ -12,35 +13,18 @@ const CHANGE_ISSUE_ASSIGNEE_START = "CHANGE_ISSUE_ASSIGNEE_START";
 const CHANGE_ISSUE_ASSIGNEE = "CHANGE_ISSUE_ASSIGNEE";
 const SAVE_COMMENT_START = "SAVE_COMMENT_START";
 const SAVE_COMMENT = "SAVE_COMMENT";
+const FETCH_LATEST_ISSUE = "FETCH_LATEST_ISSUE";
+const FETCH_LATEST_ISSUE_START = "FETCH_LATEST_ISSUE_START";
 
 const state = {
     issues: null,
-    issue: {
-        id: 9,
-        name: 'Issue 9',
-        slug: 'issue-9',
-        description: 'Description',
-        type: 'task',
-        status: 'done',
-        projectId: 3,
-        priority: 'medium',
-        reporter: {
-            name: 'Andrew Hopkins',
-            avatar: 'avatar',
-            link: 'link'
-        },
-        assignee: {
-            name: 'Joy Rones',
-            avatar: 'avatar',
-            link: 'link'
-        },
-        comments: []
-    },
+    issue: null,
     isIssuesPending: false,
     isIssuePending: false,
     isIssueStatusChanging: false,
     isIssueAssigneeChanging: false,
     isCommentSaving: false,
+    isLatestIssueFetching: false
 };
 
 const mutations = {
@@ -59,298 +43,33 @@ const mutations = {
     [SAVE_COMMENT_START] (state) {
         state.isCommentSaving = true;
     },
-    [FETCH_ISSUES] (state, projectId = null) {    
-        let issues = [
-            {
-                id: 1,
-                name: 'Issue 1',
-                slug: 'issue-1',
-                description: 'Description',
-                type: 'task',
-                status: 'done',
-                projectId: 1,
-                priority: 'low',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 2,
-                name: 'Issue 2',
-                slug: 'issue-2',
-                description: 'Description',
-                type: 'task',
-                status: 'done',
-                projectId: 1,
-                priority: 'high',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 3,
-                name: 'Issue 3',
-                slug: 'issue-3',
-                description: 'Description',
-                type: 'task',
-                status: 'in-progress',
-                projectId: 1,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 4,
-                name: 'Issue 4',
-                slug: 'issue-4',
-                description: 'Description',
-                type: 'task',
-                status: 'to-do',
-                projectId: 2,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 5,
-                name: 'Issue 5',
-                slug: 'issue-5',
-                description: 'Description',
-                type: 'task',
-                status: 'done',
-                projectId: 2,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 6,
-                name: 'Issue 6',
-                slug: 'issue-6',
-                description: 'Description',
-                type: 'task',
-                status: 'done',
-                projectId: 2,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 7,
-                name: 'Issue 7',
-                slug: 'issue-7',
-                description: 'Description',
-                type: 'task',
-                status: 'to-do',
-                projectId: 3,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 8,
-                name: 'Issue 8',
-                slug: 'issue-8',
-                description: 'Description',
-                type: 'task',
-                status: 'done',
-                projectId: 3,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 9,
-                name: 'Issue 9',
-                slug: 'issue-9',
-                description: 'Description',
-                type: 'task',
-                status: 'in-progress',
-                projectId: 3,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 10,
-                name: 'Issue 10',
-                slug: 'issue-10',
-                description: 'Description',
-                type: 'task',
-                status: 'in-progress',
-                projectId: 4,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 11,
-                name: 'Issue 11',
-                slug: 'issue-11',
-                description: 'Description',
-                type: 'bug',
-                status: 'done',
-                projectId: 4,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-            {
-                id: 12,
-                name: 'Issue 12',
-                slug: 'issue-12',
-                description: 'Description',
-                type: 'sub-task',
-                status: 'to-do',
-                projectId: 10,
-                priority: 'medium',
-                reporter: {
-                    name: 'Andrew Hopkins',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                assignee: {
-                    name: 'Joy Rones',
-                    avatar: 'avatar',
-                    link: 'link'
-                },
-                comments: []
-            },
-        ];
-        if(projectId) {
-            issues = issues.filter(issue => {
-                return issue.projectId === projectId
-            });
-        }
+    [FETCH_LATEST_ISSUE_START] (state) {
+        state.isLatestIssueFetching = true;
+    },
+    [FETCH_ISSUES] (state, issues) {
         state.issues = issues;
         state.isIssuesPending = false;
     },
-    [FETCH_ISSUE] (state, issueId) {    
-        state.issue = {
-            name: 'Issue 10',
-            slug: 'issue-10',
-            description: 'Description',
-            type: 'task',
-            status: 'in-progress',
-            projectId: 4,
-            priority: 'medium',
-            reporter: {
-                name: 'Andrew Hopkins',
-                avatar: 'avatar',
-                link: 'link'
-            },
-            assignee: {
-                name: 'Joy Rones',
-                avatar: 'avatar',
-                link: 'link'
-            },
-            comments: []
+    [FETCH_ISSUE] (state, issue) {
+        issue.reporter = {
+            name: 'Andrew Hopkins',
+            avatar: 'avatar',
+            link: 'link'
         };
+        issue.assignee = {
+            name: 'Joy Rones',
+            avatar: 'avatar',
+            link: 'link'
+        };
+        state.issue = issue;        
         state.isIssuePending = false;
     },
     [STORE_ISSUE] (state, issue) {
         state.issues.push(issue);
     },
-    [DELETE_ISSUE] (state, issueSlug) {
+    [DELETE_ISSUE] (state, id) {
         let issue = state.issues.filter(issue => {
-            return issue.slug === issueSlug;
+            return issue.id === id;
         })[0];
         state.issues.splice(state.issues.indexOf(issue), 1);
     },
@@ -370,35 +89,52 @@ const mutations = {
         state.issue.comments.push(comment);
         state.isCommentSaving = false;
     },
+    [FETCH_LATEST_ISSUE] (state, issue) {
+        issue.reporter = {
+            name: 'Andrew Hopkins',
+            avatar: 'avatar',
+            link: 'link'
+        };
+        issue.assignee = {
+            name: 'Joy Rones',
+            avatar: 'avatar',
+            link: 'link'
+        };
+        state.issue = issue;
+        state.isLatestIssueFetching = false;
+    },
 };
 
 const actions = {
     fetchIssues: ({ commit }, projectId) => {
         commit(FETCH_START);
-        return new Promise(resolve => {
-            setTimeout(() => {
-                commit(FETCH_ISSUES, projectId);
-                resolve();
-            }, 1000);
-        });
+        return axios.get('http://localhost:1337/issue/find')
+          .then(function (response) {                
+            commit(FETCH_ISSUES, response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     },
-    fetchIssue: ({ commit }, issueId) => {
+    fetchIssue: ({ commit }, id) => {
         commit(FETCH_ISSUE_START);
-        return new Promise(resolve => {
-            setTimeout(() => {
-                commit(FETCH_ISSUE, issueId);
-                resolve();
-            }, 1000);
-        });
+        return axios.get('http://localhost:1337/issue/find/' + id)
+          .then(function (response) {                
+            commit(FETCH_ISSUE, response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     },
-    changeIssueStatus: ({ commit }, status) => {
+    changeIssueStatus: ({ commit }, payload) => {
         commit(CHANGE_ISSUE_STATUS_START);
-        return new Promise(resolve => {
-            setTimeout(() => {
-                commit(CHANGE_ISSUE_STATUS, status);
-                resolve();
-            }, 1000);
-        });
+        return axios.post('http://localhost:1337/issue/' + payload.id + '/changeStatus', {status: payload.status})
+          .then(function (response) {                
+            commit(CHANGE_ISSUE_STATUS, payload.status);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     },
     changeIssueAssignee: ({ commit }, assigneeId) => {
         commit(CHANGE_ISSUE_ASSIGNEE_START);
@@ -419,20 +155,31 @@ const actions = {
         });
     },
     storeIssue: ({ commit }, issue) => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                commit(STORE_ISSUE, issue);
-                resolve();
-            }, 1000);
-        });
+        return axios.post('http://localhost:1337/issue/create', issue)
+          .then(function (response) {
+            commit(STORE_ISSUE, issue);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     },
-    deleteIssue: ({ commit }, issueSlug) => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                commit(DELETE_ISSUE, issueSlug);
-                resolve();
-            }, 1000);
-        });
+    deleteIssue: ({ commit }, id) => {
+        return axios.delete('http://localhost:1337/issue/destroy/' + id)
+          .then(function (response) {                
+            commit(DELETE_ISSUE, id);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    },
+    fetchLatestIssue: ({ commit }) => {
+        return axios.get('http://localhost:1337/issue/latest')
+          .then(function (response) {                
+            commit(FETCH_LATEST_ISSUE, response.data.issue);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     },
 };
 
@@ -478,6 +225,9 @@ const getters = {
     },
     isCommentSaving: state => {
         return state.isCommentSaving
+    },
+    isLatestIssueFetching: state => {
+        return state.isLatestIssueFetching
     },
 };
 

@@ -61,6 +61,18 @@
                                <label>{{ $t('Type') }}</label>
                                <md-textarea v-model="newIssue.type"></md-textarea>
                            </md-input-container>
+                           <md-input-container>
+                               <label>{{ $t('Status') }}</label>
+                               <md-textarea v-model="newIssue.status"></md-textarea>
+                           </md-input-container>
+                           <md-input-container>
+                               <label>{{ $t('Project id') }}</label>
+                               <md-textarea v-model="newIssue.projectId"></md-textarea>
+                           </md-input-container>
+                           <md-input-container>
+                               <label>{{ $t('Priority') }}</label>
+                               <md-textarea v-model="newIssue.priority"></md-textarea>
+                           </md-input-container>
                        </form>
                    </md-dialog-content>
 
@@ -82,7 +94,7 @@
                            <span>{{issue.description}}</span>
                        </div>
 
-                       <md-button class="md-icon-button md-list-action" @click="deleteIssue(issue.slug)">
+                       <md-button class="md-icon-button md-list-action" @click="deleteIssue(issue.id)">
                           <md-icon class="md-warn">delete</md-icon>
                         </md-button>
 
@@ -111,15 +123,20 @@
                 query: '',
                 newIssue: {
                     name: '',
-                    description: '',
                     slug: '',
-                    type: ''
+                    description: '',
+                    type: '',
+                    status: 'to-do',
+                    projectId: '',
+                    priority: '',
+                    comments: []
                 },
             }
         },
         computed: {
             ...mapGetters(['allIssues', 'isIssuesPending']),
             filteredIssues() {
+                console.log('filtered')
                 let issues = [];
 
                 switch(this.filter) {
@@ -197,7 +214,7 @@
             },
         },
         beforeMount() {
-            let projectId = parseInt(this.$route.params.id);
+            let projectId = this.$route.params.id;
             this.fetchIssues(projectId);
         }
     }

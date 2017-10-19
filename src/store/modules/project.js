@@ -12,7 +12,7 @@ const FETCH_BY_ID = "FETCH_BY_ID";
 const DELETE_PROJECT = "DELETE_PROJECT";
 
 const state = {
-    projects: null,
+    projects: [],
     isProjectsPending: false,
     project: null,
     isProjectPending: false,
@@ -31,8 +31,10 @@ const mutations = {
         projects.map(project => {
             let createdAt = moment(project.createdAt);
             let finishAt = moment(project.finishAt);
+            let finishAtFormatted = finishAt.format('YYYY-MM-DD');
             let perfectProgress = Math.ceil((currentDay.diff(createdAt, "days")) / (finishAt.diff(createdAt, "days")) * 100);
             project.perfectProgress = perfectProgress;
+            project.finishAt = finishAtFormatted;
         });
         state.projects = projects;
         state.isProjectsPending = false;
@@ -97,6 +99,8 @@ const actions = {
     storeProject: ({ dispatch, commit }, project) => {
         return axios.post('http://localhost:1337/project/create', project)
           .then(function (response) {
+            project.id = response.data.id;
+            project.perfectProgress = 0;
             commit(STORE_PROJECT, project);
           })
           .catch(function (error) {

@@ -51,6 +51,19 @@
         display: block;
         margin: auto;
     }
+
+    .issue-dialog {
+        .dropdown {
+            &.v-select {
+                width: 100%;
+
+                .dropdown-toggle {
+                    border: none;
+                    border-radius: 0;
+                }
+            }
+        }
+    }
     
     .heading {
         .md-sidenav-content {

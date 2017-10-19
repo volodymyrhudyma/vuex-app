@@ -35,16 +35,15 @@
                        </md-input-container>
                    </form>
                </div>
-
            </div>
-
+          
            <div class="phone-viewport list">
 
                <div class="wrapper-loader" v-if="isIssuesPending">
                    <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
                </div>
 
-               <md-dialog md-open-from="#fab" md-close-to="#fab" ref="addIssue">
+               <md-dialog md-open-from="#fab" md-close-to="#fab" ref="addIssue" class="issue-dialog">
                    <md-dialog-title>{{ $t('Create new issue') }}</md-dialog-title>
 
                    <md-dialog-content>
@@ -58,21 +57,24 @@
                                <md-textarea v-model="newIssue.description"></md-textarea>
                            </md-input-container>
                            <md-input-container>
-                               <label>{{ $t('Type') }}</label>
-                               <md-textarea v-model="newIssue.type"></md-textarea>
+                            <label for="type">Type</label>
+                            <md-select name="type" id="type" v-model="newIssue.type">
+                              <md-option value="task">Task</md-option>
+                              <md-option value="sub-task">Sub task</md-option>
+                              <md-option value="bug">Bug</md-option>
+                            </md-select>
+                          </md-input-container>
+                           <md-input-container>
+                               <v-select v-model="newIssue.projectId" :options="formattedProjects" :placeholder="'Project'"></v-select>
                            </md-input-container>
                            <md-input-container>
-                               <label>{{ $t('Status') }}</label>
-                               <md-textarea v-model="newIssue.status"></md-textarea>
-                           </md-input-container>
-                           <md-input-container>
-                               <label>{{ $t('Project id') }}</label>
-                               <md-textarea v-model="newIssue.projectId"></md-textarea>
-                           </md-input-container>
-                           <md-input-container>
-                               <label>{{ $t('Priority') }}</label>
-                               <md-textarea v-model="newIssue.priority"></md-textarea>
-                           </md-input-container>
+                            <label for="priority">Priority</label>
+                            <md-select name="priority" id="priority" v-model="newIssue.priority">
+                              <md-option value="low">Low</md-option>
+                              <md-option value="medium">Medium</md-option>
+                              <md-option value="high">High</md-option>
+                            </md-select>
+                          </md-input-container>
                        </form>
                    </md-dialog-content>
 
@@ -112,8 +114,8 @@
 </template>
 
 <script>
-    import { createNamespacedHelpers } from 'vuex'
-    const { mapGetters, mapActions } = createNamespacedHelpers('issue')
+    import { mapGetters, mapActions } from 'vuex'
+    import vSelect from 'vue-select'
 
     export default {
         props: ['hideAddBtn'],
@@ -125,7 +127,7 @@
                     name: '',
                     slug: '',
                     description: '',
-                    type: '',
+                    type: 'task',
                     status: 'to-do',
                     projectId: '',
                     priority: '',
@@ -133,8 +135,12 @@
                 },
             }
         },
+        components: {
+          vSelect
+        },
         computed: {
-            ...mapGetters(['allIssues', 'isIssuesPending']),
+            ...mapGetters('issue', ['allIssues', 'isIssuesPending']),
+            ...mapGetters('project', ['allProjects', 'isProjectsPending']),
             filteredIssues() {
                 let issues = [];
 
@@ -168,17 +174,30 @@
                     return issue.name.toLowerCase().includes(this.query.toLowerCase())
                 });
             },
+            formattedProjects() {
+              return this.allProjects.map(project => {
+                return {
+                  label: project.name,
+                  value: project.id
+                }
+              });
+            }
         },
         methods: {
-            ...mapActions(['fetchIssues', 'fetchIssue', 'storeIssue', 'deleteIssue']),
+            ...mapActions('issue', ['fetchIssues', 'fetchIssue', 'storeIssue', 'deleteIssue']),
+            ...mapActions('project', ['fetchProjects']),
             saveIssue(newIssue) {
                 this.slugifyNewIssue(newIssue);
+                this.setProjectId(newIssue);
                 this.storeIssue(newIssue);
                 this.closeDialog('addIssue');
                 this.resetNewIssueData();
             },
             slugifyNewIssue(newIssue) {
                 newIssue.slug = this.slugify(newIssue.name);
+            },
+            setProjectId(newIssue) {
+                newIssue.projectId = newIssue.projectId.value;
             },
             slugify(string) {
                 return string
@@ -215,6 +234,7 @@
         beforeMount() {
             let projectId = this.$route.params.id;
             this.fetchIssues(projectId);
+            this.fetchProjects();
         }
     }
 </script>

@@ -241,12 +241,16 @@
             ...mapActions(['fetchProjects', 'storeProject', 'toggleFavorite', 'complete', 'deleteProject']),
             saveProject(newProject) {
               this.slugifyNewProject(newProject);
+              this.setFinishAt(newProject);
               this.storeProject(newProject);
               this.closeDialog('addProject');
               this.resetNewProjectData();
             },
             slugifyNewProject(newProject) {
                 newProject.slug = this.slugify(newProject.name);
+            },
+            setFinishAt(newProject) {
+                newProject.finishAt = this.datePicker.startTime.time;
             },
             slugify(string) {
                 return string
@@ -300,7 +304,6 @@
             ...mapGetters(['allProjects', 'isProjectsPending']),
             filteredProjects() {
               let projects = [];
-
               switch(this.filter) {
                 case 'all':
                   projects = this.allProjects;

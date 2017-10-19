@@ -12,8 +12,6 @@ const CHANGE_ISSUE_ASSIGNEE_START = "CHANGE_ISSUE_ASSIGNEE_START";
 const CHANGE_ISSUE_ASSIGNEE = "CHANGE_ISSUE_ASSIGNEE";
 const SAVE_COMMENT_START = "SAVE_COMMENT_START";
 const SAVE_COMMENT = "SAVE_COMMENT";
-const FETCH_LATEST_ISSUE = "FETCH_LATEST_ISSUE";
-const FETCH_LATEST_ISSUE_START = "FETCH_LATEST_ISSUE_START";
 
 const state = {
     issues: null,
@@ -23,7 +21,6 @@ const state = {
     isIssueStatusChanging: false,
     isIssueAssigneeChanging: false,
     isCommentSaving: false,
-    isLatestIssueFetching: false
 };
 
 const mutations = {
@@ -41,9 +38,6 @@ const mutations = {
     },
     [SAVE_COMMENT_START] (state) {
         state.isCommentSaving = true;
-    },
-    [FETCH_LATEST_ISSUE_START] (state) {
-        state.isLatestIssueFetching = true;
     },
     [FETCH_ISSUES] (state, issues) {
         state.issues = issues;
@@ -87,20 +81,6 @@ const mutations = {
     [SAVE_COMMENT] (state, comment) {
         state.issue.comments.push(comment);
         state.isCommentSaving = false;
-    },
-    [FETCH_LATEST_ISSUE] (state, issue) {
-        issue.reporter = {
-            name: 'Andrew Hopkins',
-            avatar: 'avatar',
-            link: 'link'
-        };
-        issue.assignee = {
-            name: 'Joy Rones',
-            avatar: 'avatar',
-            link: 'link'
-        };
-        state.issue = issue;
-        state.isLatestIssueFetching = false;
     },
 };
 
@@ -156,6 +136,7 @@ const actions = {
     storeIssue: ({ dispatch, commit }, issue) => {
         return axios.post('http://localhost:1337/issue/create', issue)
           .then(function (response) {
+            issue.id = response.data.id;
             commit(STORE_ISSUE, issue);
           })
           .catch(function (error) {
@@ -170,16 +151,7 @@ const actions = {
           .catch(function (error) {
             dispatch('handleError', error, {root: true});
           });
-    },
-    fetchLatestIssue: ({ dispatch, commit }) => {
-        return axios.get('http://localhost:1337/issue/latest')
-          .then(function (response) {                
-            commit(FETCH_LATEST_ISSUE, response.data.issue);
-          })
-          .catch(function (error) {
-            dispatch('handleError', error, {root: true});
-          });
-    },
+    },    
 };
 
 const getters = {
@@ -224,9 +196,6 @@ const getters = {
     },
     isCommentSaving: state => {
         return state.isCommentSaving
-    },
-    isLatestIssueFetching: state => {
-        return state.isLatestIssueFetching
     },
 };
 

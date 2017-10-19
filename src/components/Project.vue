@@ -26,19 +26,17 @@
     export default {
         computed: {
             ...mapGetters('project', ['project', 'isProjectPending']),
-            ...mapGetters('issue', ['issue', 'isIssuePending', 'isLatestIssueFetching']),
+            ...mapGetters('issue', ['issue', 'isIssuePending']),
             isPending() {
-              return this.isIssuePending || this.isProjectPending || this.isLatestIssueFetching;
+              return this.isIssuePending || this.isProjectPending;
             }
         },
         methods: {
             ...mapActions('project', ['fetchById']),            
-            ...mapActions('issue', ['fetchLatestIssue']),            
         },
         beforeMount() {
             let id = this.$route.params.id;
             this.fetchById(id);
-            this.fetchLatestIssue();
         },
         components: {
           List,

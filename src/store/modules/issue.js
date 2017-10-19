@@ -173,7 +173,7 @@ const getters = {
                 case 'sub-task':
                     subTasks++;
                     break;
-                case 'bugs':
+                case 'bug':
                     bugs++;
                     break;
                 default:

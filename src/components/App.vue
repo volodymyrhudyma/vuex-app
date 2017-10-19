@@ -396,13 +396,23 @@
                 padding: 20px;
 
                 .heading {
+                    height: 40px;
                     padding-bottom: 20px;
                     font-size: 2em;
                     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
                 }
 
                 .issue {
-                    padding: 20px 0;
+                    padding-top: 20px;
+                    height: calc(100% - 20px);
+                    overflow-y: auto;
+
+                    .empty {
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
 
                     .section {
                         font-weight: bold;
@@ -425,6 +435,7 @@
 
                         .workers {
                             margin-left: auto;
+                            margin-right: 10px;
                             text-align: right;
                             position: relative;
 

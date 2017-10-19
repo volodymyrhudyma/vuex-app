@@ -1,4 +1,3 @@
-import toastr from 'toastr'
 import axios from 'axios'
 
 const FETCH_ISSUES = "FETCH_ISSUES";
@@ -106,37 +105,37 @@ const mutations = {
 };
 
 const actions = {
-    fetchIssues: ({ commit }, projectId) => {
+    fetchIssues: ({ dispatch, commit }, projectId) => {
         commit(FETCH_START);
         return axios.get('http://localhost:1337/issue/find')
           .then(function (response) {                
             commit(FETCH_ISSUES, response.data);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    fetchIssue: ({ commit }, id) => {
+    fetchIssue: ({ dispatch, commit }, id) => {
         commit(FETCH_ISSUE_START);
         return axios.get('http://localhost:1337/issue/find/' + id)
           .then(function (response) {                
             commit(FETCH_ISSUE, response.data);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    changeIssueStatus: ({ commit }, payload) => {
+    changeIssueStatus: ({ dispatch, commit }, payload) => {
         commit(CHANGE_ISSUE_STATUS_START);
         return axios.post('http://localhost:1337/issue/' + payload.id + '/changeStatus', {status: payload.status})
           .then(function (response) {                
             commit(CHANGE_ISSUE_STATUS, payload.status);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    changeIssueAssignee: ({ commit }, assigneeId) => {
+    changeIssueAssignee: ({ dispatch, commit }, assigneeId) => {
         commit(CHANGE_ISSUE_ASSIGNEE_START);
         return new Promise(resolve => {
             setTimeout(() => {
@@ -145,7 +144,7 @@ const actions = {
             }, 1000);
         });
     },
-    saveComment: ({ commit }, comment) => {
+    saveComment: ({ dispatch, commit }, comment) => {
         commit(SAVE_COMMENT_START);
         return new Promise(resolve => {
             setTimeout(() => {
@@ -154,31 +153,31 @@ const actions = {
             }, 1000);
         });
     },
-    storeIssue: ({ commit }, issue) => {
+    storeIssue: ({ dispatch, commit }, issue) => {
         return axios.post('http://localhost:1337/issue/create', issue)
           .then(function (response) {
             commit(STORE_ISSUE, issue);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    deleteIssue: ({ commit }, id) => {
+    deleteIssue: ({ dispatch, commit }, id) => {
         return axios.delete('http://localhost:1337/issue/destroy/' + id)
           .then(function (response) {                
             commit(DELETE_ISSUE, id);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    fetchLatestIssue: ({ commit }) => {
+    fetchLatestIssue: ({ dispatch, commit }) => {
         return axios.get('http://localhost:1337/issue/latest')
           .then(function (response) {                
             commit(FETCH_LATEST_ISSUE, response.data.issue);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
 };

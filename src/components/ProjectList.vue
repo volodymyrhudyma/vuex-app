@@ -50,8 +50,7 @@
                   <md-textarea v-model="newProject.avatar"></md-textarea>
                 </md-input-container>
                 <md-input-container>
-                  <label>{{ $t('Finish at') }}</label>
-                  <md-textarea v-model="newProject.finishAt"></md-textarea>
+                  <date-picker :date="datePicker.startTime" :option="datePicker.option" :limit="datePicker.limit"></date-picker>
                 </md-input-container>
                 
                 <md-select name="tags" id="tags" multiple v-model="newProject.tags">
@@ -182,6 +181,8 @@
 
 <script>
     import { createNamespacedHelpers } from 'vuex'
+    import DatePicker from 'vue-datepicker'
+    import moment from 'moment'
     const { mapGetters, mapActions } = createNamespacedHelpers('project')
 
     export default {
@@ -201,7 +202,40 @@
               progress: 0,
               finishAt: null
             },
+
+            datePicker: {
+              startTime: {
+                time: ''
+              },
+         
+              option: {
+                type: 'day',
+                week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+                month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                format: 'YYYY-MM-DD',
+                placeholder: 'Finish at',
+                inputStyle: {
+                  'font-size': '16px',
+                },
+                color: {
+                  header: '#3f51b5',
+                  headerText: '#fff'
+                },
+                buttons: {
+                  ok: 'Select',
+                  cancel: 'Cancel'
+                },
+              },
+              limit: [{
+                type: 'fromto',
+                from: moment().format('YYYY-MM-DD'),
+                to: moment().add(3, "years").format('YYYY-MM-DD'),
+              }]
+            }
           }
+        },
+        components: {
+          DatePicker,
         },
         methods: {
             ...mapActions(['fetchProjects', 'storeProject', 'toggleFavorite', 'complete', 'deleteProject']),
@@ -229,7 +263,12 @@
               this.newProject = {
                 name: '',
                 description: '',
-                tags: []                
+                avatar: '',
+                tags: [],
+                completed: false,
+                favorited: false,
+                progress: 0,
+                finishAt: null               
               };
             },
             openDialog(ref) {
@@ -239,7 +278,6 @@
               this.$refs[ref].close();
             },
             setFilter(filter, value = null) {
-              console.log('set filter')
               this.filter = filter;
               if(value) {
                 this.tag = value;

@@ -136,7 +136,6 @@
         computed: {
             ...mapGetters(['allIssues', 'isIssuesPending']),
             filteredIssues() {
-                console.log('filtered')
                 let issues = [];
 
                 switch(this.filter) {

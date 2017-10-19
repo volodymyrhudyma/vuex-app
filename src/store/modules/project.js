@@ -15,7 +15,8 @@ const state = {
     projects: null,
     isProjectsPending: false,
     project: null,
-    isProjectPending: false
+    isProjectPending: false,
+    error: {}
 };
 
 const mutations = {
@@ -79,65 +80,64 @@ const mutations = {
             return project.id === id;
         })[0];
         state.projects.splice(state.projects.indexOf(project), 1);
-    },
+    }    
 };
 
 const actions = {
-    fetchProjects: ({ commit }, projects) => {
+    fetchProjects: ({ dispatch, commit }, projects) => {
         commit(FETCH_START);
         return axios.get('http://localhost:1337/project/find')
           .then(function (response) {                
             commit(FETCH_PROJECTS, response.data);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    storeProject: ({ commit }, project) => {
+    storeProject: ({ dispatch, commit }, project) => {
         return axios.post('http://localhost:1337/project/create', project)
           .then(function (response) {
-            console.log(response);
             commit(STORE_PROJECT, project);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    toggleFavorite: ({ commit }, id) => {
+    toggleFavorite: ({ dispatch, commit }, id) => {
         return axios.post('http://localhost:1337/project/' + id + '/toggleFavorite')
           .then(function (response) {
             commit(TOGGLE_FAVORITE, id);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    complete: ({ commit }, id) => {
+    complete: ({ dispatch, commit }, id) => {
         return axios.post('http://localhost:1337/project/' + id + '/complete')
           .then(function (response) {
             commit(COMPLETE, id);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    fetchById: ({ commit }, id) => {
+    fetchById: ({ dispatch, commit }, id) => {
         commit(FETCH_BY_ID_START);
         return axios.get('http://localhost:1337/project/find/' + id)
           .then(function (response) {
             commit(FETCH_BY_ID, response.data);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
-    deleteProject: ({ commit }, id) => {
+    deleteProject: ({ dispatch, commit }, id) => {
         return axios.delete('http://localhost:1337/project/destroy/' + id)
           .then(function (response) {                
             commit(DELETE_PROJECT, id);
           })
           .catch(function (error) {
-            console.log(error);
+            dispatch('handleError', error, {root: true});
           });
     },
 };

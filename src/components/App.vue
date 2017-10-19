@@ -51,7 +51,7 @@
         display: block;
         margin: auto;
     }
-
+    
     .heading {
         .md-sidenav-content {
             .md-avatar {

@@ -72,6 +72,9 @@
                               <md-option value="high">High</md-option>
                             </md-select>
                           </md-input-container>
+                          <md-input-container>
+                               <v-select v-model="newIssue.assignee" :options="teamMembers" :placeholder="'Assignee'"></v-select>
+                           </md-input-container>
                        </form>
                    </md-dialog-content>
 
@@ -127,8 +130,20 @@
                     status: 'to-do',
                     projectId: this.$route.params.id,
                     priority: '',
+                    assignee: '59e9d814cb2b21601b9431e9',
+                    reporter: '59e9d814cb2b21601b9431e9',
                     comments: []
                 },
+                teamMembers: [
+                  {
+                    label: 'Andrew Hopkins',
+                    value: '59e9d814cb2b21601b9431e9'
+                  },
+                  {
+                    label: 'Rafal Makes',
+                    value: '59e9d814cb2b21601b9431e9'
+                  },
+                ],
             }
         },
         components: {
@@ -175,12 +190,16 @@
             ...mapActions('project', ['fetchProjects']),
             saveIssue(newIssue) {
                 this.slugifyNewIssue(newIssue);
+                this.setIssueAssignee(newIssue);
                 this.storeIssue(newIssue);
                 this.closeDialog('addIssue');
                 this.resetNewIssueData();
             },
             slugifyNewIssue(newIssue) {
                 newIssue.slug = this.slugify(newIssue.name);
+            },
+            setIssueAssignee(newIssue) {
+                newIssue.assignee = newIssue.assignee.value
             },
             slugify(string) {
                 return string
@@ -196,9 +215,15 @@
             resetNewIssueData() {
                 this.newIssue = {
                     name: '',
-                    description: '',
                     slug: '',
-                    type: ''
+                    description: '',
+                    type: 'task',
+                    status: 'to-do',
+                    projectId: this.$route.params.id,
+                    priority: '',
+                    assignee: '59e9d814cb2b21601b9431e9',
+                    reporter: '59e9d814cb2b21601b9431e9',
+                    comments: []
                 }
             },
             onIssueClick(id) {

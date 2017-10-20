@@ -13,6 +13,9 @@ const CHANGE_ISSUE_ASSIGNEE = "CHANGE_ISSUE_ASSIGNEE";
 const SAVE_COMMENT_START = "SAVE_COMMENT_START";
 const SAVE_COMMENT = "SAVE_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
+const EDIT_ISSUE_START = "EDIT_ISSUE_START";
+const EDIT_ISSUE = "EDIT_ISSUE";
+const UPDATE_FIELD = "UPDATE_FIELD";
 
 const state = {
     issues: null,
@@ -22,6 +25,7 @@ const state = {
     isIssueStatusChanging: false,
     isIssueAssigneeChanging: false,
     isCommentSaving: false,
+    isIssueEditing: false,
 };
 
 const mutations = {
@@ -44,17 +48,7 @@ const mutations = {
         state.issues = issues;
         state.isIssuesPending = false;
     },
-    [FETCH_ISSUE] (state, issue) {
-        issue.reporter = {
-            name: 'Andrew Hopkins',
-            avatar: 'avatar',
-            link: 'link'
-        };
-        issue.assignee = {
-            name: 'Joy Rones',
-            avatar: 'avatar',
-            link: 'link'
-        };
+    [FETCH_ISSUE] (state, issue) {        
         state.issue = issue;        
         state.isIssuePending = false;
     },
@@ -66,17 +60,14 @@ const mutations = {
             return issue.id === id;
         })[0];
         state.issues.splice(state.issues.indexOf(issue), 1);
+        state.issue = null;
     },
     [CHANGE_ISSUE_STATUS] (state, status) {    
         state.issue.status = status;
         state.isIssueStatusChanging = false;
     },
-    [CHANGE_ISSUE_ASSIGNEE] (state, assigneeId) {
-        state.issue.assignee = {
-            name: 'Changed',
-            avatar: 'changed',
-            link: 'changed'
-        };
+    [CHANGE_ISSUE_ASSIGNEE] (state, assignee) {
+        state.issue.assignee = assignee;
         state.isIssueAssigneeChanging = false;
     },
     [SAVE_COMMENT] (state, comment) {
@@ -88,6 +79,16 @@ const mutations = {
             return comment.id === id;
         })[0];
         state.issue.comments.splice(state.issue.comments.indexOf(comment), 1);
+    },
+    [EDIT_ISSUE_START] (state) {
+        state.isIssueEditing = true;
+    },
+    [EDIT_ISSUE] (state, issue) {
+        state.issue = issue;
+        state.isIssueEditing = false;
+    },
+    [UPDATE_FIELD] (state, payload) {
+        state.issue[payload.name] = payload.value;
     },
 };
 
@@ -122,14 +123,15 @@ const actions = {
             dispatch('handleError', error, {root: true});
           });
     },
-    changeIssueAssignee: ({ dispatch, commit }, assigneeId) => {
+    changeIssueAssignee: ({ dispatch, commit }, payload) => {
         commit(CHANGE_ISSUE_ASSIGNEE_START);
-        return new Promise(resolve => {
-            setTimeout(() => {
-                commit(CHANGE_ISSUE_ASSIGNEE, assigneeId);
-                resolve();
-            }, 1000);
-        });
+        return axios.post('http://localhost:1337/issue/' + payload.id + '/changeAssignee', {assignee: payload.assignee})
+          .then(function (response) {                
+            commit(CHANGE_ISSUE_ASSIGNEE, response.data.assignee);
+          })
+          .catch(function (error) {
+            dispatch('handleError', error, {root: true});
+          });
     },
     saveComment: ({ dispatch, commit }, comment) => {
         commit(SAVE_COMMENT_START);        
@@ -168,7 +170,19 @@ const actions = {
           .catch(function (error) {
             dispatch('handleError', error, {root: true});
           });
-    },    
+    },
+    editIssue: ({ dispatch, commit }, issue) => {
+        console.log('issue')
+        console.log(issue)
+        commit(EDIT_ISSUE_START);
+        return axios.post('http://localhost:1337/issue/update/' + issue.id, issue)
+          .then(function (response) {                
+            commit(EDIT_ISSUE, response.data);
+          })
+          .catch(function (error) {
+            dispatch('handleError', error, {root: true});
+          });
+    },  
 };
 
 const getters = {
@@ -213,6 +227,9 @@ const getters = {
     },
     isCommentSaving: state => {
         return state.isCommentSaving
+    },
+    isIssueEditing: state => {
+        return state.isIssueEditing
     },
 };
 

@@ -33,17 +33,7 @@
                             <md-button class="md-icon-button" md-menu-trigger slot="icon">
                               <md-icon>mode_edit</md-icon>
                             </md-button>
-                            <md-option value="1">Pam Beesly</md-option>
-                            <md-option value="2">Angela Martin</md-option>
-                            <md-option value="3">Kelly Kapoor</md-option>
-                            <md-option value="4">Ryan Howard</md-option>
-                            <md-option value="5">Kevin Malone</md-option>
-                            <md-option value="6">Creed Bratton</md-option>
-                            <md-option value="7">Oscar Nunez</md-option>
-                            <md-option value="8">Toby Flenderson</md-option>
-                            <md-option value="9">Stanley Hudson</md-option>
-                            <md-option value="10">Meredith Palmer</md-option>
-                            <md-option value="11">Phyllis Lapin-Vance</md-option>
+                            <md-option value="59e9e5dc2e05d6742497361d">Name2</md-option>
                           </md-select>
                       </span>
                   </div>
@@ -60,8 +50,57 @@
          <div class="manager">
               <div class="actions">
                   <div class="item">
-                      <md-button class="md-raised">Edit</md-button>
-                 </div>                   
+                      <md-button class="md-raised" @click="openDialog('editIssue')">Edit</md-button>
+                 </div>
+
+
+                <md-dialog md-open-from="#fab" md-close-to="#fab" ref="editIssue" class="edit-issue-dialog">
+                   <md-dialog-title>{{ $t('Edit issue') }}</md-dialog-title>
+
+                   <md-dialog-content>
+                       <form>
+                           <md-input-container>
+                               <label>{{ $t('Name') }}</label>
+                               <md-textarea v-model="name"></md-textarea>
+                           </md-input-container>
+                           <md-input-container>
+                               <label>{{ $t('Description') }}</label>
+                               <md-textarea v-model="description"></md-textarea>
+                           </md-input-container>
+                           <md-input-container>
+                            <label for="type">Type</label>
+                            <md-select name="type" id="type" v-model="type">
+                              <md-option value="task">Task</md-option>
+                              <md-option value="sub-task">Sub task</md-option>
+                              <md-option value="bug">Bug</md-option>
+                            </md-select>
+                          </md-input-container>
+                          <md-input-container>
+                            <label for="type">Status</label>
+                            <md-select name="type" id="type" v-model="status">
+                              <md-option value="to-do">To do</md-option>
+                              <md-option value="in-progress">In progress</md-option>
+                              <md-option value="done">Done</md-option>
+                            </md-select>
+                          </md-input-container>
+                           <md-input-container>
+                            <label for="priority">Priority</label>
+                            <md-select name="priority" id="priority" v-model="priority">
+                              <md-option value="low">Low</md-option>
+                              <md-option value="medium">Medium</md-option>
+                              <md-option value="high">High</md-option>
+                            </md-select>
+                          </md-input-container>
+                       </form>
+                   </md-dialog-content>
+
+                   <md-dialog-actions>
+                       <md-button class="md-primary" @click="closeDialog('editIssue')">{{ $t('Cancel') }}</md-button>
+                       <md-button class="md-primary" @click="editIssue(issue)">{{ $t('Create') }}</md-button>
+                   </md-dialog-actions>
+               </md-dialog>
+
+
               </div>
               <div class="status">
                   <div class="item">
@@ -174,30 +213,82 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters, mapActions, mapState } from 'vuex'
   import Dropzone from 'vue2-dropzone/src/index.vue'
+  import vSelect from 'vue-select'
 
     export default {
-        props: ['project', 'issue'],
+        props: ['project'],
         data() {
           return {
             commentInputShown: false,
             comment: {
               message: ''
-            }
+            },
+            teamMembers: [
+              {
+                label: 'Andrew Hopkins',
+                value: '59e9d814cb2b21601b9431e9'
+              },
+              {
+                label: 'Rafal Makes',
+                value: '59e9d814cb2b21601b9431e9'
+              },
+            ],
           }
         },
         computed: {
-            ...mapGetters('issue', ['isIssueAssigneeChanging', 'isCommentSaving']),
+            ...mapGetters('issue', ['isIssueAssigneeChanging', 'isCommentSaving', 'issue']),
           issueStatus() {
             return this.issue.status;
-          }
+          },
+          name: {
+            get () {
+              return this.$store.state.issue.issue.name;
+            },
+            set (value) {
+              this.$store.commit('issue/UPDATE_FIELD', {name: 'name', value: value});
+            }
+          },
+          description: {
+            get () {
+              return this.$store.state.issue.issue.description;
+            },
+            set (value) {
+              this.$store.commit('issue/UPDATE_FIELD', {name: 'description', value: value});
+            }
+          },
+          type: {
+            get () {
+              return this.$store.state.issue.issue.type;
+            },
+            set (value) {
+              this.$store.commit('issue/UPDATE_FIELD', {name: 'type', value: value});
+            }
+          },
+          status: {
+            get () {
+              return this.$store.state.issue.issue.status;
+            },
+            set (value) {
+              this.$store.commit('issue/UPDATE_FIELD', {name: 'status', value: value});
+            }
+          },
+          priority: {
+            get () {
+              return this.$store.state.issue.issue.priority;
+            },
+            set (value) {
+              this.$store.commit('issue/UPDATE_FIELD', {name: 'priority', value: value});
+            }
+          },
         },
         components: {
-          Dropzone
+          Dropzone,
+          vSelect
         },
-        methods: {
-          ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment', 'deleteComment']),
+        methods: {          
+          ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment', 'deleteComment', 'editIssue']),
           showSuccess(file) {
             console.log('A file was successfully uploaded')
           },
@@ -208,8 +299,12 @@
             };
             this.changeIssueStatus(payload);
           },
-          assigneeChanged(id) {
-              this.changeIssueAssignee(id);
+          assigneeChanged(assignee) {
+            let payload = {
+              id: this.issue.id,
+              assignee: assignee
+            };
+            this.changeIssueAssignee(payload);            
           },
           showCommentInput() {
             this.commentInputShown = true;
@@ -232,6 +327,12 @@
             this.saveComment(comment);
             this.cancelComment();
             this.hideCommentInput();
+          },
+          openDialog(ref) {
+              this.$refs[ref].open();
+          },
+          closeDialog(ref) {
+              this.$refs[ref].close();
           },
         }
     }

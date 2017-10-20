@@ -5,7 +5,7 @@
          <list></list>
       </div>
 
-      <issue-details :project="project" :issue="issue" v-if="!isPending"></issue-details>
+      <issue-details :project="project" v-if="!isPending"></issue-details>
 
       <div class="wrapper-loader" v-if="isPending">
          <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
@@ -26,7 +26,7 @@
     export default {
         computed: {
             ...mapGetters('project', ['project', 'isProjectPending']),
-            ...mapGetters('issue', ['issue', 'isIssuePending']),
+            ...mapGetters('issue', ['isIssuePending']),
             isPending() {
               return this.isIssuePending || this.isProjectPending;
             }

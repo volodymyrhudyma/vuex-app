@@ -1,6 +1,6 @@
 <template>
    <div class="flex-wrapper">
-       <div class="add-section" v-if="!hideAddBtn">
+       <div class="add-section">
 
            <md-button class="md-icon-button md-raised md-primary" @click="openDialog('addIssue')">
                <md-icon>add</md-icon>
@@ -65,9 +65,6 @@
                             </md-select>
                           </md-input-container>
                            <md-input-container>
-                               <v-select v-model="newIssue.projectId" :options="formattedProjects" :placeholder="'Project'"></v-select>
-                           </md-input-container>
-                           <md-input-container>
                             <label for="priority">Priority</label>
                             <md-select name="priority" id="priority" v-model="newIssue.priority">
                               <md-option value="low">Low</md-option>
@@ -118,7 +115,6 @@
     import vSelect from 'vue-select'
 
     export default {
-        props: ['hideAddBtn'],
         data () {
             return {
                 filter: 'all',
@@ -129,7 +125,7 @@
                     description: '',
                     type: 'task',
                     status: 'to-do',
-                    projectId: '',
+                    projectId: this.$route.params.id,
                     priority: '',
                     comments: []
                 },
@@ -140,7 +136,6 @@
         },
         computed: {
             ...mapGetters('issue', ['allIssues', 'isIssuesPending']),
-            ...mapGetters('project', ['allProjects', 'isProjectsPending']),
             filteredIssues() {
                 let issues = [];
 
@@ -173,31 +168,19 @@
                 return issues.filter(issue => {
                     return issue.name.toLowerCase().includes(this.query.toLowerCase())
                 });
-            },
-            formattedProjects() {
-              return this.allProjects.map(project => {
-                return {
-                  label: project.name,
-                  value: project.id
-                }
-              });
-            }
+            },            
         },
         methods: {
             ...mapActions('issue', ['fetchIssues', 'fetchIssue', 'storeIssue', 'deleteIssue']),
             ...mapActions('project', ['fetchProjects']),
             saveIssue(newIssue) {
                 this.slugifyNewIssue(newIssue);
-                this.setProjectId(newIssue);
                 this.storeIssue(newIssue);
                 this.closeDialog('addIssue');
                 this.resetNewIssueData();
             },
             slugifyNewIssue(newIssue) {
                 newIssue.slug = this.slugify(newIssue.name);
-            },
-            setProjectId(newIssue) {
-                newIssue.projectId = newIssue.projectId.value;
             },
             slugify(string) {
                 return string

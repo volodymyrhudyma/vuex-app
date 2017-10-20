@@ -2,7 +2,7 @@
    <div class="flex-wrapper">
 
       <div class="issues">
-         <list :hideAddBtn="true"></list>
+         <list></list>
       </div>
 
       <issue-details :project="project" :issue="issue" v-if="!isPending"></issue-details>

@@ -5,7 +5,6 @@ import Login from './components/Login.vue'
 import Home from './components/Home.vue'
 import ProjectList from './components/ProjectList.vue'
 import Project from './components/Project.vue'
-import IssueList from './components/IssueList.vue'
 import TechList from './components/TechList.vue'
 import BadgeList from './components/BadgeList.vue'
 import Profile from './components/Profile.vue'
@@ -33,7 +32,6 @@ const routes = [
 	{ path: '/login', component: Login },
 	{ path: '/projects', component: ProjectList },
 	{ path: '/project/:id', component: Project },
-	{ path: '/issues', component: IssueList },
 	{ path: '/technologies', component: TechList },
 	{ path: '/badges', component: BadgeList },
 	{ path: '/profile', component: Profile },

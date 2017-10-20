@@ -55,15 +55,6 @@
                     </span>
                   </md-list-item>
 
-                  <md-list-item @click="onLeftMenuItemClick('issues')">
-                    <md-icon>gesture</md-icon> 
-                    <span>
-                        <li v-if="isLoggedIn">
-                              {{ $t('Issues') }}
-                          </li>
-                    </span>
-                  </md-list-item>
-
                   <md-list-item @click="onLeftMenuItemClick('technologies')">
                     <md-icon>http</md-icon> 
                       <span>

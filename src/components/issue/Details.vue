@@ -105,9 +105,9 @@
              Attachments
            </div>
            <div class="value">
-             <div class="empty">
-               There are no attachments yet on this issue.
-             </div>
+            <dropzone id="myVueDropzone" url="https://httpbin.org/post" v-on:vdropzone-success="showSuccess">
+                <input type="hidden" name="token" value="xxx">
+            </dropzone>
            </div>
          </div>
          <div class="activity">
@@ -175,6 +175,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
+  import Dropzone from 'vue2-dropzone/src/index.vue'
 
     export default {
         props: ['project', 'issue'],
@@ -192,8 +193,14 @@
             return this.issue.status;
           }
         },
+        components: {
+          Dropzone
+        },
         methods: {
           ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment', 'deleteComment']),
+          showSuccess(file) {
+            console.log('A file was successfully uploaded')
+          },
           changeStatus(status) {
             let payload = {
               id: this.issue.id,

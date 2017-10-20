@@ -94,7 +94,7 @@ const mutations = {
 const actions = {
     fetchIssues: ({ dispatch, commit }, projectId) => {
         commit(FETCH_START);
-        return axios.get('http://localhost:1337/issue/find')
+        return axios.get('http://localhost:1337/issue/find?projectId=' + projectId)
           .then(function (response) {                
             commit(FETCH_ISSUES, response.data);
           })

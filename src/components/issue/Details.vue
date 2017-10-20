@@ -117,15 +117,34 @@
            <div class="comments-container">
              <div class="comments">
 
-             <div class="list">
-               <div class="item" v-for="comment in issue.comments">
-                 {{comment}}
-               </div>
 
-               <div class="empty" v-if="!issue.comments.length && !isCommentSaving">
-                 There are no comments yet on this issue.
-               </div>
-             </div>
+              <div class="phone-viewport" v-if="issue.comments.length">
+                <md-list class="custom-list md-triple-line md-dense">
+
+                  <md-list-item v-for="comment in issue.comments">
+                    <md-avatar>
+                      <img src="https://placeimg.com/40/40/people/1" alt="People">
+                    </md-avatar>
+
+                    <div class="md-list-text-container">
+                      <span>{{comment.author}}</span>
+                      <p>{{comment.message}}</p>
+                    </div>
+
+                    <md-button class="md-icon-button md-list-action" @click="deleteComment(comment.id)">
+                      <md-icon class="md-primary">delete</md-icon>
+                    </md-button>
+
+                    <md-divider class="md-inset"></md-divider>
+                  </md-list-item>
+
+                </md-list>
+              </div>
+
+              <div class="empty" v-if="!issue.comments.length">
+                  There are no comments yet on this issue.
+              </div>
+
                
              </div>
              <div class="add-comment" v-if="!commentInputShown">
@@ -138,9 +157,9 @@
                  <md-input-container>
                   <md-icon>speaker_notes</md-icon>
                   <label>Notes</label>
-                  <md-textarea v-model="comment"></md-textarea>
+                  <md-textarea v-model="comment.message"></md-textarea>
                 </md-input-container>
-                <md-button class="md-raised md-primary" @click="addComment">Add</md-button>
+                <md-button class="md-raised md-primary" @click="addComment()">Add</md-button>
                 <md-button @click="cancelComment">Cancel</md-button>
               </form>
              </div>
@@ -162,7 +181,9 @@
         data() {
           return {
             commentInputShown: false,
-            comment: ''
+            comment: {
+              message: ''
+            }
           }
         },
         computed: {
@@ -172,7 +193,7 @@
           }
         },
         methods: {
-          ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment']),
+          ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment', 'deleteComment']),
           changeStatus(status) {
             let payload = {
               id: this.issue.id,
@@ -190,13 +211,21 @@
             this.commentInputShown = false;
           },
           cancelComment() {
-            this.comment = '';
+            this.comment = {
+              message: ''
+            };
           },
           addComment() {
-            this.saveComment(this.comment);
+            let comment = {
+              author: 'Volodymyr Hudyma',
+              message: this.comment.message,
+              id: this.issue.id,
+              type: 'issue'
+            }
+            this.saveComment(comment);
             this.cancelComment();
             this.hideCommentInput();
-          }
+          },
         }
     }
 </script>

@@ -560,18 +560,6 @@
                         margin-bottom: 15px;
 
                         .comments-container {
-                             .comments {
-                                .list {
-                                    .item {
-                                        margin-bottom: 5px;
-                                    }
-
-                                    .empty {
-                                        margin-top: 10px;
-                                    }
-                                }
-                            }
-
                             .add-comment {
                                 margin-top: 10px;
                             }

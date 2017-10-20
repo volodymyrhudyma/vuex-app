@@ -20,12 +20,21 @@ const state = {
 
 const mutations = {
 	[THROW_ERROR] (state, error) {
-		state.error = {
-            statusCode: error.response.status,
-            invalidAttributes: Object.keys(error.response.data.invalidAttributes),
-            reason: error.response.data.reason
-        };
-        let html = state.error.reason + ": <br /> " + state.error.invalidAttributes.join(", ");
+        let html = 'Error!';
+        if(typeof error.response.data === 'object') {
+           state.error = {
+                statusCode: error.response.status,
+                invalidAttributes: Object.keys(error.response.data.invalidAttributes),
+                reason: error.response.data.reason
+            };
+            html = state.error.reason + ": <br /> " + state.error.invalidAttributes.join(", ");
+        } else {
+            state.error = {
+                statusCode: error.response.status,
+                reason: error.response.data
+            };
+            html = state.error.reason;
+        }
         toastr.error(html);
     },
 };

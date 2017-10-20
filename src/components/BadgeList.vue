@@ -16,18 +16,13 @@
 			<div class="cards" v-if="!isBadgesPending">
 		    	<md-card md-with-hover v-for="badge in allBadges" :key="badge.name">
 				  <md-card-media>
-				    <img src="assets/card-image-1.jpg" alt="People">
+				    <img :src="'/assets/images/badges/' + badge.icon" alt="People">
 				    <md-ink-ripple></md-ink-ripple>
 				  </md-card-media>
 				  <md-card-actions>
 				    <md-button class="md-icon-button">
 				      <md-icon>favorite</md-icon>
 				    </md-button>
-
-				    <md-button class="md-icon-button">
-				      <md-icon>bookmark</md-icon>
-				    </md-button>
-
 				    <md-button class="md-icon-button">
 				      <md-icon>share</md-icon>
 				    </md-button>

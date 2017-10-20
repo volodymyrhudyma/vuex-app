@@ -1,10 +1,12 @@
 import toastr from 'toastr'
+import axios from 'axios'
 
 const FETCH_BADGES = "FETCH_BADGES";
 const FETCH_START = "FETCH_START";
+const ADD_BADGE = "ADD_BADGE";
 
 const state = {
-    badges: null,
+    badges: [],
     types: [
         {
             name: 'One',
@@ -100,62 +102,34 @@ const mutations = {
     [FETCH_START] (state) {
         state.isBadgesPending = true;
     },
-    [FETCH_BADGES] (state, issues) {
-        state.badges = [
-            {
-                name: 'One',
-                type: 'one'
-            },
-            {
-                name: 'Two',
-                type: 'two'
-            },
-            {
-                name: 'Three',
-                type: 'three'
-            },
-            {
-                name: 'Four',
-                type: 'four'
-            },
-            {
-                name: 'Five',
-                type: 'five'
-            },
-            {
-                name: 'Six',
-                type: 'six'
-            },
-            {
-                name: 'Seven',
-                type: 'seven'
-            },
-            {
-                name: 'Eight',
-                type: 'eight'
-            },
-            {
-                name: 'Nine',
-                type: 'nine'
-            },
-            {
-                name: 'Ten',
-                type: 'ten'
-            },
-        ];
+    [FETCH_BADGES] (state, badges) {
+        state.badges = badges;
         state.isBadgesPending = false;
+    },
+    [ADD_BADGE] (state, payload) {
+        state.badges.push(payload);
     },
 };
 
 const actions = {
-    fetchBadges: ({ commit }, badges) => {
+    fetchBadges: ({ commit }) => {
         commit(FETCH_START);
-        return new Promise(resolve => {
-            setTimeout(() => {
-                commit(FETCH_BADGES);
-                resolve();
-            }, 1000);
-        });
+        return axios.post('http://localhost:1337/badge/find')
+          .then(function (response) {
+            commit(FETCH_BADGES, response.data);
+          })
+          .catch(function (error) {
+            dispatch('handleError', error, {root: true});
+          });
+    },
+    addBadge: ({ dispatch, commit }, payload) => {
+        return axios.post('http://localhost:1337/badge/create', payload)
+          .then(function (response) {
+            commit(ADD_BADGE, payload);
+          })
+          .catch(function (error) {
+            dispatch('handleError', error, {root: true});
+          });
     },
 };
 

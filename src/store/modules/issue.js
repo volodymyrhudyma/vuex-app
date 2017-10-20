@@ -12,6 +12,7 @@ const CHANGE_ISSUE_ASSIGNEE_START = "CHANGE_ISSUE_ASSIGNEE_START";
 const CHANGE_ISSUE_ASSIGNEE = "CHANGE_ISSUE_ASSIGNEE";
 const SAVE_COMMENT_START = "SAVE_COMMENT_START";
 const SAVE_COMMENT = "SAVE_COMMENT";
+const DELETE_COMMENT = "DELETE_COMMENT";
 
 const state = {
     issues: null,
@@ -82,6 +83,12 @@ const mutations = {
         state.issue.comments.push(comment);
         state.isCommentSaving = false;
     },
+    [DELETE_COMMENT] (state, id) {
+        let comment = state.issue.comments.filter(comment => {
+            return comment.id === id;
+        })[0];
+        state.issue.comments.splice(state.issue.comments.indexOf(comment), 1);
+    },
 };
 
 const actions = {
@@ -125,13 +132,23 @@ const actions = {
         });
     },
     saveComment: ({ dispatch, commit }, comment) => {
-        commit(SAVE_COMMENT_START);
-        return new Promise(resolve => {
-            setTimeout(() => {
-                commit(SAVE_COMMENT, comment);
-                resolve();
-            }, 1000);
-        });
+        commit(SAVE_COMMENT_START);        
+        return axios.post('http://localhost:1337/issue/' + comment.id + '/comments/create', comment)
+          .then(function (response) {
+            commit(SAVE_COMMENT, response.data);
+          })
+          .catch(function (error) {
+            dispatch('handleError', error, {root: true});
+          });
+    },
+    deleteComment: ({ dispatch, commit }, id) => {
+        return axios.post('http://localhost:1337/comment/destroy/' + id)
+          .then(function (response) {
+            commit(DELETE_COMMENT, id);
+          })
+          .catch(function (error) {
+            dispatch('handleError', error, {root: true});
+          });
     },
     storeIssue: ({ dispatch, commit }, issue) => {
         return axios.post('http://localhost:1337/issue/create', issue)

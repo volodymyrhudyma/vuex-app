@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import { badger } from '../helpers/badger'
 
 export default {
   data() {
@@ -32,12 +33,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions('badge', ['addBadge']),
     login() {
       this.$store.dispatch("login", {
         email: this.email,
         password: this.password
       }).then(() => {
-        this.$router.push("/")
+        this.addBadge(badger.loginBadge);
+        this.$router.push("/");
       });
     }
   },

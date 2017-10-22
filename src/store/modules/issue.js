@@ -172,8 +172,6 @@ const actions = {
           });
     },
     editIssue: ({ dispatch, commit }, issue) => {
-        console.log('issue')
-        console.log(issue)
         commit(EDIT_ISSUE_START);
         return axios.post('http://localhost:1337/issue/update/' + issue.id, issue)
           .then(function (response) {                
@@ -182,7 +180,17 @@ const actions = {
           .catch(function (error) {
             dispatch('handleError', error, {root: true});
           });
-    },  
+    },
+    uploadAttachment: ({ dispatch, commit }, payload) => {
+        console.log(payload);
+        return axios.post('http://localhost:1337/issue/' + payload.id + '/attachments/create', payload)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                dispatch('handleError', error, {root: true});
+            });
+    },
 };
 
 const getters = {

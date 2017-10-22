@@ -46,10 +46,6 @@
                   <md-textarea v-model="newProject.description"></md-textarea>
                 </md-input-container>
                 <md-input-container>
-                  <label>{{ $t('Avatar') }}</label>
-                  <md-textarea v-model="newProject.avatar"></md-textarea>
-                </md-input-container>
-                <md-input-container>
                   <date-picker :date="datePicker.startTime" :option="datePicker.option" :limit="datePicker.limit"></date-picker>
                 </md-input-container>
                 
@@ -77,9 +73,6 @@
           <md-list class="custom-list md-triple-line" v-if="!isProjectsPending && filteredProjects.length">
 
               <md-list-item v-for="(project, index) in filteredProjects" :key="project.name">
-                <md-avatar>
-                  <img v-bind:src="project.avatar" alt="People">
-                </md-avatar>
 
                 <div class="md-list-text-container">
                   <a href="#" class="project-name" @click="onProjectClick(project.id, $event)">{{project.name}}</a>
@@ -123,7 +116,7 @@
                     <div>For the current project, your perfect progress in the current time should be: <span class="value">{{project.perfectProgress}}</span></div>
                     <div>It really is: <span class="value">{{project.progress}}</span></div>
                     <div :class="'tip' + (project.progress >= project.perfectProgress ? ' ok' : ' lack')">
-                      {{project.progress === project.perfectProgress ? 
+                      {{project.progress === project.perfectProgress && project.progress !== 0 ?
                         'The project is completed, cool!' 
                       : project.progress >= project.perfectProgress ?
                         'Well, you should go on this way and the project will be completed in time!' 
@@ -195,7 +188,6 @@
               name: '',
               slug: '',
               description: '',
-              avatar: '',
               tags: [],
               completed: false,
               favorited: false,
@@ -267,7 +259,6 @@
               this.newProject = {
                 name: '',
                 description: '',
-                avatar: '',
                 tags: [],
                 completed: false,
                 favorited: false,

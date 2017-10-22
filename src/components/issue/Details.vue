@@ -144,7 +144,7 @@
              Attachments
            </div>
            <div class="value">
-            <dropzone id="myVueDropzone" url="https://httpbin.org/post" v-on:vdropzone-success="showSuccess">
+            <dropzone id="myVueDropzone" :url="'http://localhost:1337/issue/' + issue.id + '/attachments/create'" v-on:vdropzone-success="showSuccess">
                 <input type="hidden" name="token" value="xxx">
             </dropzone>
            </div>
@@ -228,11 +228,11 @@
             teamMembers: [
               {
                 label: 'Andrew Hopkins',
-                value: '59e9d814cb2b21601b9431e9'
+                value: '59ea1be562b2200503c36bd0'
               },
               {
                 label: 'Rafal Makes',
-                value: '59e9d814cb2b21601b9431e9'
+                value: '59ea1be562b2200503c36bd0'
               },
             ],
           }
@@ -271,7 +271,7 @@
               return this.$store.state.issue.issue.status;
             },
             set (value) {
-              this.$store.commit('issue/UPDATE_FIELD', {name: 'status', value: value});
+              this.$store.commit('issue/UPDATE_`FIELD', {name: 'status', value: value});
             }
           },
           priority: {
@@ -288,9 +288,9 @@
           vSelect
         },
         methods: {          
-          ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment', 'deleteComment', 'editIssue']),
+          ...mapActions('issue', ['changeIssueStatus', 'changeIssueAssignee', 'saveComment', 'deleteComment', 'editIssue', 'uploadAttachment']),
           showSuccess(file) {
-            console.log('A file was successfully uploaded')
+            console.log('success');
           },
           changeStatus(status) {
             let payload = {
@@ -323,7 +323,7 @@
               message: this.comment.message,
               id: this.issue.id,
               type: 'issue'
-            }
+            };
             this.saveComment(comment);
             this.cancelComment();
             this.hideCommentInput();

@@ -130,18 +130,18 @@
                     status: 'to-do',
                     projectId: this.$route.params.id,
                     priority: '',
-                    assignee: '59e9d814cb2b21601b9431e9',
-                    reporter: '59e9d814cb2b21601b9431e9',
+                    assignee: '59ea1be562b2200503c36bd0',
+                    reporter: '59ea1be562b2200503c36bd0',
                     comments: []
                 },
                 teamMembers: [
                   {
                     label: 'Andrew Hopkins',
-                    value: '59e9d814cb2b21601b9431e9'
+                    value: '59ea1be562b2200503c36bd0'
                   },
                   {
                     label: 'Rafal Makes',
-                    value: '59e9d814cb2b21601b9431e9'
+                    value: '59ea1be562b2200503c36bd0'
                   },
                 ],
             }

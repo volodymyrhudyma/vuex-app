@@ -1,13 +1,13 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import App from './components/App.vue'
-import Login from './components/Login.vue'
 import Home from './components/Home.vue'
 import ProjectList from './components/ProjectList.vue'
 import Project from './components/Project.vue'
 import TechList from './components/TechList.vue'
 import BadgeList from './components/BadgeList.vue'
 import Profile from './components/Profile.vue'
+import Callback from './components/Callback.vue'
 import store from './store'
 import VueRouter from 'vue-router'
 import vuexI18n from 'vuex-i18n';
@@ -29,12 +29,12 @@ Vue.i18n.set(DEFAULT_LANGUAGE);
 
 const routes = [
 	{ path: '/', component: Home },
-	{ path: '/login', component: Login },
 	{ path: '/projects', component: ProjectList },
 	{ path: '/project/:id', component: Project },
 	{ path: '/technologies', component: TechList },
 	{ path: '/badges', component: BadgeList },
 	{ path: '/profile', component: Profile },
+	{ path: '/callback', component: Callback },
 ];
 
 const router = new VueRouter({

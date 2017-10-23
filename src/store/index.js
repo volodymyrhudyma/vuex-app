@@ -18,6 +18,8 @@ const state = {
     error: {}
 };
 
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+
 const mutations = {
 	[THROW_ERROR] (state, error) {
         let html = 'Error!';

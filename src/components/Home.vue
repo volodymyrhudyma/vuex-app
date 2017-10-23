@@ -1,5 +1,4 @@
 <template>
-    
     <div class="flex-wrapper" v-if="isLoggedIn">
         <div class="chart" v-if="!isPending">
             <div class="title">
@@ -26,7 +25,6 @@
            <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
         </div>
     </div>
-    
 </template>
 
 <script>

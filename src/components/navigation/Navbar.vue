@@ -108,7 +108,7 @@
           </md-toolbar>
           <div class="phone-viewport">
               <md-list>
-                  <md-list-item v-if="!isLoggedIn" @click="onRightMenuItemClick('login')">
+                  <md-list-item v-if="!isLoggedIn" @click="login">
                     <md-icon>move_to_inbox</md-icon>
                     <span>
                           {{ $t('Login') }}
@@ -159,6 +159,9 @@
             close(ref) {
               console.log('Closed: ' + ref);
             },
+            login() {
+              this.$store.dispatch("login");
+            }
         },
         computed: {
             ...mapGetters(['isLoggedIn'])

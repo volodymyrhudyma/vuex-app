@@ -3,6 +3,7 @@ import decode from 'jwt-decode'
 import auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock';
 import store from '../index';
+import axios from 'axios';
 
 const LOGIN = "LOGIN";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -33,7 +34,8 @@ lock.on("authenticated", function(authResult) {
             return;
         }
         setIdToken(authResult.idToken);
-        setAccessToken(authResult.accessToken);        
+        setAccessToken(authResult.accessToken);
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
         store.commit(LOGIN_SUCCESS);
     });
 });
@@ -55,6 +57,7 @@ const mutations = {
     },
     [LOGOUT] (state) {
         state.isLoggedIn = false;
+        window.location.href = '#/';
         toastr.success('You have been logged out');
     },
 };

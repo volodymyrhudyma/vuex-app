@@ -7,7 +7,6 @@ import issue from './modules/issue'
 import technology from './modules/technology'
 import badge from './modules/badge'
 import profile from './modules/profile'
-import axios from 'axios'
 import toastr from 'toastr'
 
 Vue.use(Vuex);
@@ -17,8 +16,6 @@ const THROW_ERROR = "THROW_ERROR";
 const state = {
     error: {}
 };
-
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
 
 const mutations = {
 	[THROW_ERROR] (state, error) {

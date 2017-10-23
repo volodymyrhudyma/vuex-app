@@ -72,9 +72,11 @@
         	LineChart
         },
         beforeMount() {
-            this.$store.dispatch('technology/fetchTechnologies');
-            this.$store.dispatch('project/fetchProjects');
-            this.$store.dispatch('issue/fetchIssues');
+            if(this.isLoggedIn) {
+                this.$store.dispatch('technology/fetchTechnologies');
+                this.$store.dispatch('project/fetchProjects');
+                this.$store.dispatch('issue/fetchIssues');
+            }
         }
     }
 </script>

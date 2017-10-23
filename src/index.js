@@ -15,6 +15,7 @@ import { en } from './locales/en';
 import { ua } from './locales/ua';
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
+import axios from 'axios'
 
 Vue.use(VueRouter)
 Vue.use(vuexI18n.plugin, store);
@@ -27,14 +28,56 @@ const DEFAULT_LANGUAGE = 'en';
 
 Vue.i18n.set(DEFAULT_LANGUAGE);
 
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+
 const routes = [
-	{ path: '/', component: Home },
-	{ path: '/projects', component: ProjectList },
-	{ path: '/project/:id', component: Project },
-	{ path: '/technologies', component: TechList },
-	{ path: '/badges', component: BadgeList },
-	{ path: '/profile', component: Profile },
-	{ path: '/callback', component: Callback },
+	{ 
+		path: '/', 
+		component: Home,
+
+	},
+	{ 
+		path: '/projects', 
+		component: ProjectList,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
+	{ 
+		path: '/project/:id', 
+		component: Project,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
+	{ 
+		path: '/technologies', 
+		component: TechList,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
+	{ 
+		path: '/badges', 
+		component: BadgeList,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
+	{ 
+		path: '/profile', 
+		component: Profile,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
+	{ 
+		path: '/callback', 
+		component: Callback,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
 ];
 
 const router = new VueRouter({

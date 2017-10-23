@@ -36,6 +36,7 @@ lock.on("authenticated", function(authResult) {
         setIdToken(authResult.idToken);
         setAccessToken(authResult.accessToken);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+        store.dispatch('fetchUser', profile);
     });
 });
 
@@ -66,9 +67,50 @@ const actions = {
         commit(LOGIN);
         login();        
     },
-    logout({ commit }) {
+    logout: ({ commit }) => {
         logout();
         commit(LOGOUT);
+    },
+    storeUser: ({ dispatch, commit }, payload) => {
+        return axios.post('http://localhost:1337/user/create', payload)
+            .then(function (response) {
+                commit(LOGIN_SUCCESS);
+            })
+            .catch(function (error) {
+                dispatch('handleError', error, {root: true});
+            });
+    },
+    fetchUser: ({ dispatch, commit }, profile) => {
+        return axios.get('http://localhost:1337/user/findByEmail?email=' + profile.email)
+            .then(function (response) {
+                if(!response.data) {
+                    let data = {};
+                    if(profile.sub.includes('auth0')) {
+                        data = {
+                            name: profile.name,
+                            surname: profile.nickname,
+                            email: profile.email,
+                            avatar: profile.picture,
+                            sub: profile.sub
+                        };
+                    }
+                    if(profile.sub.includes('google-oauth2')) {
+                        data = {
+                            name: profile.given_name,
+                            surname: profile.family_name,
+                            email: profile.email,
+                            avatar: profile.picture,
+                            sub: profile.sub
+                        };
+                    }
+                    dispatch('storeUser', data);
+                } else {
+                    commit(LOGIN_SUCCESS);
+                }
+            })
+            .catch(function (error) {
+                dispatch('handleError', error, {root: true});
+            });
     },
 };
 

@@ -14,7 +14,7 @@ const ACCESS_TOKEN_KEY = 'access_token';
 const CLIENT_ID = 'sYQrG53uT3yKGv3s4Ltgc8XZ67Li3I7l';
 const CLIENT_DOMAIN = 'progrest.eu.auth0.com';
 const REDIRECT = 'http://localhost:8000/#/callback';
-const SCOPE = 'openid';
+const SCOPE = 'openid profile email';
 const AUDIENCE = 'progrest.com';
 
 let auth = new auth0.WebAuth({
@@ -36,7 +36,6 @@ lock.on("authenticated", function(authResult) {
         setIdToken(authResult.idToken);
         setAccessToken(authResult.accessToken);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
-        store.commit(LOGIN_SUCCESS);
     });
 });
 

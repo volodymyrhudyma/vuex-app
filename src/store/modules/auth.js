@@ -8,6 +8,7 @@ import axios from 'axios';
 const LOGIN = "LOGIN";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGOUT = "LOGOUT";
+const SET_LOGGED_USER = "SET_LOGGED_USER";
 
 const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
@@ -36,12 +37,13 @@ lock.on("authenticated", function(authResult) {
         setIdToken(authResult.idToken);
         setAccessToken(authResult.accessToken);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
-        store.dispatch('fetchUser', profile);
+        store.dispatch('handleUser', profile);
     });
 });
 
 const state = {
     isLoggedIn: isLoggedIn(),
+    loggedUser: null,
     isPending: false
 };
 
@@ -49,17 +51,23 @@ const mutations = {
     [LOGIN] (state) {
         state.isPending = true;
     },
-    [LOGIN_SUCCESS] (state) {
+    [LOGIN_SUCCESS] (state, user) {
         state.isLoggedIn = true;
+        state.loggedUser = user;
         state.isPending = false;
         window.location.href = '#/';
         toastr.success('You have been logged in');
     },
     [LOGOUT] (state) {
         state.isLoggedIn = false;
+        state.loggedUser = null;
         window.location.href = '#/';
         toastr.success('You have been logged out');
     },
+    [SET_LOGGED_USER] (state, user) {
+        state.loggedUser = user;
+        state.isPending = false;
+    }
 };
 
 const actions = {
@@ -74,16 +82,16 @@ const actions = {
     storeUser: ({ dispatch, commit }, payload) => {
         return axios.post('http://localhost:1337/user/create', payload)
             .then(function (response) {
-                commit(LOGIN_SUCCESS);
+                dispatch('fetchUser', response.data.email)
             })
             .catch(function (error) {
                 dispatch('handleError', error, {root: true});
             });
     },
-    fetchUser: ({ dispatch, commit }, profile) => {
-        return axios.get('http://localhost:1337/user/findByEmail?email=' + profile.email)
+    handleUser: ({ dispatch, commit }, profile) => {
+        return axios.get('http://localhost:1337/user?email=' + profile.email)
             .then(function (response) {
-                if(!response.data) {
+                if(!response.data.length) {
                     let data = {};
                     if(profile.sub.includes('auth0')) {
                         data = {
@@ -105,8 +113,32 @@ const actions = {
                     }
                     dispatch('storeUser', data);
                 } else {
-                    commit(LOGIN_SUCCESS);
+                    dispatch('fetchUser', profile.email)
                 }
+            })
+            .catch(function (error) {
+                dispatch('handleError', error, {root: true});
+            });
+    },
+    fetchUser: ({dispatch, commit}, email) => {
+        return axios.get('http://localhost:1337/user?email=' + email)
+            .then(function (response) {
+                commit(LOGIN_SUCCESS, response.data[0]);
+            })
+            .catch(function (error) {
+                dispatch('handleError', error, {root: true});
+            });
+    },
+    fetchUserUsingIdToken: ({dispatch, commit}) => {
+        commit(LOGIN);
+        // Should be a helper function
+        let token = localStorage.getItem('id_token');
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        let email = JSON.parse(window.atob(base64)).email;
+        return axios.get('http://localhost:1337/user?email=' + email)
+            .then(function (response) {
+                commit(SET_LOGGED_USER, response.data[0]);
             })
             .catch(function (error) {
                 dispatch('handleError', error, {root: true});
@@ -117,6 +149,9 @@ const actions = {
 const getters = {
     isLoggedIn: state => {
         return state.isLoggedIn
+    },
+    loggedUser: state => {
+        return state.loggedUser
     },
     isPending: state => {
         return state.isPending

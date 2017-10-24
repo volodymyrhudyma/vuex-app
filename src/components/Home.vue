@@ -33,7 +33,7 @@
     
     export default {        
         computed: {
-            ...mapGetters(['isLoggedIn']), 
+            ...mapGetters(['isLoggedIn', 'loggedUser']), 
             technologyStats() {
                 return this.$store.getters['technology/technologyStats'];
             },
@@ -66,7 +66,7 @@
             },
             availableColors() {
                 return this.$store.getters['technology/availableColors'];
-            },
+            },            
         },
         components: {
         	LineChart

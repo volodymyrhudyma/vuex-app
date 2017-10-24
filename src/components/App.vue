@@ -3,7 +3,7 @@
         <div class="heading">
             <navbar></navbar>
         </div>
-        <div class="content">
+        <div class="content" v-if="!isPending">
             <router-view></router-view>
         </div>
     </div>
@@ -11,6 +11,7 @@
 
 <script>
     import Navbar from './navigation/Navbar.vue'
+    import { mapGetters } from 'vuex'
 
 	export default {
 		data() {
@@ -25,12 +26,19 @@
             this.pageName = this.splitUrl() ? this.splitUrl() : 'home';
         },
         beforeMount() {
+            // Delete call to profile endpoint
 		    this.$store.dispatch('profile/fetchProfile');
+            if(localStorage.getItem('id_token')) {
+                this.$store.dispatch('fetchUserUsingIdToken');
+            }
         },
         methods: {
             splitUrl() {
                 return this.$route.path.toLowerCase().split('/')[1];
             }
+        },
+        computed: {
+            ...mapGetters(['isPending'])
         },
         components: {
             Navbar

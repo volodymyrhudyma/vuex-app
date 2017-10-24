@@ -86,25 +86,27 @@ const mutations = {
 };
 
 const actions = {
-    fetchProjects: ({ dispatch, commit }, projects) => {
-        commit(FETCH_START);
-        return axios.get('http://localhost:1337/project/find')
+    fetchProjects: (context) => {
+        let userId = context.rootState.auth.loggedUser.id;
+        context.commit(FETCH_START);
+        return axios.get('http://localhost:1337/project?userId=' + userId)
           .then(function (response) {                
-            commit(FETCH_PROJECTS, response.data);
+            context.commit(FETCH_PROJECTS, response.data);
           })
           .catch(function (error) {
-            dispatch('handleError', error, {root: true});
+            context.dispatch('handleError', error, {root: true});
           });
     },
-    storeProject: ({ dispatch, commit }, project) => {
+    storeProject: (context, project) => {
+        project.userId = context.rootState.auth.loggedUser.id;
         return axios.post('http://localhost:1337/project/create', project)
           .then(function (response) {
             project.id = response.data.id;
             project.perfectProgress = 0;
-            commit(STORE_PROJECT, project);
+            context.commit(STORE_PROJECT, project);
           })
           .catch(function (error) {
-            dispatch('handleError', error, {root: true});
+            context.dispatch('handleError', error, {root: true});
           });
     },
     toggleFavorite: ({ dispatch, commit }, id) => {

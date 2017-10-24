@@ -14,7 +14,7 @@ Vue.use(Vuex);
 const THROW_ERROR = "THROW_ERROR";
 
 const state = {
-    error: {}
+    error: {},
 };
 
 const mutations = {
@@ -43,13 +43,13 @@ const mutations = {
             html = state.error.reason;
         }
         toastr.error(html);
-    },
+    },    
 };
 
 const actions = {
 	handleError: ({ commit }, error) => {
         commit(THROW_ERROR, error);
-    },
+    },    
 };
 
 const getters = {

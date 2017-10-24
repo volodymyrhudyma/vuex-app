@@ -6,6 +6,9 @@
         <div class="content" v-if="!isPending">
             <router-view></router-view>
         </div>
+        <div class="wrapper-loader" v-if="isPending">
+          <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
+       </div>
     </div>
 </template>
 
@@ -26,8 +29,6 @@
             this.pageName = this.splitUrl() ? this.splitUrl() : 'home';
         },
         beforeMount() {
-            // Delete call to profile endpoint
-		    this.$store.dispatch('profile/fetchProfile');
             if(localStorage.getItem('id_token')) {
                 this.$store.dispatch('fetchUserUsingIdToken');
             }

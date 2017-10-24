@@ -9,6 +9,8 @@ const LOGIN = "LOGIN";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGOUT = "LOGOUT";
 const SET_LOGGED_USER = "SET_LOGGED_USER";
+const FETCH_USERS_START = "FETCH_USERS_START";
+const FETCH_USERS = "FETCH_USERS";
 
 const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
@@ -44,7 +46,9 @@ lock.on("authenticated", function(authResult) {
 const state = {
     isLoggedIn: isLoggedIn(),
     loggedUser: null,
-    isPending: false
+    isPending: false,
+    users: null,
+    isUsersFetching: false
 };
 
 const mutations = {
@@ -67,7 +71,14 @@ const mutations = {
     [SET_LOGGED_USER] (state, user) {
         state.loggedUser = user;
         state.isPending = false;
-    }
+    },
+    [FETCH_USERS_START] (state, users) {
+        state.isUsersFetching = true;
+    },
+    [FETCH_USERS] (state, users) {
+        state.users = users;
+        state.isUsersFetching = false;
+    },
 };
 
 const actions = {
@@ -144,6 +155,16 @@ const actions = {
                 dispatch('handleError', error, {root: true});
             });
     },
+    fetchUsers: ({dispatch, commit}, email) => {
+        commit(FETCH_USERS_START);
+        return axios.get('http://localhost:1337/user/find')
+            .then(function (response) {
+                commit(FETCH_USERS, response.data);
+            })
+            .catch(function (error) {
+                dispatch('handleError', error, {root: true});
+            });
+    },
 };
 
 const getters = {
@@ -155,6 +176,12 @@ const getters = {
     },
     isPending: state => {
         return state.isPending
+    },
+    users: state => {
+        return state.users
+    },
+    isUsersFetching: state => {
+        return state.isUsersFetching
     },
 };
 

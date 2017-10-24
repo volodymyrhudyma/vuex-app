@@ -271,7 +271,7 @@
               return this.$store.state.issue.issue.status;
             },
             set (value) {
-              this.$store.commit('issue/UPDATE_`FIELD', {name: 'status', value: value});
+              this.$store.commit('issue/UPDATE_FIELD', {name: 'status', value: value});
             }
           },
           priority: {

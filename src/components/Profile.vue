@@ -1,8 +1,8 @@
 <template>
    <div class="flex-wrapper">
-      <div class="avatar" v-if="!isProfileFetching">
+      <div class="avatar" v-if="!isPending">
          <div class="image">
-            Avatar
+            {{loggedUser.avatar}}
          </div>
          <div class="full-name">
             {{fullName}}
@@ -11,41 +11,30 @@
       <div class="overview">
          <md-tabs md-centered>
             <md-tab md-label="Overview" md-icon="ondemand_video">
-               <div class="data" v-if="!isProfileFetching">
+               <div class="data" v-if="!isPending">
                   <div class="item">
-                     Name: {{fullName}}
+                     Name: {{loggedUser.name}}
                   </div>
                   <div class="item">
-                     Email: {{profile.email}}
-                  </div>
-                  <div class="item">
-                     Bio: {{profile.bio}}
-                  </div>
-                  <div class="location">
-                     City: {{profile.city}}
+                     Email: {{loggedUser.email}}
                   </div>
                </div>
-               <div class="wrapper-loader" v-if="isProfileFetching">
+               <div class="wrapper-loader" v-if="isPending">
                   <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
                </div>
             </md-tab>
 
-            <md-tab md-label="Following" md-icon="music_note">
-               <div class="empty" v-if="!isProfileFetching && !profile.following.length">
+            <!-- <md-tab md-label="Following" md-icon="music_note">
+               <div class="empty" v-if="!isPending && !loggedUser.following.length">
                   You aren't following nobody
                </div>
             </md-tab>
 
             <md-tab md-label="Followers" md-icon="books">
-               <div class="followers" v-if="!isProfileFetching">
-                  <div class="item" v-for="follower in filteredFollowers">
-                     Avatar
-                  </div>
-               </div>
-               <div class="empty" v-if="!isProfileFetching && !profile.followers.length">
+               <div class="empty" v-if="!isPending && !loggedUser.followers.length">
                   You don't have any followers yet
                </div>
-            </md-tab>
+            </md-tab> -->
          </md-tabs>
 
       </div>
@@ -53,18 +42,14 @@
 </template>
 
 <script>
-    import { createNamespacedHelpers } from 'vuex'
-    const { mapGetters } = createNamespacedHelpers('profile');
+    import { mapGetters } from 'vuex'
 
     export default {
         computed: {
-            ...mapGetters(['profile', 'isProfileFetching']),
+            ...mapGetters(['loggedUser', 'isPending']),
             fullName() {
-                return this.profile.name + ' ' + this.profile.surname;
+                return this.loggedUser.name + ' ' + this.loggedUser.surname;
             },
-            filteredFollowers() {
-                return this.profile.followers;
-            }
         },
     }
 </script>

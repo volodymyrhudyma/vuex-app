@@ -72,8 +72,8 @@
                               <md-option value="high">High</md-option>
                             </md-select>
                           </md-input-container>
-                          <md-input-container>
-                               <v-select v-model="newIssue.assignee" :options="teamMembers" :placeholder="'Assignee'"></v-select>
+                          <md-input-container v-if="!isUsersFetching">
+                               <v-select v-model="newIssue.assignee" :options="formatUsers()" :placeholder="'Assignee'"></v-select>
                            </md-input-container>
                        </form>
                    </md-dialog-content>
@@ -130,20 +130,10 @@
                     status: 'to-do',
                     projectId: this.$route.params.id,
                     priority: '',
-                    assignee: '59ea1be562b2200503c36bd0',
-                    reporter: '59ea1be562b2200503c36bd0',
+                    assignee: '',
+                    reporter: '',
                     comments: []
                 },
-                teamMembers: [
-                  {
-                    label: 'Andrew Hopkins',
-                    value: '59ea1be562b2200503c36bd0'
-                  },
-                  {
-                    label: 'Rafal Makes',
-                    value: '59ea1be562b2200503c36bd0'
-                  },
-                ],
             }
         },
         components: {
@@ -151,6 +141,7 @@
         },
         computed: {
             ...mapGetters('issue', ['allIssues', 'isIssuesPending']),
+            ...mapGetters(['loggedUser', 'users', 'isUsersFetching']),
             filteredIssues() {
                 let issues = [];
 
@@ -188,9 +179,10 @@
         methods: {
             ...mapActions('issue', ['fetchIssues', 'fetchIssue', 'storeIssue', 'deleteIssue']),
             ...mapActions('project', ['fetchProjects']),
+            ...mapActions(['fetchUsers']),
             saveIssue(newIssue) {
                 this.slugifyNewIssue(newIssue);
-                this.setIssueAssignee(newIssue);
+                this.setIssueData(newIssue);
                 this.storeIssue(newIssue);
                 this.closeDialog('addIssue');
                 this.resetNewIssueData();
@@ -198,8 +190,9 @@
             slugifyNewIssue(newIssue) {
                 newIssue.slug = this.slugify(newIssue.name);
             },
-            setIssueAssignee(newIssue) {
-                newIssue.assignee = newIssue.assignee.value
+            setIssueData(newIssue) {
+                newIssue.assignee = newIssue.assignee.value;
+                newIssue.reporter= this.loggedUser.id;
             },
             slugify(string) {
                 return string
@@ -221,8 +214,8 @@
                     status: 'to-do',
                     projectId: this.$route.params.id,
                     priority: '',
-                    assignee: '59e9d814cb2b21601b9431e9',
-                    reporter: '59e9d814cb2b21601b9431e9',
+                    assignee: '',
+                    reporter: '',
                     comments: []
                 }
             },
@@ -238,11 +231,20 @@
             setFilter(filter) {
                 this.filter = filter;
             },
+            formatUsers() {
+              return this.users.map(user => {
+                return {
+                  label: user.name,
+                  value: user.id
+                };
+              });
+            }
         },
         beforeMount() {
             let projectId = this.$route.params.id;
             this.fetchIssues(projectId);
             this.fetchProjects();
+            this.fetchUsers();
         }
     }
 </script>

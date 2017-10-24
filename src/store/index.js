@@ -6,7 +6,6 @@ import project from './modules/project'
 import issue from './modules/issue'
 import technology from './modules/technology'
 import badge from './modules/badge'
-import profile from './modules/profile'
 import toastr from 'toastr'
 
 Vue.use(Vuex);
@@ -71,7 +70,6 @@ const store = new Vuex.Store({
 	    issue: issue,
 	    technology: technology,
 	    badge: badge,
-        profile: profile,
 	}
 });
 

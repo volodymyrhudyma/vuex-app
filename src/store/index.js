@@ -35,6 +35,10 @@ const mutations = {
                 };
                 html = state.error.reason + ": <br /> " + state.error.invalidAttributes.join(", ");
             }
+
+            if(error.response.data.status === 401) {
+                console.log('should be logged out')
+            }
         } else {
             state.error = {
                 statusCode: error.response.status,

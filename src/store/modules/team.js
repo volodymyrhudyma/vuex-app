@@ -4,15 +4,22 @@ const FETCH_TEAMS = "FETCH_TEAMS";
 const FETCH_START = "FETCH_START";
 const STORE_TEAM = "STORE_TEAM";
 const DELETE_TEAM = "DELETE_TEAM";
+const FETCH_BY_ID_START = "FETCH_BY_ID_START";
+const FETCH_BY_ID = "FETCH_BY_ID";
 
 const state = {
+    team: null,
     teams: null,
     isTeamsPending: false,
+    isTeamPending: false,
 };
 
 const mutations = {
     [FETCH_START] (state) {
         state.isTeamsPending = true;
+    },
+    [FETCH_BY_ID_START] (state) {
+        state.isTeamPending = true;
     },
     [FETCH_TEAMS] (state, teams) {
         state.teams = teams;
@@ -26,6 +33,10 @@ const mutations = {
             return team.id === id;
         })[0];
         state.teams.splice(state.teams.indexOf(team), 1);
+    },
+    [FETCH_BY_ID] (state, team) {
+        state.team = team;
+        state.isTeamPending = false;
     },
 };
 
@@ -42,8 +53,6 @@ const actions = {
           });
     },
     storeTeam: (context, team) => {
-        console.log('team')
-        console.log(team)
         return axios.post('http://localhost:1337/team/create', team)
           .then(function (response) {
             context.commit(STORE_TEAM, response.data);
@@ -61,14 +70,30 @@ const actions = {
             context.dispatch('handleError', error, {root: true});
           });
     },
+    fetchById: ({ dispatch, commit }, id) => {
+        commit(FETCH_BY_ID_START);
+        return axios.get('http://localhost:1337/team/find/' + id)
+          .then(function (response) {
+            commit(FETCH_BY_ID, response.data);
+          })
+          .catch(function (error) {
+            dispatch('handleError', error, {root: true});
+          });
+    },
 };
 
 const getters = {
     allTeams: state => {
         return state.teams;
     },
+    team: state => {
+        return state.team;
+    },
     isTeamsPending: state => {
         return state.isTeamsPending;
+    },
+    isTeamPending: state => {
+        return state.isTeamPending;
     },
 };
 

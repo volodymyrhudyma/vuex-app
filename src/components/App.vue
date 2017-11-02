@@ -294,23 +294,57 @@
         .content {
             .flex-wrapper {
                 flex-direction: column;
+                justify-content: normal;
+
+                .title {
+                    text-align: center;
+                    margin: 20px 0;
+                }
 
                 .charts-container {
                     display: flex;
-
-                    .chart {
-                        .title {
-                            text-align: center;
-                            margin: 20px 0;
-                        }
-                    }
+                    justify-content: space-between;                    
                 }
 
                 .teams {
                     display: flex;
                     flex-direction: column;
+
+                    .add {
+                        text-align: center;
+                        margin: 20px 0;
+                    }
                 }
             }   
+        }
+    }
+
+    #team {
+        .content {
+            .flex-wrapper {
+                .details {
+                    width: 100%;
+
+                    .item {
+                        text-align: center;
+
+                        .heading {
+                            font-size: 1.5em;
+                            margin: 15px 0;
+                            padding-bottom: 15px;
+                            border-bottom: 1px solid #3f51b5;
+                        }
+
+                        .value {
+
+                            &.link {
+                                cursor: pointer;
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import TechList from './components/TechList.vue'
 import BadgeList from './components/BadgeList.vue'
 import Profile from './components/Profile.vue'
 import Callback from './components/Callback.vue'
+import Team from './components/Team.vue'
 import store from './store'
 import VueRouter from 'vue-router'
 import vuexI18n from 'vuex-i18n';
@@ -46,6 +47,13 @@ const routes = [
 	{ 
 		path: '/project/:id', 
 		component: Project,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
+	{ 
+		path: '/team/:id', 
+		component: Team,
 		beforeEnter: (to, from, next) => {
 	    	store.getters.isLoggedIn ? next() : next(false);
 	    }

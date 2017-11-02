@@ -28,27 +28,35 @@
         </div>
 
         <div class="teams">
-            <div class="heading">
-                Teams:
+            <div class="title">
+              <span class="md-display-1">Teams</span>
             </div>
-            <md-list class="custom-list md-triple-line" v-if="!isTeamsPending && filteredTeams.length">
-               <md-list-item v-for="(team, key) in filteredTeams" :key="team.name" @click="onTeamClick(team.id)">
+            <div class="list" v-if="!isTeamsPending && filteredTeams.length">
+              <div class="phone-viewport">
+                <md-list class="custom-list md-triple-line">
+                  <md-list-item v-for="(team, key) in filteredTeams" :key="team.name" @click="onTeamClick(team.id)">
+                    <md-avatar class="avatar">
+                         {{++key}}
+                     </md-avatar>
 
-                   <md-avatar class="avatar">
-                       {{++key}}
-                   </md-avatar>
+                    <div class="md-list-text-container">
+                      <span>{{team.name}}</span>
+                      <span>Members here</span>
+                      <p>Projects here</p>
+                    </div>
 
-                   <div class="md-list-text-container">
-                       <span>{{team.name}}</span>
-                   </div>
+                    <md-button class="md-icon-button md-list-action" @click="deleteTeam(team.id)">
+                        <md-icon class="md-warn">delete</md-icon>
+                      </md-button>
 
-                   <md-button class="md-icon-button md-list-action" @click="deleteTeam(team.id)">
-                      <md-icon class="md-warn">delete</md-icon>
-                    </md-button>
-
-                   <md-divider class="md-inset"></md-divider>
-               </md-list-item>
-           </md-list>
+                    <md-divider class="md-inset"></md-divider>
+                  </md-list-item>
+                </md-list>
+              </div>
+            </div>
+            <div class="wrapper-loader" v-if="isTeamsPending">
+               <md-spinner :md-size="60" md-indeterminate class="md-primary"></md-spinner>
+            </div>
             <div class="add">
                 <md-button class="md-icon-button md-raised md-primary" @click="openDialog('addTeam')">
                    <md-icon>add</md-icon>
@@ -203,9 +211,13 @@
                 this.newTeam = {
                     name: '',
                     slug: '',
-                    members: []
+                    members: [],
+                    projects: []
                 };
             },
+            onTeamClick(id) {
+                this.$router.push("/team/" + id);
+            }
         },
         components: {
         	LineChart,

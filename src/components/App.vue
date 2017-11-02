@@ -293,11 +293,22 @@
     #home {
         .content {
             .flex-wrapper {
-                .chart {
-                    .title {
-                        text-align: center;
-                        margin: 20px 0;
+                flex-direction: column;
+
+                .charts-container {
+                    display: flex;
+
+                    .chart {
+                        .title {
+                            text-align: center;
+                            margin: 20px 0;
+                        }
                     }
+                }
+
+                .teams {
+                    display: flex;
+                    flex-direction: column;
                 }
             }   
         }

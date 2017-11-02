@@ -192,7 +192,7 @@
             },
             setIssueData(newIssue) {
                 newIssue.assignee = newIssue.assignee.value;
-                newIssue.reporter= this.loggedUser.id;
+                newIssue.reporter = this.loggedUser.id;
             },
             slugify(string) {
                 return string

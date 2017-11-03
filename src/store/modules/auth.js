@@ -76,7 +76,9 @@ const mutations = {
         state.isUsersFetching = true;
     },
     [FETCH_USERS] (state, users) {
-        state.users = users;
+        state.users = users.filter(user => {
+            return user.id !== state.loggedUser.id;
+        });
         state.isUsersFetching = false;
     },
 };

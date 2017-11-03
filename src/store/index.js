@@ -52,6 +52,8 @@ const mutations = {
 
 const actions = {
 	handleError: ({ commit }, error) => {
+        console.log('error')
+        console.log(error)
         commit(THROW_ERROR, error);
     },    
 };

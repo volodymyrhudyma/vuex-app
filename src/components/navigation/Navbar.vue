@@ -55,6 +55,15 @@
                     </span>
                   </md-list-item>
 
+                  <md-list-item @click="onLeftMenuItemClick('friends')">
+                    <md-icon>people</md-icon> 
+                    <span>
+                        <li v-if="isLoggedIn">
+                              {{ $t('Friends') }}
+                          </li>
+                    </span>
+                  </md-list-item>
+
                   <md-list-item @click="onLeftMenuItemClick('technologies')">
                     <md-icon>http</md-icon> 
                       <span>

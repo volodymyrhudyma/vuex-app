@@ -7,6 +7,7 @@ import Project from './components/Project.vue'
 import TechList from './components/TechList.vue'
 import BadgeList from './components/BadgeList.vue'
 import Profile from './components/Profile.vue'
+import Friends from './components/Friends.vue'
 import Callback from './components/Callback.vue'
 import Team from './components/Team.vue'
 import store from './store'
@@ -75,6 +76,13 @@ const routes = [
 	{ 
 		path: '/profile', 
 		component: Profile,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
+	{ 
+		path: '/friends', 
+		component: Friends,
 		beforeEnter: (to, from, next) => {
 	    	store.getters.isLoggedIn ? next() : next(false);
 	    }

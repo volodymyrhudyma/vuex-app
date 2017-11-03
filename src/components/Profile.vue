@@ -24,17 +24,17 @@
                </div>
             </md-tab>
 
-            <!-- <md-tab md-label="Following" md-icon="music_note">
-               <div class="empty" v-if="!isPending && !loggedUser.following.length">
+            <md-tab md-label="Following" md-icon="music_note">
+               <div class="empty" v-if="!isPending">
                   You aren't following nobody
                </div>
             </md-tab>
 
             <md-tab md-label="Followers" md-icon="books">
-               <div class="empty" v-if="!isPending && !loggedUser.followers.length">
+               <div class="empty" v-if="!isPending">
                   You don't have any followers yet
                </div>
-            </md-tab> -->
+            </md-tab>
          </md-tabs>
 
       </div>

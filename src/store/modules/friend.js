@@ -36,7 +36,7 @@ const actions = {
         let userId = context.rootState.auth.loggedUser.id;
         context.commit(FETCH_START);
         return axios.get('http://localhost:1337/friend?userId=' + userId)
-          .then(function (response) {                
+          .then(function (response) {
             context.commit(FETCH_FRIENDS, response.data);
           })
           .catch(function (error) {

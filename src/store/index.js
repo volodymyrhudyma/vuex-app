@@ -35,10 +35,6 @@ const mutations = {
                 };
                 html = state.error.reason + ": <br /> " + state.error.invalidAttributes.join(", ");
             }
-
-            if(error.response.data.status === 401) {
-                console.log('should be logged out')
-            }
         } else {
             state.error = {
                 statusCode: error.response.status,
@@ -47,13 +43,15 @@ const mutations = {
             html = state.error.reason;
         }
         toastr.error(html);
+        state.isPending = false;
     },    
 };
 
 const actions = {
-	handleError: ({ commit }, error) => {
-        console.log('error')
-        console.log(error)
+	handleError: ({ dispatch, commit }, error) => {
+        if(error.response.data.status === 401) {
+            dispatch('logout');
+        }
         commit(THROW_ERROR, error);
     },    
 };

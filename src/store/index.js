@@ -45,11 +45,13 @@ const mutations = {
         }
         toastr.error(html);
         state.isPending = false;
-    },    
+    },
 };
 
 const actions = {
 	handleError: ({ dispatch, commit }, error) => {
+        console.log('error')
+        console.log(error)
         if(error.response.data.status === 401) {
             dispatch('logout');
         }

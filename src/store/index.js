@@ -7,6 +7,7 @@ import issue from './modules/issue'
 import technology from './modules/technology'
 import badge from './modules/badge'
 import team from './modules/team'
+import friend from './modules/friend'
 import toastr from 'toastr'
 
 Vue.use(Vuex);
@@ -75,7 +76,8 @@ const store = new Vuex.Store({
 	    issue: issue,
 	    technology: technology,
         badge: badge,
-	    team: team,
+        team: team,
+	    friend: friend,
 	}
 });
 

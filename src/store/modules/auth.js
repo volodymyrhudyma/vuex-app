@@ -4,6 +4,11 @@ import auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock';
 import store from '../index';
 import axios from 'axios';
+import { 
+    USER_CREATE, 
+    USER_FIND, 
+    USER_ALL 
+} from '../../config/endpoints.js';
 
 const LOGIN = "LOGIN";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -93,7 +98,7 @@ const actions = {
         commit(LOGOUT);
     },
     storeUser: ({ dispatch, commit }, payload) => {
-        return axios.post('http://localhost:1337/user/create', payload)
+        return axios.post(USER_CREATE, payload)
             .then(function (response) {
                 dispatch('fetchUser', response.data.email)
             })
@@ -102,7 +107,7 @@ const actions = {
             });
     },
     handleUser: ({ dispatch, commit }, profile) => {
-        return axios.get('http://localhost:1337/user?email=' + profile.email)
+        return axios.get(USER_FIND + '?email=' + profile.email)
             .then(function (response) {
                 if(!response.data.length) {
                     let data = {};
@@ -134,7 +139,7 @@ const actions = {
             });
     },
     fetchUser: ({dispatch, commit}, email) => {
-        return axios.get('http://localhost:1337/user?email=' + email)
+        return axios.get(USER_FIND + '?email=' + email)
             .then(function (response) {
                 commit(LOGIN_SUCCESS, response.data[0]);
             })
@@ -149,7 +154,7 @@ const actions = {
         var base64Url = token.split('.')[1];
         var base64 = base64Url.replace('-', '+').replace('_', '/');
         let email = JSON.parse(window.atob(base64)).email;
-        return axios.get('http://localhost:1337/user?email=' + email)
+        return axios.get(USER_FIND + '?email=' + email)
             .then(function (response) {
                 commit(SET_LOGGED_USER, response.data[0]);
             })
@@ -159,7 +164,7 @@ const actions = {
     },
     fetchUsers: ({dispatch, commit}, email) => {
         commit(FETCH_USERS_START);
-        return axios.get('http://localhost:1337/user/find')
+        return axios.get(USER_ALL)
             .then(function (response) {
                 commit(FETCH_USERS, response.data);
             })

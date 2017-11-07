@@ -1,6 +1,14 @@
 import toastr from 'toastr'
 import moment from 'moment'
 import axios from 'axios'
+import { 
+    PROJECT_ALL,
+    PROJECT_CREATE,
+    PROJECT_TOGGLE_FAVORITE,
+    PROJECT_COMPLETE,
+    PROJECT_FIND,
+    PROJECT_DELETE,
+} from '../../config/endpoints.js';
 
 const FETCH_PROJECTS = "FETCH_PROJECTS";
 const FETCH_START = "FETCH_START";
@@ -89,7 +97,7 @@ const actions = {
     fetchProjects: (context) => {
         let userId = context.rootState.auth.loggedUser.id;
         context.commit(FETCH_START);
-        return axios.get('http://localhost:1337/project?userId=' + userId)
+        return axios.get(PROJECT_ALL + '?userId=' + userId)
           .then(function (response) {                
             context.commit(FETCH_PROJECTS, response.data);
           })
@@ -99,7 +107,7 @@ const actions = {
     },
     storeProject: (context, project) => {
         project.userId = context.rootState.auth.loggedUser.id;
-        return axios.post('http://localhost:1337/project/create', project)
+        return axios.post(PROJECT_CREATE, project)
           .then(function (response) {
             project.id = response.data.id;
             project.perfectProgress = 0;
@@ -110,7 +118,7 @@ const actions = {
           });
     },
     toggleFavorite: ({ dispatch, commit }, id) => {
-        return axios.post('http://localhost:1337/project/' + id + '/toggleFavorite')
+        return axios.post(PROJECT_TOGGLE_FAVORITE + '/' + id + '/toggleFavorite')
           .then(function (response) {
             commit(TOGGLE_FAVORITE, id);
           })
@@ -119,7 +127,7 @@ const actions = {
           });
     },
     complete: ({ dispatch, commit }, id) => {
-        return axios.post('http://localhost:1337/project/' + id + '/complete')
+        return axios.post(PROJECT_COMPLETE + '/' + id + '/complete')
           .then(function (response) {
             commit(COMPLETE, id);
           })
@@ -129,7 +137,7 @@ const actions = {
     },
     fetchById: ({ dispatch, commit }, id) => {
         commit(FETCH_BY_ID_START);
-        return axios.get('http://localhost:1337/project/find/' + id)
+        return axios.get(PROJECT_FIND + '/' + id)
           .then(function (response) {
             commit(FETCH_BY_ID, response.data);
           })
@@ -138,7 +146,7 @@ const actions = {
           });
     },
     deleteProject: ({ dispatch, commit }, id) => {
-        return axios.delete('http://localhost:1337/project/destroy/' + id)
+        return axios.delete(PROJECT_DELETE + '/' + id)
           .then(function (response) {                
             commit(DELETE_PROJECT, id);
           })

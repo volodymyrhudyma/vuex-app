@@ -1,5 +1,9 @@
 import toastr from 'toastr'
 import axios from 'axios'
+import { 
+    BADGE_ALL, 
+    BADGE_CREATE, 
+} from '../../config/endpoints.js';
 
 const FETCH_BADGES = "FETCH_BADGES";
 const FETCH_START = "FETCH_START";
@@ -114,7 +118,7 @@ const mutations = {
 const actions = {
     fetchBadges: ({ commit }) => {
         commit(FETCH_START);
-        return axios.post('http://localhost:1337/badge/find')
+        return axios.post(BADGE_ALL)
           .then(function (response) {
             commit(FETCH_BADGES, response.data);
           })
@@ -123,7 +127,7 @@ const actions = {
           });
     },
     addBadge: ({ dispatch, commit }, payload) => {
-        return axios.post('http://localhost:1337/badge/create', payload)
+        return axios.post(BADGE_CREATE, payload)
           .then(function (response) {
             commit(ADD_BADGE, payload);
           })

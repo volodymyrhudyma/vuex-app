@@ -1,6 +1,15 @@
 import toastr from 'toastr'
 import moment from 'moment'
 import axios from 'axios'
+import { 
+    FRIEND_INVITATIONS_SENT,
+    FRIEND_INVITATIONS_ACCEPTED,
+    FRIEND_INVITATIONS_MY,
+    FRIEND_CREATE,
+    FRIEND_INVITATIONS_ACCEPT,
+    FRIEND_INVITATIONS_DELETE,
+} from '../../config/endpoints.js';
+
 
 const SEND_INVITATION = "SEND_INVITATION";
 const DELETE_SENT_INVITATION = "DELETE_SENT_INVITATION";
@@ -63,7 +72,7 @@ const mutations = {
 const actions = {
     fetchSentInvitations: (context) => {
         let userId = context.rootState.auth.loggedUser.id;
-        return axios.get('http://localhost:1337/friend/invitations/sent?userId=' + userId)
+        return axios.get(FRIEND_INVITATIONS_SENT + '?userId=' + userId)
           .then(function (response) {
             context.commit(FETCH_SENT_INVITATIONS, response.data);
           })
@@ -73,7 +82,7 @@ const actions = {
     },
     fetchAcceptedInvitations: (context) => {
         let userId = context.rootState.auth.loggedUser.id;
-        return axios.get('http://localhost:1337/friend/invitations/accepted?userId=' + userId)
+        return axios.get(FRIEND_INVITATIONS_ACCEPTED + '?userId=' + userId)
           .then(function (response) {
             context.commit(FETCH_ACCEPTED_INVITATIONS, response.data);
           })
@@ -84,7 +93,7 @@ const actions = {
     fetchMyInvitations: (context) => {
         let userId = context.rootState.auth.loggedUser.id;
         context.commit(FETCH_MY_INVITATIONS_START);
-        return axios.get('http://localhost:1337/friend/invitations?userId=' + userId)
+        return axios.get(FRIEND_INVITATIONS_MY + '?userId=' + userId)
           .then(function (response) {
             context.commit(FETCH_MY_INVITATIONS, response.data);
           })
@@ -98,7 +107,7 @@ const actions = {
             userId: context.rootState.auth.loggedUser.id,
             from: context.rootState.auth.loggedUser.id,
         };
-        return axios.post('http://localhost:1337/friend/create', data)
+        return axios.post(FRIEND_CREATE, data)
           .then(function (response) {                
             context.commit(SEND_INVITATION, response.data[0]);
           })
@@ -110,7 +119,7 @@ const actions = {
         let data = {
             id: id
         };
-        return axios.post('http://localhost:1337/friend/invitations/accept', data)
+        return axios.post(FRIEND_INVITATIONS_ACCEPT, data)
           .then(function (response) {               
              context.commit(ACCEPT_INVITATION, response.data);
           })
@@ -119,7 +128,7 @@ const actions = {
           });
     },
     deleteSentInvitation: ({ dispatch, commit }, id) => {
-        return axios.delete('http://localhost:1337/friend/destroy/' + id)
+        return axios.delete(FRIEND_INVITATIONS_DELETE + '/' + id)
           .then(function (response) {                
             commit(DELETE_SENT_INVITATION, id);
           })
@@ -128,7 +137,7 @@ const actions = {
           });
     },
     deleteAcceptedInvitation: ({ dispatch, commit }, id) => {
-        return axios.delete('http://localhost:1337/friend/destroy/' + id)
+        return axios.delete(FRIEND_INVITATIONS_DELETE + '/' + id)
           .then(function (response) {                
             commit(DELETE_ACCEPTED_INVITATION, id);
           })

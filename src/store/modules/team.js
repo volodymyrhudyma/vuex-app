@@ -1,4 +1,10 @@
 import axios from 'axios'
+import { 
+    TEAM_ALL,
+    TEAM_CREATE,
+    TEAM_DELETE,
+    TEAM_FIND,
+} from '../../config/endpoints.js';
 
 const FETCH_TEAMS = "FETCH_TEAMS";
 const FETCH_START = "FETCH_START";
@@ -44,7 +50,7 @@ const actions = {
     fetchTeams: (context) => {
         let userId = context.rootState.auth.loggedUser.id;
         context.commit(FETCH_START);
-        return axios.get('http://localhost:1337/team?userId=' + userId)
+        return axios.get(TEAM_ALL + '?userId=' + userId)
           .then(function (response) {                
             context.commit(FETCH_TEAMS, response.data);
           })
@@ -53,7 +59,7 @@ const actions = {
           });
     },
     storeTeam: (context, team) => {
-        return axios.post('http://localhost:1337/team/create', team)
+        return axios.post(TEAM_CREATE, team)
           .then(function (response) {
             context.commit(STORE_TEAM, response.data);
           })
@@ -62,7 +68,7 @@ const actions = {
           });
     },
     deleteTeam: (context, id) => {
-        return axios.delete('http://localhost:1337/team/destroy/' + id)
+        return axios.delete(TEAM_DELETE + '/' + id)
           .then(function (response) {                
             context.commit(DELETE_TEAM, id);
           })
@@ -72,7 +78,7 @@ const actions = {
     },
     fetchById: ({ dispatch, commit }, id) => {
         commit(FETCH_BY_ID_START);
-        return axios.get('http://localhost:1337/team/find/' + id)
+        return axios.get(TEAM_FIND + '/' + id)
           .then(function (response) {
             commit(FETCH_BY_ID, response.data);
           })

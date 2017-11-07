@@ -1,4 +1,16 @@
 import axios from 'axios'
+import { 
+    ISSUE_ALL,
+    ISSUE_FIND,
+    ISSUE_CHANGE_STATUS,
+    ISSUE_CHANGE_ASSIGNEE,
+    ISSUE_COMMENT_CREATE,
+    ISSUE_COMMENT_DELETE,
+    ISSUE_CREATE,
+    ISSUE_DELETE,
+    ISSUE_EDIT,
+    ISSUE_ATTACHMENT_UPLOAD,
+} from '../../config/endpoints.js';
 
 const FETCH_ISSUES = "FETCH_ISSUES";
 const FETCH_ISSUE = "FETCH_ISSUE";
@@ -95,7 +107,7 @@ const mutations = {
 const actions = {
     fetchIssues: ({ dispatch, commit }, projectId) => {
         commit(FETCH_START);
-        return axios.get('http://localhost:1337/issue/find?projectId=' + projectId)
+        return axios.get(ISSUE_ALL + '?projectId=' + projectId)
           .then(function (response) {                
             commit(FETCH_ISSUES, response.data);
           })
@@ -105,7 +117,7 @@ const actions = {
     },
     fetchIssue: ({ dispatch, commit }, id) => {
         commit(FETCH_ISSUE_START);
-        return axios.get('http://localhost:1337/issue/find/' + id)
+        return axios.get(ISSUE_FIND + '/' + id)
           .then(function (response) {                
             commit(FETCH_ISSUE, response.data);
           })
@@ -115,7 +127,7 @@ const actions = {
     },
     changeIssueStatus: ({ dispatch, commit }, payload) => {
         commit(CHANGE_ISSUE_STATUS_START);
-        return axios.post('http://localhost:1337/issue/' + payload.id + '/changeStatus', {status: payload.status})
+        return axios.post(ISSUE_CHANGE_STATUS + '/' + payload.id + '/changeStatus', {status: payload.status})
           .then(function (response) {                
             commit(CHANGE_ISSUE_STATUS, payload.status);
           })
@@ -125,7 +137,7 @@ const actions = {
     },
     changeIssueAssignee: ({ dispatch, commit }, payload) => {
         commit(CHANGE_ISSUE_ASSIGNEE_START);
-        return axios.post('http://localhost:1337/issue/' + payload.id + '/changeAssignee', {assignee: payload.assignee})
+        return axios.post(ISSUE_CHANGE_ASSIGNEE + '/' + payload.id + '/changeAssignee', {assignee: payload.assignee})
           .then(function (response) {                
             commit(CHANGE_ISSUE_ASSIGNEE, response.data.assignee);
           })
@@ -135,7 +147,7 @@ const actions = {
     },
     saveComment: ({ dispatch, commit }, comment) => {
         commit(SAVE_COMMENT_START);        
-        return axios.post('http://localhost:1337/issue/' + comment.id + '/comments/create', comment)
+        return axios.post(ISSUE_COMMENT_DELETE + '/' + comment.id + '/comments/create', comment)
           .then(function (response) {
             commit(SAVE_COMMENT, response.data);
           })
@@ -144,7 +156,7 @@ const actions = {
           });
     },
     deleteComment: ({ dispatch, commit }, id) => {
-        return axios.post('http://localhost:1337/comment/destroy/' + id)
+        return axios.post(ISSUE_COMMENT_DELETE + '/' + id)
           .then(function (response) {
             commit(DELETE_COMMENT, id);
           })
@@ -153,7 +165,7 @@ const actions = {
           });
     },
     storeIssue: ({ dispatch, commit }, issue) => {
-        return axios.post('http://localhost:1337/issue/create', issue)
+        return axios.post(ISSUE_CREATE, issue)
           .then(function (response) {
             issue.id = response.data.id;
             commit(STORE_ISSUE, issue);
@@ -163,7 +175,7 @@ const actions = {
           });
     },
     deleteIssue: ({ dispatch, commit }, id) => {
-        return axios.delete('http://localhost:1337/issue/destroy/' + id)
+        return axios.delete(ISSUE_DELETE + '/' + id)
           .then(function (response) {                
             commit(DELETE_ISSUE, id);
           })
@@ -173,7 +185,7 @@ const actions = {
     },
     editIssue: ({ dispatch, commit }, issue) => {
         commit(EDIT_ISSUE_START);
-        return axios.post('http://localhost:1337/issue/update/' + issue.id, issue)
+        return axios.post(ISSUE_EDIT + '/' + issue.id, issue)
           .then(function (response) {                
             commit(EDIT_ISSUE, response.data);
           })
@@ -183,7 +195,7 @@ const actions = {
     },
     uploadAttachment: ({ dispatch, commit }, payload) => {
         console.log(payload);
-        return axios.post('http://localhost:1337/issue/' + payload.id + '/attachments/create', payload)
+        return axios.post(ISSUE_ATTACHMENT_UPLOAD + '/' + payload.id + '/attachments/create', payload)
             .then(function (response) {
                 console.log(response);
             })

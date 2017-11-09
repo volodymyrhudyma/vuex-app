@@ -16,6 +16,8 @@ const LOGOUT = "LOGOUT";
 const SET_LOGGED_USER = "SET_LOGGED_USER";
 const FETCH_USERS_START = "FETCH_USERS_START";
 const FETCH_USERS = "FETCH_USERS";
+const USER_INVITATION_STATUS = "USER_INVITATION_STATUS";
+const USER_INVITATION_DELETED = "USER_INVITATION_DELETED";
 
 const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
@@ -85,6 +87,15 @@ const mutations = {
             return user.id !== state.loggedUser.id;
         });
         state.isUsersFetching = false;
+    },
+    [USER_INVITATION_STATUS] (state, payload) {
+        let userId = payload.user.to ? payload.user.to.id : payload.user.id;
+        let status = payload.status;
+        state.users.filter(filteredUser => {
+            if(filteredUser.id === userId) {
+                filteredUser.invitationStatus = status;
+            }
+        });
     },
 };
 
@@ -171,6 +182,9 @@ const actions = {
             .catch(function (error) {
                 dispatch('handleError', error, {root: true});
             });
+    },
+    userInvitationStatus: ({dispatch, commit}, payload) => {
+        commit(USER_INVITATION_STATUS, payload);
     },
 };
 

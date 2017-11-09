@@ -121,25 +121,28 @@ const actions = {
         };
         return axios.post(FRIEND_INVITATIONS_ACCEPT, data)
           .then(function (response) {               
-             context.commit(ACCEPT_INVITATION, response.data);
+             context.commit(ACCEPT_INVITATION, response.data[0]);
           })
           .catch(function (error) {
             context.dispatch('handleError', error, {root: true});
           });
     },
-    deleteSentInvitation: ({ dispatch, commit }, id) => {
-        return axios.delete(FRIEND_INVITATIONS_DELETE + '/' + id)
-          .then(function (response) {                
-            commit(DELETE_SENT_INVITATION, id);
+    deleteSentInvitation: ({ dispatch, commit }, invitation) => {
+        return axios.delete(FRIEND_INVITATIONS_DELETE + '/' + invitation.id)
+          .then(function (response) {
+            // Decouple this
+            commit(DELETE_SENT_INVITATION, invitation.id);
+            dispatch('userInvitationStatus', {user: invitation, status: null}, { root: true });
           })
           .catch(function (error) {
             dispatch('handleError', error, {root: true});
           });
     },
-    deleteAcceptedInvitation: ({ dispatch, commit }, id) => {
-        return axios.delete(FRIEND_INVITATIONS_DELETE + '/' + id)
+    deleteAcceptedInvitation: ({ dispatch, commit }, invitation) => {
+        return axios.delete(FRIEND_INVITATIONS_DELETE + '/' + invitation.id)
           .then(function (response) {                
-            commit(DELETE_ACCEPTED_INVITATION, id);
+            commit(DELETE_ACCEPTED_INVITATION, invitation.id);
+            dispatch('userInvitationStatus', {user: invitation, status: null}, { root: true });
           })
           .catch(function (error) {
             dispatch('handleError', error, {root: true});

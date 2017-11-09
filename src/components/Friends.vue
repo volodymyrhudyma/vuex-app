@@ -5,7 +5,7 @@
     <div class="title">
       All users:
     </div>
-      <md-list>
+      <md-list v-if="!isUsersFetching">
 
         <md-list-item v-for="user in filteredUsers" :key="user.id">
           <md-avatar>
@@ -14,9 +14,17 @@
 
           <span>{{user.email}}</span>
 
-          <md-button class="md-icon-button md-list-action" @click="sendInvitation(user.id)">
+          <md-button class="md-icon-button md-list-action" v-if="!user.invitationStatus" @click="sendInvitation(user.id)">
             <md-icon class="md-primary">add</md-icon>
           </md-button>
+          <md-button class="md-icon-button md-list-action" v-if="user.invitationStatus === 'sent'">
+            <md-icon class="md-primary">done</md-icon>
+          </md-button>
+          <md-button class="md-icon-button md-list-action" v-if="user.invitationStatus === 'accepted'">
+            <md-icon class="md-primary">people</md-icon>
+          </md-button>
+
+
           <md-button class="md-icon-button md-list-action">
             <md-icon class="md-primary">chat_bubble</md-icon>
           </md-button>
@@ -38,7 +46,7 @@
 
             <span>{{invitation.to.email}}</span>
 
-            <md-button class="md-icon-button md-list-action" @click="deleteSentInvitation(invitation.id)">
+            <md-button class="md-icon-button md-list-action" @click="deleteSentInvitation(invitation)">
               <md-icon class="md-warn">delete</md-icon>
             </md-button>
             <md-button class="md-icon-button md-list-action">
@@ -60,9 +68,10 @@
               <img src="https://placeimg.com/40/40/people/5" alt="People">
             </md-avatar>
 
+
             <span>{{invitation.to.email === loggedUser.email ? invitation.from.email : invitation.to.email}}</span>
 
-            <md-button class="md-icon-button md-list-action" @click="deleteAcceptedInvitation(invitation.id)">
+            <md-button class="md-icon-button md-list-action" @click="deleteAcceptedInvitation(invitation)">
               <md-icon class="md-warn">delete</md-icon>
             </md-button>
             <md-button class="md-icon-button md-list-action">
@@ -106,14 +115,30 @@
 
   export default {
     computed: {
-      ...mapGetters(['users', 'loggedUser']),
+      ...mapGetters(['users', 'loggedUser', 'isUsersFetching']),
       ...mapGetters('friend', ['sentInvitations', 'acceptedInvitations', 'myInvitations']),
       filteredUsers() {
-         return this.users;
-      }
+        this.sentInvitations.filter(sentInvitation => {
+          this.users.filter(user => {
+            if(sentInvitation.to.email === user.email) {
+              this.userInvitationStatus({user: user, status: 'sent'});
+            }
+          });
+        });
+
+        this.acceptedInvitations.filter(acceptInvitation => {
+          this.users.filter(user => {
+            if(acceptInvitation.to.email === user.email) {
+              this.userInvitationStatus({user: user, status: 'accepted'});
+            }
+          });
+        });
+
+        return this.users;
+      },
     },
     methods: {
-        ...mapActions(['fetchUsers']),
+        ...mapActions(['fetchUsers', 'userInvitationStatus']),
         ...mapActions('friend', [
           'sendInvitation', 'fetchSentInvitations', 'deleteSentInvitation', 
           'deleteAcceptedInvitation', 'fetchMyInvitations', 'acceptInvitation', 

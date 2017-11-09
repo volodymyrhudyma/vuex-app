@@ -348,6 +348,34 @@
         }
     }
 
+    #chat {
+        .content {
+            .flex-wrapper {
+                .dialogs {
+                    .dialog {
+                        &:hover {
+                            background: #f2f6fa;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .chat-area {
+                    overflow-y: auto;
+                    width: 100%;
+                    height: 100%;
+                    padding: 15px 50px;
+
+                    .messages-list {
+                        .time {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     #badges {
         .content {
             .flex-wrapper {

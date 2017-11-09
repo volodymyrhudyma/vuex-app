@@ -64,6 +64,15 @@
                     </span>
                   </md-list-item>
 
+                  <md-list-item @click="onLeftMenuItemClick('chat')">
+                    <md-icon>people</md-icon> 
+                    <span>
+                        <li v-if="isLoggedIn">
+                              {{ $t('Chat') }}
+                          </li>
+                    </span>
+                  </md-list-item>
+
                   <md-list-item @click="onLeftMenuItemClick('technologies')">
                     <md-icon>http</md-icon> 
                       <span>

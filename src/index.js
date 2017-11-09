@@ -8,6 +8,7 @@ import TechList from './components/TechList.vue'
 import BadgeList from './components/BadgeList.vue'
 import Profile from './components/Profile.vue'
 import Friends from './components/Friends.vue'
+import Chat from './components/Chat.vue'
 import Callback from './components/Callback.vue'
 import Team from './components/Team.vue'
 import store from './store'
@@ -83,6 +84,13 @@ const routes = [
 	{ 
 		path: '/friends', 
 		component: Friends,
+		beforeEnter: (to, from, next) => {
+	    	store.getters.isLoggedIn ? next() : next(false);
+	    }
+	},
+	{ 
+		path: '/chat', 
+		component: Chat,
 		beforeEnter: (to, from, next) => {
 	    	store.getters.isLoggedIn ? next() : next(false);
 	    }
